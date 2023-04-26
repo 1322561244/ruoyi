@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglDriversMapper">
+    
+    <resultMap type="TqcglDrivers" id="TqcglDriversResult">
+        <result property="driversId"    column="drivers_id"    />
+        <result property="driversName"    column="drivers_name"    />
+        <result property="driversPhone"    column="drivers_phone"    />
+        <result property="driversSupplier"    column="drivers_supplier"    />
+    </resultMap>
+
+    <sql id="selectTqcglDriversVo">
+        select drivers_id, drivers_name, drivers_phone, drivers_supplier from tqcgl_drivers
+    </sql>
+
+    <select id="selectTqcglDriversList" parameterType="TqcglDrivers" resultMap="TqcglDriversResult">
+        <include refid="selectTqcglDriversVo"/>
+        <where>  
+            <if test="driversName != null  and driversName != ''"> and drivers_name like concat('%', #{driversName}, '%')</if>
+            <if test="driversPhone != null  and driversPhone != ''"> and drivers_phone = #{driversPhone}</if>
+            <if test="driversSupplier != null  and driversSupplier != ''"> and drivers_supplier = #{driversSupplier}</if>
+        </where>
+    </select>
+    
+    <select id="selectTqcglDriversByDriversId" parameterType="Long" resultMap="TqcglDriversResult">
+        <include refid="selectTqcglDriversVo"/>
+        where drivers_id = #{driversId}
+    </select>
+        
+    <insert id="insertTqcglDrivers" parameterType="TqcglDrivers" useGeneratedKeys="true" keyProperty="driversId">
+        insert into tqcgl_drivers
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="driversName != null and driversName != ''">drivers_name,</if>
+            <if test="driversPhone != null and driversPhone != ''">drivers_phone,</if>
+            <if test="driversSupplier != null and driversSupplier != ''">drivers_supplier,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="driversName != null and driversName != ''">#{driversName},</if>
+            <if test="driversPhone != null and driversPhone != ''">#{driversPhone},</if>
+            <if test="driversSupplier != null and driversSupplier != ''">#{driversSupplier},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTqcglDrivers" parameterType="TqcglDrivers">
+        update tqcgl_drivers
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="driversName != null and driversName != ''">drivers_name = #{driversName},</if>
+            <if test="driversPhone != null and driversPhone != ''">drivers_phone = #{driversPhone},</if>
+            <if test="driversSupplier != null and driversSupplier != ''">drivers_supplier = #{driversSupplier},</if>
+        </trim>
+        where drivers_id = #{driversId}
+    </update>
+
+    <delete id="deleteTqcglDriversByDriversId" parameterType="Long">
+        delete from tqcgl_drivers where drivers_id = #{driversId}
+    </delete>
+
+    <delete id="deleteTqcglDriversByDriversIds" parameterType="String">
+        delete from tqcgl_drivers where drivers_id in 
+        <foreach item="driversId" collection="array" open="(" separator="," close=")">
+            #{driversId}
+        </foreach>
+    </delete>
+</mapper>

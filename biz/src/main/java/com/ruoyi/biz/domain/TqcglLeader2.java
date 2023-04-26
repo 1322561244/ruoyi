@@ -1,0 +1,79 @@
+package com.ruoyi.biz.domain;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
+
+/**
+ * 车长管理对象 tqcgl_leader2
+ *
+ * @author zhu
+ * @date 2023-04-26
+ */
+public class TqcglLeader2 extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 车长ID，自增长 */
+    private Long leaderId;
+
+    /** 车长姓名 */
+    @Excel(name = "车长姓名")
+    private String leaderName;
+
+    /** 联系电话 */
+    @Excel(name = "联系电话")
+    private String leaderPhone;
+
+    /** 所属企业名称 */
+    @Excel(name = "所属企业名称")
+    private String enterpriseName;
+
+    public void setLeaderId(Long leaderId)
+    {
+        this.leaderId = leaderId;
+    }
+
+    public Long getLeaderId()
+    {
+        return leaderId;
+    }
+    public void setLeaderName(String leaderName)
+    {
+        this.leaderName = leaderName;
+    }
+
+    public String getLeaderName()
+    {
+        return leaderName;
+    }
+    public void setLeaderPhone(String leaderPhone)
+    {
+        this.leaderPhone = leaderPhone;
+    }
+
+    public String getLeaderPhone()
+    {
+        return leaderPhone;
+    }
+    public void setEnterpriseName(String enterpriseName)
+    {
+        this.enterpriseName = enterpriseName;
+    }
+
+    public String getEnterpriseName()
+    {
+        return enterpriseName;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("leaderId", getLeaderId())
+                .append("leaderName", getLeaderName())
+                .append("leaderPhone", getLeaderPhone())
+                .append("enterpriseName", getEnterpriseName())
+                .toString();
+    }
+}

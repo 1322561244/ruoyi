@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglReservationMapper">
+    
+    <resultMap type="TqcglReservation" id="TqcglReservationResult">
+        <result property="reservationId"    column="reservation_id"    />
+        <result property="shiftsId"    column="shifts_id"    />
+        <result property="driversId"    column="drivers_id"    />
+        <result property="leaderId"    column="leader_id"    />
+        <result property="passengerId"    column="passenger_id"    />
+        <result property="departureTime"    column="departure_time"    />
+        <result property="reservationTime"    column="reservation_time"    />
+        <result property="reservationStatus"    column="reservation_status"    />
+    </resultMap>
+
+    <sql id="selectTqcglReservationVo">
+        select reservation_id, shifts_id, drivers_id, leader_id, passenger_id, departure_time, reservation_time, reservation_status from tqcgl_reservation
+    </sql>
+
+    <select id="selectTqcglReservationList" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
+        <include refid="selectTqcglReservationVo"/>
+        <where>  
+            <if test="shiftsId != null "> and shifts_id = #{shiftsId}</if>
+            <if test="driversId != null "> and drivers_id = #{driversId}</if>
+            <if test="leaderId != null "> and leader_id = #{leaderId}</if>
+            <if test="passengerId != null "> and passenger_id = #{passengerId}</if>
+            <if test="departureTime != null "> and departure_time = #{departureTime}</if>
+            <if test="reservationTime != null "> and reservation_time = #{reservationTime}</if>
+            <if test="reservationStatus != null "> and reservation_status = #{reservationStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectTqcglReservationByReservationId" parameterType="Long" resultMap="TqcglReservationResult">
+        <include refid="selectTqcglReservationVo"/>
+        where reservation_id = #{reservationId}
+    </select>
+        
+    <insert id="insertTqcglReservation" parameterType="TqcglReservation" useGeneratedKeys="true" keyProperty="reservationId">
+        insert into tqcgl_reservation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shiftsId != null">shifts_id,</if>
+            <if test="driversId != null">drivers_id,</if>
+            <if test="leaderId != null">leader_id,</if>
+            <if test="passengerId != null">passenger_id,</if>
+            <if test="departureTime != null">departure_time,</if>
+            <if test="reservationTime != null">reservation_time,</if>
+            <if test="reservationStatus != null">reservation_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shiftsId != null">#{shiftsId},</if>
+            <if test="driversId != null">#{driversId},</if>
+            <if test="leaderId != null">#{leaderId},</if>
+            <if test="passengerId != null">#{passengerId},</if>
+            <if test="departureTime != null">#{departureTime},</if>
+            <if test="reservationTime != null">#{reservationTime},</if>
+            <if test="reservationStatus != null">#{reservationStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTqcglReservation" parameterType="TqcglReservation">
+        update tqcgl_reservation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shiftsId != null">shifts_id = #{shiftsId},</if>
+            <if test="driversId != null">drivers_id = #{driversId},</if>
+            <if test="leaderId != null">leader_id = #{leaderId},</if>
+            <if test="passengerId != null">passenger_id = #{passengerId},</if>
+            <if test="departureTime != null">departure_time = #{departureTime},</if>
+            <if test="reservationTime != null">reservation_time = #{reservationTime},</if>
+            <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>
+        </trim>
+        where reservation_id = #{reservationId}
+    </update>
+
+    <delete id="deleteTqcglReservationByReservationId" parameterType="Long">
+        delete from tqcgl_reservation where reservation_id = #{reservationId}
+    </delete>
+
+    <delete id="deleteTqcglReservationByReservationIds" parameterType="String">
+        delete from tqcgl_reservation where reservation_id in 
+        <foreach item="reservationId" collection="array" open="(" separator="," close=")">
+            #{reservationId}
+        </foreach>
+    </delete>
+</mapper>

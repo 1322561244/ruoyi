@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglLeaderMapper">
+    
+    <resultMap type="TqcglLeader" id="TqcglLeaderResult">
+        <result property="leaderId"    column="leader_id"    />
+        <result property="leaderName"    column="leader_name"    />
+        <result property="leaderPhone"    column="leader_phone"    />
+        <result property="enterpriseId"    column="enterprise_id"    />
+    </resultMap>
+
+    <resultMap type="TqcglLeader2" id="TqcglLeader2Result">
+        <result property="leaderId"    column="leader_id"    />
+        <result property="leaderName"    column="leader_name"    />
+        <result property="leaderPhone"    column="leader_phone"    />
+        <result property="enterpriseName"    column="enterprise_name"    />
+    </resultMap>
+
+
+    <resultMap type="TqcglLeader_Enterprise" id="TqcglLeaderResult3">
+        <result property="enterpriseName"    column="enterprise_name"    />
+    </resultMap>
+
+    <sql id="selectTqcglLeaderVo">
+        select leader_id, leader_name, leader_phone, enterprise_id from tqcgl_leader
+    </sql>
+
+
+    <sql id="selectTqcglLeaderVo2">
+        select l.leader_id, l.leader_name, l.leader_phone, e.enterprise_name from tqcgl_leader l,tqcgl_enterprise e
+    </sql>
+
+    <sql id="selectTqcglLeaderVo3">
+        select enterprise_name from tqcgl_enterprise
+    </sql>
+
+    <select id="selectTqcglEnterpriseList" parameterType="TqcglLeader_Enterprise" resultMap="TqcglLeaderResult3">
+        <include refid="selectTqcglLeaderVo3"/>
+    </select>
+
+    <select id="selectTqcglLeaderList" parameterType="TqcglLeader" resultMap="TqcglLeaderResult">
+        <include refid="selectTqcglLeaderVo"/>
+        <where>  
+            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%', #{leaderName}, '%')</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and leader_phone = #{leaderPhone}</if>
+            <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
+        </where>
+    </select>
+
+    <select id="selectTqcglLeaderList2" parameterType="TqcglLeader" resultMap="TqcglLeader2Result">
+        <include refid="selectTqcglLeaderVo2"/>
+        <where>
+            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%', #{leaderName}, '%')</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and l.leader_phone = #{leaderPhone}</if>
+            <if test="enterpriseId != null "> and l.enterprise_id = #{enterpriseId}</if>
+             and e.enterprise_id = l.enterprise_id
+        </where>
+    </select>
+    
+    <select id="selectTqcglLeaderByLeaderId" parameterType="Long" resultMap="TqcglLeaderResult">
+        <include refid="selectTqcglLeaderVo"/>
+        where leader_id = #{leaderId}
+    </select>
+        
+    <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true" keyProperty="leaderId">
+        insert into tqcgl_leader
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="leaderName != null and leaderName != ''">leader_name,</if>
+            <if test="leaderPhone != null and leaderPhone != ''">leader_phone,</if>
+            <if test="enterpriseId != null">enterprise_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="leaderName != null and leaderName != ''">#{leaderName},</if>
+            <if test="leaderPhone != null and leaderPhone != ''">#{leaderPhone},</if>
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTqcglLeader" parameterType="TqcglLeader">
+        update tqcgl_leader
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="leaderName != null and leaderName != ''">leader_name = #{leaderName},</if>
+            <if test="leaderPhone != null and leaderPhone != ''">leader_phone = #{leaderPhone},</if>
+            <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+        </trim>
+        where leader_id = #{leaderId}
+    </update>
+
+    <delete id="deleteTqcglLeaderByLeaderId" parameterType="Long">
+        delete from tqcgl_leader where leader_id = #{leaderId}
+    </delete>
+
+    <delete id="deleteTqcglLeaderByLeaderIds" parameterType="String">
+        delete from tqcgl_leader where leader_id in 
+        <foreach item="leaderId" collection="array" open="(" separator="," close=")">
+            #{leaderId}
+        </foreach>
+    </delete>
+</mapper>

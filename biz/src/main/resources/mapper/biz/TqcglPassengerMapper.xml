@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglPassengerMapper">
+    
+    <resultMap type="TqcglPassenger" id="TqcglPassengerResult">
+        <result property="passengerId"    column="passenger_id"    />
+        <result property="passengerName"    column="passenger_name"    />
+        <result property="enterpriseId"    column="enterprise_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="passengerPhone"    column="passenger_phone"    />
+        <result property="passengerPhoto"    column="passenger_photo"    />
+    </resultMap>
+
+
+    <resultMap type="TqcglPassenger2" id="TqcglPassenger2Result">
+        <result property="passengerId"    column="passenger_id"    />
+        <result property="passengerName"    column="passenger_name"    />
+        <result property="enterpriseName"    column="enterprise_name"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="passengerPhone"    column="passenger_phone"    />
+        <result property="passengerPhoto"    column="passenger_photo"    />
+    </resultMap>
+
+
+    <sql id="selectTqcglPassengerVo">
+        select passenger_id, passenger_name, enterprise_id, dept_id, passenger_phone, passenger_photo from tqcgl_passenger
+    </sql>
+
+
+    <sql id="selectTqcglPassenger2Vo">
+        select passenger_id, passenger_name, enterprise_name, dept_name, passenger_phone, passenger_photo from tqcgl_passenger p,sys_dept d,tqcgl_enterprise e
+        where d.dept_id= p.dept_id and e.enterprise_id=p.enterprise_id
+    </sql>
+
+    <select id="selectTqcglPassengerList" parameterType="TqcglPassenger" resultMap="TqcglPassengerResult">
+        <include refid="selectTqcglPassengerVo"/>
+        <where>
+            <if test="passengerName != null  and passengerName != ''"> and passenger_name like concat('%', #{passengerName}, '%')</if>
+            <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="passengerPhone != null  and passengerPhone != ''"> and passenger_phone = #{passengerPhone}</if>
+            <if test="passengerPhoto != null  and passengerPhoto != ''"> and passenger_photo = #{passengerPhoto}</if>
+        </where>
+    </select>
+
+    <select id="selectTqcglPassenger2List" parameterType="TqcglPassenger" resultMap="TqcglPassenger2Result">
+        <include refid="selectTqcglPassenger2Vo"/>
+        <where>  
+            <if test="passengerName != null  and passengerName != ''"> and passenger_name like concat('%', #{passengerName}, '%')</if>
+            <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="passengerPhone != null  and passengerPhone != ''"> and passenger_phone = #{passengerPhone}</if>
+            <if test="passengerPhoto != null  and passengerPhoto != ''"> and passenger_photo = #{passengerPhoto}</if>
+        </where>
+    </select>
+    
+    <select id="selectTqcglPassengerByPassengerId" parameterType="Long" resultMap="TqcglPassengerResult">
+        <include refid="selectTqcglPassengerVo"/>
+        where passenger_id = #{passengerId}
+    </select>
+        
+    <insert id="insertTqcglPassenger" parameterType="TqcglPassenger" useGeneratedKeys="true" keyProperty="passengerId">
+        insert into tqcgl_passenger
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">passenger_name,</if>
+            <if test="enterpriseId != null">enterprise_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="passengerPhone != null and passengerPhone != ''">passenger_phone,</if>
+            <if test="passengerPhoto != null">passenger_photo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
+            <if test="passengerPhoto != null">#{passengerPhoto},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTqcglPassenger" parameterType="TqcglPassenger">
+        update tqcgl_passenger
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">passenger_name = #{passengerName},</if>
+            <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="passengerPhone != null and passengerPhone != ''">passenger_phone = #{passengerPhone},</if>
+            <if test="passengerPhoto != null">passenger_photo = #{passengerPhoto},</if>
+        </trim>
+        where passenger_id = #{passengerId}
+    </update>
+
+    <delete id="deleteTqcglPassengerByPassengerId" parameterType="Long">
+        delete from tqcgl_passenger where passenger_id = #{passengerId}
+    </delete>
+
+    <delete id="deleteTqcglPassengerByPassengerIds" parameterType="String">
+        delete from tqcgl_passenger where passenger_id in 
+        <foreach item="passengerId" collection="array" open="(" separator="," close=")">
+            #{passengerId}
+        </foreach>
+    </delete>
+</mapper>

@@ -42,3 +42,4 @@ export function delLeader(leaderId) {
     method: 'delete'
   })
 }
+

@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="车长姓名" prop="leaderName">
         <el-input
           v-model="queryParams.leaderName"
@@ -17,16 +24,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业ID" prop="enterpriseId">
+      <el-form-item label="所属企业名称" prop="enterpriseName">
         <el-input
-          v-model="queryParams.enterpriseId"
-          placeholder="请输入所属企业ID"
+          v-model="queryParams.enterpriseName"
+          placeholder="请输入所属企业名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
+          >搜索</el-button
+        >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
@@ -40,7 +49,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:leader:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -51,7 +61,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:leader:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -62,7 +73,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:leader:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -72,17 +84,22 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:leader:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="leaderList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="leaderList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="车长ID，自增长" align="center" prop="leaderId" />
       <el-table-column label="车长姓名" align="center" prop="leaderName" />
       <el-table-column label="联系电话" align="center" prop="leaderPhone" />
-      <el-table-column label="所属企业ID" align="center" prop="enterpriseId" />
+      <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -91,20 +108,22 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:leader:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:leader:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -120,8 +139,14 @@
         <el-form-item label="联系电话" prop="leaderPhone">
           <el-input v-model="form.leaderPhone" placeholder="请输入联系电话" />
         </el-form-item>
-        <el-form-item label="所属企业ID" prop="enterpriseId">
-          <el-input v-model="form.enterpriseId" placeholder="请输入所属企业ID" />
+<!--        <el-form-item label="所属企业名称" prop="enterpriseName">-->
+<!--          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />-->
+<!--        </el-form-item>-->
+        <el-form-item label="下拉所属企业名称" prop="enterpriseName">
+            <el-select v-model="form.enterpriseName" placeholder="请选择所属企业">
+              <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseName" :key="iteam.enterpriseName"/>
+
+            </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -133,7 +158,14 @@
 </template>
 
 <script>
-import { listLeader, getLeader, delLeader, addLeader, updateLeader } from "@/api/biz/leader";
+import {
+  listLeader,
+  getLeader,
+  delLeader,
+  addLeader,
+  updateLeader,
+} from "@/api/biz/leader";
+import { listEnterprise } from "@/api/biz/enterprise";
 
 export default {
   name: "Leader",
@@ -163,31 +195,35 @@ export default {
         pageSize: 10,
         leaderName: null,
         leaderPhone: null,
-        enterpriseId: null
+        enterpriseName: null,
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-        leaderName: [
-          { required: true, message: "车长姓名不能为空", trigger: "blur" }
-        ],
-        leaderPhone: [
-          { required: true, message: "联系电话不能为空", trigger: "blur" }
-        ],
-      }
+      rules: {},
+      enterpriseList:[],
     };
+  },
+  mounted() {
+    this.getEnterpriseList();
   },
   created() {
     this.getList();
   },
   methods: {
+    /** 查询企业管理列表 */
+    getEnterpriseList() {
+      this.loading = true;
+      listEnterprise(this.queryParams).then(response => {
+        this.enterpriseList = response.rows;
+        this.loading = false;
+      });
+    },
     /** 查询车长管理列表 */
     getList() {
       this.loading = true;
-      listLeader(this.queryParams).then(response => {
+      listLeader(this.queryParams).then((response) => {
         this.leaderList = response.rows;
-        this.total = response.total;
         this.loading = false;
       });
     },
@@ -202,7 +238,7 @@ export default {
         leaderId: null,
         leaderName: null,
         leaderPhone: null,
-        enterpriseId: null
+        enterpriseName: null,
       };
       this.resetForm("form");
     },
@@ -218,9 +254,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.leaderId)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.leaderId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -231,8 +267,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const leaderId = row.leaderId || this.ids
-      getLeader(leaderId).then(response => {
+      const leaderId = row.leaderId || this.ids;
+      getLeader(leaderId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改车长管理";
@@ -240,16 +276,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.leaderId != null) {
-            updateLeader(this.form).then(response => {
+            updateLeader(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addLeader(this.form).then(response => {
+            addLeader(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -261,19 +297,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const leaderIds = row.leaderId || this.ids;
-      this.$modal.confirm('是否确认删除车长管理编号为"' + leaderIds + '"的数据项？').then(function() {
-        return delLeader(leaderIds);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除车长管理编号为"' + leaderIds + '"的数据项？')
+        .then(function () {
+          return delLeader(leaderIds);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('biz/leader/export', {
-        ...this.queryParams
-      }, `leader_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "biz/leader/export",
+        {
+          ...this.queryParams,
+        },
+        `leader_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

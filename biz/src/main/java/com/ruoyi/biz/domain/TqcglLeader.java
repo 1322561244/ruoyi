@@ -30,6 +30,9 @@ public class TqcglLeader extends BaseEntity
     @Excel(name = "所属企业ID")
     private Long enterpriseId;
 
+    @Excel(name = "所属企业名称")
+    private String enterpriseName;
+
     public void setLeaderId(Long leaderId) 
     {
         this.leaderId = leaderId;
@@ -67,13 +70,24 @@ public class TqcglLeader extends BaseEntity
         return enterpriseId;
     }
 
+    public void setEnterpriseName(String enterpriseName) 
+    {
+        this.enterpriseName = enterpriseName;
+    }
+
+    public String getEnterpriseName() 
+    {
+        return enterpriseName;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("leaderId", getLeaderId())
             .append("leaderName", getLeaderName())
             .append("leaderPhone", getLeaderPhone())
-            .append("enterpriseId", getEnterpriseId())
+            .append("enterpriseName", getEnterpriseName())
+            .append("enterpriseId",getEnterpriseId())
             .toString();
     }
 }

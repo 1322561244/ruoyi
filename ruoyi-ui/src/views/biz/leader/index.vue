@@ -142,10 +142,9 @@
 <!--        <el-form-item label="所属企业名称" prop="enterpriseName">-->
 <!--          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />-->
 <!--        </el-form-item>-->
-        <el-form-item label="下拉所属企业名称" prop="enterpriseName">
-            <el-select v-model="form.enterpriseName" placeholder="请选择所属企业">
-              <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseName" :key="iteam.enterpriseName"/>
-
+        <el-form-item label="下拉所属企业名称" prop="enterpriseId">
+            <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">
+              <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseId" :key="iteam.enterpriseId"/>
             </el-select>
         </el-form-item>
       </el-form>
@@ -158,14 +157,14 @@
 </template>
 
 <script>
-import {
-  listLeader,
-  getLeader,
-  delLeader,
-  addLeader,
-  updateLeader,
-} from "@/api/biz/leader";
 import { listEnterprise } from "@/api/biz/enterprise";
+import {
+addLeader,
+delLeader,
+getLeader,
+listLeader,
+updateLeader,
+} from "@/api/biz/leader";
 
 export default {
   name: "Leader",
@@ -214,7 +213,7 @@ export default {
     /** 查询企业管理列表 */
     getEnterpriseList() {
       this.loading = true;
-      listEnterprise(this.queryParams).then(response => {
+      listEnterprise(this.queryParams).then((response) => {
         this.enterpriseList = response.rows;
         this.loading = false;
       });

@@ -6,42 +6,44 @@
         <result property="leaderId" column="leader_id" />
         <result property="leaderName" column="leader_name" />
         <result property="leaderPhone" column="leader_phone" />
-        <result property="enterpriseName"    column="enterprise_name"    />
+        <result property="enterpriseName" column="enterprise_name" />
         <result property="enterpriseId" column="enterprise_id" />
     </resultMap>
 
-    <sql id="selectTqcglLeaderVo">
-        select leader_id, leader_name, leader_phone, e.enterprise_name from tqcgl_leader l,tqcgl_enterprise e
-    </sql>
+
+    <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name
+        from tqcgl_leader l,tqcgl_enterprise e </sql>
 
     <select id="selectTqcglLeaderList" parameterType="TqcglLeader" resultMap="TqcglLeaderResult">
-        <include refid="selectTqcglLeaderVo"/>
-        <where>  
-            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%', #{leaderName}, '%')</if>
-            <if test="leaderPhone != null  and leaderPhone != ''"> and leader_phone = #{leaderPhone}</if>
-            <if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like concat('%', #{enterpriseName}, '%')</if>
-             and e.enterprise_id=l.enterprise_id
-        </where>
+        <include refid="selectTqcglLeaderVo" />
+        <where>
+            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%',
+        #{leaderName}, '%')</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and
+        leader_phone = #{leaderPhone}</if>
+            <if
+                test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
+        concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=l.enterprise_id </where>
     </select>
-    
-    <select id="selectTqcglLeaderByLeaderId" parameterType="Long" resultMap="TqcglLeaderResult">
-        <include refid="selectTqcglLeaderVo"/>
-        where leader_id = #{leaderId}
-    </select>
-        
-    <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true" keyProperty="leaderId">
-        insert into tqcgl_leader
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="leaderName != null">leader_name,</if>
-            <if test="leaderPhone != null">leader_phone,</if>
-            <if test="enterpriseName != null">enterprise_id,</if>
-         </trim>v
 
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <select id="selectTqcglLeaderByLeaderId" parameterType="Long" resultMap="TqcglLeaderResult">
+        <include refid="selectTqcglLeaderVo" /> where leader_id = #{leaderId} </select>
+
+    <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true"
+        keyProperty="leaderId"> insert into tqcgl_leader <trim prefix="(" suffix=")"
+            suffixOverrides=",">
+            <if test="leaderName != null">leader_name,</if>
+            <if test="leaderPhone != null">
+        leader_phone,</if>
+            <if test="enterpriseId != null">enterprise_id,</if>
+        </trim>
+        <trim
+            prefix="values (" suffix=")" suffixOverrides=",">
             <if test="leaderName != null">#{leaderName},</if>
-            <if test="leaderPhone != null">#{leaderPhone},</if>
-            <if test="enterpriseName != null">(select enterprise_id from tqcgl_enterprise where enterprise_name = #{enterpriseName})),</if>
-         </trim>
+            <if test="leaderPhone != null">
+        #{leaderPhone},</if>
+            <if test="enterpriseId != null">#{enterpriseId}</if>
+        </trim>
     </insert>
 
     <update id="updateTqcglLeader" parameterType="TqcglLeader"> update tqcgl_leader <trim

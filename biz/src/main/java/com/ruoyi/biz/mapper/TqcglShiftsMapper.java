@@ -7,7 +7,7 @@ import com.ruoyi.biz.domain.TqcglShifts;
  * 班次管理Mapper接口
  * 
  * @author ruoyi
- * @date 2023-04-25
+ * @date 2023-04-28
  */
 public interface TqcglShiftsMapper 
 {

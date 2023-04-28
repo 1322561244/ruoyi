@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 预约管理对象 tqcgl_reservation
  * 
  * @author ruoyi
- * @date 2023-04-25
+ * @date 2023-04-28
  */
 public class TqcglReservation extends BaseEntity
 {
@@ -24,27 +24,19 @@ public class TqcglReservation extends BaseEntity
     @Excel(name = "班次ID")
     private Long shiftsId;
 
-    /** 司机ID */
-    @Excel(name = "司机ID")
-    private Long driversId;
-
-    /** 车长ID */
-    @Excel(name = "车长ID")
-    private Long leaderId;
-
     /** 员工(乘客)ID */
     @Excel(name = "员工(乘客)ID")
     private Long passengerId;
 
-    /** 发车时间 */
+    /** 搭乘时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date departureTime;
-
-    /** 预约时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预约时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "搭乘时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date reservationTime;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date creationTime;
 
     /** 预约状态1代表已预约，0代表已取消 */
     @Excel(name = "预约状态1代表已预约，0代表已取消")
@@ -68,24 +60,6 @@ public class TqcglReservation extends BaseEntity
     {
         return shiftsId;
     }
-    public void setDriversId(Long driversId) 
-    {
-        this.driversId = driversId;
-    }
-
-    public Long getDriversId() 
-    {
-        return driversId;
-    }
-    public void setLeaderId(Long leaderId) 
-    {
-        this.leaderId = leaderId;
-    }
-
-    public Long getLeaderId() 
-    {
-        return leaderId;
-    }
     public void setPassengerId(Long passengerId) 
     {
         this.passengerId = passengerId;
@@ -95,15 +69,6 @@ public class TqcglReservation extends BaseEntity
     {
         return passengerId;
     }
-    public void setDepartureTime(Date departureTime) 
-    {
-        this.departureTime = departureTime;
-    }
-
-    public Date getDepartureTime() 
-    {
-        return departureTime;
-    }
     public void setReservationTime(Date reservationTime) 
     {
         this.reservationTime = reservationTime;
@@ -112,6 +77,15 @@ public class TqcglReservation extends BaseEntity
     public Date getReservationTime() 
     {
         return reservationTime;
+    }
+    public void setCreationTime(Date creationTime) 
+    {
+        this.creationTime = creationTime;
+    }
+
+    public Date getCreationTime() 
+    {
+        return creationTime;
     }
     public void setReservationStatus(Long reservationStatus) 
     {
@@ -128,11 +102,9 @@ public class TqcglReservation extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("reservationId", getReservationId())
             .append("shiftsId", getShiftsId())
-            .append("driversId", getDriversId())
-            .append("leaderId", getLeaderId())
             .append("passengerId", getPassengerId())
-            .append("departureTime", getDepartureTime())
             .append("reservationTime", getReservationTime())
+            .append("creationTime", getCreationTime())
             .append("reservationStatus", getReservationStatus())
             .toString();
     }

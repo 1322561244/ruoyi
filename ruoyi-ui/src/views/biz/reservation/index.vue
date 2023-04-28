@@ -9,22 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="司机ID" prop="driversId">
-        <el-input
-          v-model="queryParams.driversId"
-          placeholder="请输入司机ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="车长ID" prop="leaderId">
-        <el-input
-          v-model="queryParams.leaderId"
-          placeholder="请输入车长ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="员工(乘客)ID" prop="passengerId">
         <el-input
           v-model="queryParams.passengerId"
@@ -33,20 +17,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发车时间" prop="departureTime">
-        <el-date-picker clearable
-          v-model="queryParams.departureTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择发车时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="预约时间" prop="reservationTime">
+      <el-form-item label="搭乘时间" prop="reservationTime">
         <el-date-picker clearable
           v-model="queryParams.reservationTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择预约时间">
+          placeholder="请选择搭乘时间">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="创建时间" prop="creationTime">
+        <el-date-picker clearable
+          v-model="queryParams.creationTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -105,17 +89,15 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="预约ID" align="center" prop="reservationId" />
       <el-table-column label="班次ID" align="center" prop="shiftsId" />
-      <el-table-column label="司机ID" align="center" prop="driversId" />
-      <el-table-column label="车长ID" align="center" prop="leaderId" />
       <el-table-column label="员工(乘客)ID" align="center" prop="passengerId" />
-      <el-table-column label="发车时间" align="center" prop="departureTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.departureTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="预约时间" align="center" prop="reservationTime" width="180">
+      <el-table-column label="搭乘时间" align="center" prop="reservationTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reservationTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="creationTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.creationTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="预约状态1代表已预约，0代表已取消" align="center" prop="reservationStatus" />
@@ -153,29 +135,23 @@
         <el-form-item label="班次ID" prop="shiftsId">
           <el-input v-model="form.shiftsId" placeholder="请输入班次ID" />
         </el-form-item>
-        <el-form-item label="司机ID" prop="driversId">
-          <el-input v-model="form.driversId" placeholder="请输入司机ID" />
-        </el-form-item>
-        <el-form-item label="车长ID" prop="leaderId">
-          <el-input v-model="form.leaderId" placeholder="请输入车长ID" />
-        </el-form-item>
         <el-form-item label="员工(乘客)ID" prop="passengerId">
           <el-input v-model="form.passengerId" placeholder="请输入员工(乘客)ID" />
         </el-form-item>
-        <el-form-item label="发车时间" prop="departureTime">
-          <el-date-picker clearable
-            v-model="form.departureTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择发车时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="预约时间" prop="reservationTime">
+        <el-form-item label="搭乘时间" prop="reservationTime">
           <el-date-picker clearable
             v-model="form.reservationTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择预约时间">
+            placeholder="请选择搭乘时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="创建时间" prop="creationTime">
+          <el-date-picker clearable
+            v-model="form.creationTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择创建时间">
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -217,11 +193,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
         shiftsId: null,
-        driversId: null,
-        leaderId: null,
         passengerId: null,
-        departureTime: null,
         reservationTime: null,
+        creationTime: null,
         reservationStatus: null
       },
       // 表单参数
@@ -254,11 +228,9 @@ export default {
       this.form = {
         reservationId: null,
         shiftsId: null,
-        driversId: null,
-        leaderId: null,
         passengerId: null,
-        departureTime: null,
         reservationTime: null,
+        creationTime: null,
         reservationStatus: null
       };
       this.resetForm("form");

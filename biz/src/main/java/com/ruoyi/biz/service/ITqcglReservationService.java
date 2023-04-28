@@ -7,7 +7,7 @@ import com.ruoyi.biz.domain.TqcglReservation;
  * 预约管理Service接口
  * 
  * @author ruoyi
- * @date 2023-04-25
+ * @date 2023-04-28
  */
 public interface ITqcglReservationService 
 {

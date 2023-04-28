@@ -9,14 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车牌号码" prop="shiftsPlateNumber">
-        <el-input
-          v-model="queryParams.shiftsPlateNumber"
-          placeholder="请输入车牌号码"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="发车时间" prop="shiftsDepartureTime">
         <el-date-picker clearable
           v-model="queryParams.shiftsDepartureTime"
@@ -105,7 +97,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="班次ID，自增长" align="center" prop="shiftsId" />
       <el-table-column label="班次名称" align="center" prop="shiftsName" />
-      <el-table-column label="车牌号码" align="center" prop="shiftsPlateNumber" />
       <el-table-column label="发车时间" align="center" prop="shiftsDepartureTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.shiftsDepartureTime, '{y}-{m}-{d}') }}</span>
@@ -147,9 +138,6 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="班次名称" prop="shiftsName">
           <el-input v-model="form.shiftsName" placeholder="请输入班次名称" />
-        </el-form-item>
-        <el-form-item label="车牌号码" prop="shiftsPlateNumber">
-          <el-input v-model="form.shiftsPlateNumber" placeholder="请输入车牌号码" />
         </el-form-item>
         <el-form-item label="发车时间" prop="shiftsDepartureTime">
           <el-date-picker clearable
@@ -207,7 +195,6 @@ export default {
         pageNum: 1,
         pageSize: 10,
         shiftsName: null,
-        shiftsPlateNumber: null,
         shiftsDepartureTime: null,
         leaderId: null,
         driversId: null,
@@ -219,9 +206,6 @@ export default {
       rules: {
         shiftsName: [
           { required: true, message: "班次名称不能为空", trigger: "blur" }
-        ],
-        shiftsPlateNumber: [
-          { required: true, message: "车牌号码不能为空", trigger: "blur" }
         ],
         shiftsDepartureTime: [
           { required: true, message: "发车时间不能为空", trigger: "blur" }
@@ -252,7 +236,6 @@ export default {
       this.form = {
         shiftsId: null,
         shiftsName: null,
-        shiftsPlateNumber: null,
         shiftsDepartureTime: null,
         leaderId: null,
         driversId: null,

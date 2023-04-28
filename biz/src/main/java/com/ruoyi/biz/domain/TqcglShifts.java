@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 班次管理对象 tqcgl_shifts
  * 
  * @author ruoyi
- * @date 2023-04-25
+ * @date 2023-04-28
  */
 public class TqcglShifts extends BaseEntity
 {
@@ -23,10 +23,6 @@ public class TqcglShifts extends BaseEntity
     /** 班次名称 */
     @Excel(name = "班次名称")
     private String shiftsName;
-
-    /** 车牌号码 */
-    @Excel(name = "车牌号码")
-    private String shiftsPlateNumber;
 
     /** 发车时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -62,15 +58,6 @@ public class TqcglShifts extends BaseEntity
     public String getShiftsName() 
     {
         return shiftsName;
-    }
-    public void setShiftsPlateNumber(String shiftsPlateNumber) 
-    {
-        this.shiftsPlateNumber = shiftsPlateNumber;
-    }
-
-    public String getShiftsPlateNumber() 
-    {
-        return shiftsPlateNumber;
     }
     public void setShiftsDepartureTime(Date shiftsDepartureTime) 
     {
@@ -114,7 +101,6 @@ public class TqcglShifts extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("shiftsId", getShiftsId())
             .append("shiftsName", getShiftsName())
-            .append("shiftsPlateNumber", getShiftsPlateNumber())
             .append("shiftsDepartureTime", getShiftsDepartureTime())
             .append("leaderId", getLeaderId())
             .append("driversId", getDriversId())

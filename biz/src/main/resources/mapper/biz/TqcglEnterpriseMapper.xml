@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglEnterpriseMapper">
+
+    <resultMap type="TqcglEnterprise" id="TqcglEnterpriseResult">
+        <result property="enterpriseId" column="enterprise_id" />
+        <result property="enterpriseName" column="enterprise_name" />
+    </resultMap>
+
+    <sql id="selectTqcglEnterpriseVo"> select enterprise_id, enterprise_name from tqcgl_enterprise </sql>
+
+    <select id="selectTqcglEnterpriseList" parameterType="TqcglEnterprise"
+        resultMap="TqcglEnterpriseResult">
+        <include refid="selectTqcglEnterpriseVo" />
+        <where>
+            <if test="enterpriseName != null  and enterpriseName != ''"> and enterprise_name like
+        concat('%', #{enterpriseName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectTqcglEnterpriseByEnterpriseId" parameterType="Long"
+        resultMap="TqcglEnterpriseResult">
+        <include refid="selectTqcglEnterpriseVo" /> where enterprise_id = #{enterpriseId} </select>
+
+    <insert id="insertTqcglEnterprise" parameterType="TqcglEnterprise" useGeneratedKeys="true"
+        keyProperty="enterpriseId"> insert into tqcgl_enterprise <trim prefix="(" suffix=")"
+            suffixOverrides=",">
+            <if test="enterpriseName != null and enterpriseName != ''">enterprise_name,</if>
+        </trim>
+        <trim
+            prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterpriseName != null and enterpriseName != ''">#{enterpriseName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTqcglEnterprise" parameterType="TqcglEnterprise"> update tqcgl_enterprise <trim
+            prefix="SET" suffixOverrides=",">
+            <if test="enterpriseName != null and enterpriseName != ''">enterprise_name =
+        #{enterpriseName},</if>
+        </trim> where enterprise_id = #{enterpriseId} </update>
+
+    <delete id="deleteTqcglEnterpriseByEnterpriseId" parameterType="Long"> delete from
+        tqcgl_enterprise where enterprise_id = #{enterpriseId} </delete>
+
+    <delete id="deleteTqcglEnterpriseByEnterpriseIds" parameterType="String"> delete from
+        tqcgl_enterprise where enterprise_id in <foreach item="enterpriseId" collection="array"
+            open="(" separator="," close=")"> #{enterpriseId} </foreach>
+    </delete>
+
+    <select id="checkNameUnique" parameterType="String" resultMap="TqcglEnterpriseResult"> select
+        enterprise_id, enterprise_name from tqcgl_enterprise where enterprise_name =
+        #{enterpriseName} limit 1 </select>
+
+    <select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+        total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_leader WHERE tqcgl_leader.enterprise_id
+        = #{Id} UNION ALL SELECT COUNT(*) AS cnt FROM tqcgl_passenger WHERE
+        tqcgl_passenger.enterprise_id = #{Id} )t</select>
+</mapper>

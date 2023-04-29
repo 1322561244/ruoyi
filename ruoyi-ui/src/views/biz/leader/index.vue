@@ -153,6 +153,29 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :title="title" :visible.sync="openUpdate" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="车长姓名" prop="leaderName">
+          <el-input v-model="form.leaderName" placeholder="请输入车长姓名" />
+        </el-form-item>
+        <el-form-item label="联系电话" prop="leaderPhone">
+          <el-input v-model="form.leaderPhone" placeholder="请输入联系电话" />
+        </el-form-item>
+                <el-form-item label="所属企业名称" prop="enterpriseName">
+                  <el-input v-model="EnterpriseName" placeholder="请输入所属企业名称" disabled="true"/>
+                </el-form-item>
+<!--        <el-form-item label="下拉所属企业名称" prop="enterpriseId">-->
+<!--          <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">-->
+<!--            <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseId" :key="iteam.enterpriseId"/>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -188,6 +211,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      openUpdate:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -201,6 +225,7 @@ export default {
       // 表单校验
       rules: {},
       enterpriseList:[],
+      EnterpriseName:null,
     };
   },
   mounted() {
@@ -229,6 +254,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.openUpdate=false,
       this.reset();
     },
     // 表单重置
@@ -267,9 +293,10 @@ export default {
     handleUpdate(row) {
       this.reset();
       const leaderId = row.leaderId || this.ids;
+      this.EnterpriseName=row.enterpriseName;
       getLeader(leaderId).then((response) => {
         this.form = response.data;
-        this.open = true;
+        this.openUpdate = true;
         this.title = "修改车长管理";
       });
     },
@@ -280,7 +307,7 @@ export default {
           if (this.form.leaderId != null) {
             updateLeader(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              this.openUpdate = false;
               this.getList();
             });
           } else {

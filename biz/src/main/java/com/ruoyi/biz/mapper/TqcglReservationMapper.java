@@ -25,7 +25,7 @@ public interface TqcglReservationMapper
      * @param tqcglReservation 预约管理
      * @return 预约管理集合
      */
-    public List<TqcglReservation> selectTqcglReservationList(TqcglReservation tqcglReservation);
+    public List<TqcglReservation> selectTqcglReservationList2(TqcglReservation tqcglReservation);
 
     /**
      * 新增预约管理

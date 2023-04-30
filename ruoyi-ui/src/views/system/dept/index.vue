@@ -101,8 +101,15 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24" v-if="form.parentId !== 0">
-            <el-form-item label="上级部门" prop="parentId">
-              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择上级部门" />
+<!--            <el-form-item label="上级部门" prop="enterpriseName">-->
+<!--              <treeselect v-model="form.enterpriseId" :options="enterpriseList" :normalizer="normalizer" placeholder="选择上级部门" />-->
+
+<!--            </el-form-item>-->
+
+            <el-form-item label="下拉所属企业名称" prop="enterpriseId">
+              <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">
+                <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseId" :key="iteam.enterpriseId"/>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -157,10 +164,12 @@
   </div>
 </template>
 
+
 <script>
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import {listEnterprise} from "@/api/biz/enterprise";
 
 export default {
   name: "Dept",
@@ -193,9 +202,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        parentId: [
-          { required: true, message: "上级部门不能为空", trigger: "blur" }
-        ],
+        // parentId: [
+        //   { required: true, message: "上级部门不能为空", trigger: "blur" }
+        // ],
         deptName: [
           { required: true, message: "部门名称不能为空", trigger: "blur" }
         ],
@@ -215,14 +224,29 @@ export default {
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
-        ]
-      }
+        ],
+
+      },
+      enterpriseList:[],
+      enterpriseId:null,
+      enterpriseName:null,
     };
   },
   created() {
     this.getList();
   },
+  mounted() {
+    this.getEnterpriseList();
+  },
   methods: {
+    /** 查询企业管理列表 */
+    getEnterpriseList() {
+      this.loading = true;
+      listEnterprise(this.queryParams).then((response) => {
+        this.enterpriseList = response.rows;
+        this.loading = false;
+      });
+    },
     /** 查询部门列表 */
     getList() {
       this.loading = true;

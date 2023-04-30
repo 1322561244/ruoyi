@@ -11,21 +11,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="leaderId"    column="leader_id"    />
         <result property="driversId"    column="drivers_id"    />
         <result property="vehiclesId"    column="vehicles_id"    />
+        <result property="leaderName"    column="leader_name"    />
+        <result property="leaderPhone"    column="leader_phone"    />
+        <result property="driversName"    column="drivers_name"    />
+        <result property="driversPhone"    column="drivers_phone"    />
+        <result property="vehiclesLicensePlate"    column="vehicles_license_plate"    />
     </resultMap>
 
     <sql id="selectTqcglShiftsVo">
         select shifts_id, shifts_name, shifts_departure_time, leader_id, drivers_id, vehicles_id from tqcgl_shifts
     </sql>
 
+    <sql id="selectTqcglShiftsVo2">
+        select shifts_id, shifts_name, shifts_departure_time, l.leader_name, l.leader_phone, d.drivers_name, d.drivers_phone, v.vehicles_license_plate
+        from tqcgl_shifts s,tqcgl_leader l,tqcgl_drivers d,tqcgl_vehicles v
+
+    </sql>
     <select id="selectTqcglShiftsList" parameterType="TqcglShifts" resultMap="TqcglShiftsResult">
-        <include refid="selectTqcglShiftsVo"/>
-        <where>  
+        <include refid="selectTqcglShiftsVo2"/>
+        <where>
             <if test="shiftsName != null  and shiftsName != ''"> and shifts_name like concat('%', #{shiftsName}, '%')</if>
-            <if test="shiftsDepartureTime != null "> and shifts_departure_time = #{shiftsDepartureTime}</if>
-            <if test="leaderId != null "> and leader_id = #{leaderId}</if>
-            <if test="driversId != null "> and drivers_id = #{driversId}</if>
-            <if test="vehiclesId != null "> and vehicles_id = #{vehiclesId}</if>
+            <if test="shiftsDepartureTime != null  and shiftsDepartureTime != ''"> and shifts_departure_time = #{shiftsDepartureTime}</if>
+            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%', #{leaderName}, '%')</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and leader_phone like concat('%', #{leaderPhone}, '%')</if>
+            <if test="driversName != null  and driversName != ''"> and drivers_name like concat('%', #{driversName}, '%')</if>
+            <if test="driversPhone != null  and driversPhone != ''"> and drivers_phone like concat('%', #{driversPhone}, '%')</if>
+            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''"> and vehicles_license_plate like concat('%', #{vehiclesLicensePlate}, '%')</if>
+            and s.leader_id=l.leader_id
+            and s.drivers_id=d.drivers_id
+            and s.vehicles_id=v.vehicles_id
         </where>
+
     </select>
     
     <select id="selectTqcglShiftsByShiftsId" parameterType="Long" resultMap="TqcglShiftsResult">

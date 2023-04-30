@@ -216,6 +216,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        leaderId:null,
         leaderName: null,
         leaderPhone: null,
         enterpriseName: null,

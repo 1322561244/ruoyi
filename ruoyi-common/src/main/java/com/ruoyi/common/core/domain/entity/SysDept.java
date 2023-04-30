@@ -25,11 +25,6 @@ public class SysDept extends BaseEntity
     /** 父部门ID */
     private Long parentId;
 
-    /**父级部门ID---enterpriseId*/
-    private Long enterpriseId;
-
-
-
     /** 祖级列表 */
     private String ancestors;
 
@@ -176,14 +171,6 @@ public class SysDept extends BaseEntity
         this.parentName = parentName;
     }
 
-    public Long getEnterpriseId() {
-        return enterpriseId;
-    }
-
-    public void setEnterpriseId(Long enterpriseId) {
-        this.enterpriseId = enterpriseId;
-    }
-
     public List<SysDept> getChildren()
     {
         return children;
@@ -211,7 +198,6 @@ public class SysDept extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
-            .append("enterpriseId",getEnterpriseId())
             .toString();
     }
 }

@@ -20,14 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createTime" column="create_time" />
 		<result property="updateBy"   column="update_by"   />
 		<result property="updateTime" column="update_time" />
-		<result property="enterpriseId" column="enterprise_id" />
 	</resultMap>
-
-	<sql id="selectEnterpriseVo">
-		select e.enterprise_id, e.enterprise_name from tqcgl_enterprise e
-	</sql>
+	
 	<sql id="selectDeptVo">
-        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time,d.enterprise
+        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status, d.del_flag, d.create_by, d.create_time 
         from sys_dept d
     </sql>
     
@@ -45,9 +41,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		<if test="status != null and status != ''">
 			AND status = #{status}
-		</if>
-		<if test="enterpriseId != null and enterpriseId != ''">
-			AND enterpriseId = #{enterpriseId}
 		</if>
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
@@ -67,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectDeptById" parameterType="Long" resultMap="SysDeptResult">
 		select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.phone, d.email, d.status,
-			(select enterprise_name from tqcgl_enterprise where enterprise_id = d.enterprise_id) parent_name
+			(select dept_name from sys_dept where dept_id = d.parent_id) parent_name
 		from sys_dept d
 		where d.dept_id = #{deptId}
 	</select>

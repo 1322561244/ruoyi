@@ -199,7 +199,6 @@
   </div>
 </template>
 
-
 <script>
 import { listEnterprise } from "@/api/biz/enterprise";
 import {
@@ -212,7 +211,6 @@ import {
 } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import {listEnterprise} from "@/api/biz/enterprise";
 
 export default {
   name: "Dept",

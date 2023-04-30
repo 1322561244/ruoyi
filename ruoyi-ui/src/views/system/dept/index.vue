@@ -157,10 +157,12 @@
   </div>
 </template>
 
+
 <script>
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import {listEnterprise} from "@/api/biz/enterprise";
 
 export default {
   name: "Dept",
@@ -221,6 +223,9 @@ export default {
   },
   created() {
     this.getList();
+  },
+  mounted() {
+    this.getEnterpriseList();
   },
   methods: {
     /** 查询部门列表 */

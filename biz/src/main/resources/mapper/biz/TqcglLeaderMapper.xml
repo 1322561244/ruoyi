@@ -11,8 +11,8 @@
     </resultMap>
 
 
-    <sql id="selectTqcglLeaderVo2"> select leader_id, leader_name, leader_phone, enterprise_id
-                                   from tqcgl_leader  </sql>
+    <sql id="selectTqcglLeaderVo2"> select leader_id, leader_name, leader_phone, enterprise_id from
+        tqcgl_leader </sql>
 
 
     <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name
@@ -31,8 +31,7 @@
     </select>
 
     <select id="selectTqcglLeaderByLeaderId" parameterType="Long" resultMap="TqcglLeaderResult">
-        <include refid="selectTqcglLeaderVo2" /> where leader_id = #{leaderId}
-    </select>
+        <include refid="selectTqcglLeaderVo2" /> where leader_id = #{leaderId} </select>
 
     <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true"
         keyProperty="leaderId"> insert into tqcgl_leader <trim prefix="(" suffix=")"

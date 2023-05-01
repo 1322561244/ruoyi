@@ -33,6 +33,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="账号id" prop="userId">
+        <el-input
+          v-model="queryParams.userId"
+          placeholder="请输入账号id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -92,7 +100,22 @@
       <el-table-column label="所属企业ID" align="center" prop="enterpriseId" />
       <el-table-column label="所属部门ID" align="center" prop="deptId" />
       <el-table-column label="联系电话" align="center" prop="passengerPhone" />
-      <el-table-column label="乘客照片" align="center" prop="passengerPhoto" />
+      <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="乘客照片2" align="center" prop="passengerPhoto2" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="乘客照片3" align="center" prop="passengerPhoto3" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="账号id" align="center" prop="userId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -136,6 +159,18 @@
         <el-form-item label="联系电话" prop="passengerPhone">
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
         </el-form-item>
+        <el-form-item label="乘客照片1" prop="passengerPhoto1">
+          <image-upload v-model="form.passengerPhoto1"/>
+        </el-form-item>
+        <el-form-item label="乘客照片2" prop="passengerPhoto2">
+          <image-upload v-model="form.passengerPhoto2"/>
+        </el-form-item>
+        <el-form-item label="乘客照片3" prop="passengerPhoto3">
+          <image-upload v-model="form.passengerPhoto3"/>
+        </el-form-item>
+        <el-form-item label="账号id" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入账号id" />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -178,7 +213,10 @@ export default {
         enterpriseId: null,
         deptId: null,
         passengerPhone: null,
-        passengerPhoto: null
+        passengerPhoto1: null,
+        passengerPhoto2: null,
+        passengerPhoto3: null,
+        userId: null
       },
       // 表单参数
       form: {},
@@ -219,7 +257,10 @@ export default {
         enterpriseId: null,
         deptId: null,
         passengerPhone: null,
-        passengerPhoto: null
+        passengerPhoto1: null,
+        passengerPhoto2: null,
+        passengerPhoto3: null,
+        userId: null
       };
       this.resetForm("form");
     },

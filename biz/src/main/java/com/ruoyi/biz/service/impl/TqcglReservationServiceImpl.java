@@ -40,7 +40,7 @@ public class TqcglReservationServiceImpl implements ITqcglReservationService
     @Override
     public List<TqcglReservation> selectTqcglReservationList(TqcglReservation tqcglReservation)
     {
-        return tqcglReservationMapper.selectTqcglReservationList(tqcglReservation);
+        return tqcglReservationMapper.selectTqcglReservationList2(tqcglReservation);
     }
 
     /**

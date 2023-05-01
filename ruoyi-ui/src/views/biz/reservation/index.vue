@@ -1,36 +1,100 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="班次ID" prop="shiftsId">
+      <el-form-item label="班次名" prop="shiftsName">
         <el-input
-          v-model="queryParams.shiftsId"
-          placeholder="请输入班次ID"
+          v-model="queryParams.shiftsName"
+          placeholder="请输入班次名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="员工(乘客)ID" prop="passengerId">
+      <el-form-item label="车牌号" prop="vehiclesLicensePlate">
         <el-input
-          v-model="queryParams.passengerId"
-          placeholder="请输入员工(乘客)ID"
+          v-model="queryParams.vehiclesLicensePlate"
+          placeholder="请输入车牌号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="搭乘时间" prop="reservationTime">
+      <el-form-item label="司机姓名" prop="driversName">
+        <el-input
+          v-model="queryParams.driversName"
+          placeholder="请输入司机姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="司机联系电话" prop="driversPhone">
+        <el-input
+          v-model="queryParams.driversPhone"
+          placeholder="请输入司机联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="车长姓名" prop="leaderName">
+        <el-input
+          v-model="queryParams.leaderName"
+          placeholder="请输入车长姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="车长联系电话" prop="leaderPhone">
+        <el-input
+          v-model="queryParams.leaderPhone"
+          placeholder="请输入车长联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="预约的发车时间" prop="reservationTime">
         <el-date-picker clearable
-          v-model="queryParams.reservationTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择搭乘时间">
+                        v-model="queryParams.reservationTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="请选择预约的发车时间">
         </el-date-picker>
+      </el-form-item>
+      <el-form-item label="乘客名" prop="passengerName">
+        <el-input
+          v-model="queryParams.passengerName"
+          placeholder="请输入乘客名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="乘客所属部门" prop="deptName">
+        <el-input
+          v-model="queryParams.deptName"
+          placeholder="请输入乘客所属部门"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="乘客所属企业" prop="enterpriseName">
+        <el-input
+          v-model="queryParams.enterpriseName"
+          placeholder="请输入乘客所属企业"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="乘客联系电话" prop="passengerPhone">
+        <el-input
+          v-model="queryParams.passengerPhone"
+          placeholder="请输入乘客联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="创建时间" prop="creationTime">
         <el-date-picker clearable
-          v-model="queryParams.creationTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择创建时间">
+                        v-model="queryParams.creationTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -48,7 +112,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:reservation:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +124,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:reservation:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,7 +136,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:reservation:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,27 +147,36 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:reservation:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="reservationList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="预约ID" align="center" prop="reservationId" />
-      <el-table-column label="班次ID" align="center" prop="shiftsId" />
-      <el-table-column label="员工(乘客)ID" align="center" prop="passengerId" />
-      <el-table-column label="搭乘时间" align="center" prop="reservationTime" width="180">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="预约id" align="center" prop="reservationId"/>
+      <el-table-column label="班次名" align="center" prop="shiftsName"/>
+      <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate"/>
+      <el-table-column label="司机姓名" align="center" prop="driversName"/>
+      <el-table-column label="司机联系电话" align="center" prop="driversPhone"/>
+      <el-table-column label="车长姓名" align="center" prop="leaderName"/>
+      <el-table-column label="车长联系电话" align="center" prop="leaderPhone"/>
+      <el-table-column label="预约的发车时间" align="center" prop="reservationTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reservationTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="乘客名" align="center" prop="passengerName"/>
+      <el-table-column label="乘客所属部门" align="center" prop="deptName"/>
+      <el-table-column label="乘客所属企业" align="center" prop="enterpriseName"/>
+      <el-table-column label="乘客联系电话" align="center" prop="passengerPhone"/>
       <el-table-column label="创建时间" align="center" prop="creationTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.creationTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预约状态1代表已预约，0代表已取消" align="center" prop="reservationStatus" />
+      <el-table-column label="预约状态1代表已预约，0代表已取消" align="center" prop="reservationStatus"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -109,18 +185,20 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:reservation:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:reservation:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -129,30 +207,60 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改预约管理对话框 -->
+    <!-- 添加预约管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="班次ID" prop="shiftsId">
-          <el-input v-model="form.shiftsId" placeholder="请输入班次ID" />
+        <el-form-item label="班次名" prop="shiftsId">
+          <!--          <el-input v-model="form.shiftsName" placeholder="请输入班次名" />-->
+          <el-select v-model="form.shiftsName" placeholder="请选择班次" @change="updateOrderList(form.shiftsName)">
+            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam" :key="iteam.shiftsId"/>
+          </el-select>
         </el-form-item>
-        <el-form-item label="员工(乘客)ID" prop="passengerId">
-          <el-input v-model="form.passengerId" placeholder="请输入员工(乘客)ID" />
+        <el-form-item label="乘客名" prop="passengerName">
+          <!--          <el-input v-model="form.passengerName" placeholder="请输入乘客名" />-->
+          <el-select v-model="form.passengerName" placeholder="请选择乘客" @change="updateOrderList2(form.passengerName)">
+            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam" :key="iteam.passengerId"/>
+          </el-select>
         </el-form-item>
-        <el-form-item label="搭乘时间" prop="reservationTime">
+        <el-form-item label="预约的发车时间" prop="reservationTime">
           <el-date-picker clearable
-            v-model="form.reservationTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择搭乘时间">
+                          v-model="form.reservationTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择预约的发车时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="创建时间" prop="creationTime">
           <el-date-picker clearable
-            v-model="form.creationTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择创建时间">
+                          v-model="form.creationTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择创建时间">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="车牌号" prop="vehiclesLicensePlate">
+          <el-input v-model="form.vehiclesLicensePlate" placeholder="请输入车牌号" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="司机姓名" prop="driversName">
+          <el-input v-model="form.driversName" :value="shiftsList.driversName" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="司机联系电话" prop="driversPhone">
+          <el-input v-model="form.driversPhone" placeholder="请输入司机联系电话" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="车长姓名" prop="leaderName">
+          <el-input v-model="form.leaderName" placeholder="请输入车长姓名" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="车长联系电话" prop="leaderPhone">
+          <el-input v-model="form.leaderPhone" placeholder="请输入车长联系电话" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客所属部门" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门"  disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客所属企业" prop="enterpriseName">
+          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业"  disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客联系电话" prop="passengerPhone">
+          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话"  disabled="true"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -160,11 +268,120 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 修改预约管理对话框 -->
+    <el-dialog :title="title" :visible.sync="openUpdate" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+<!--        <el-form-item label="班次名" prop="shiftsId">-->
+<!--&lt;!&ndash;          <el-select v-model="form.shiftsName" placeholder="请选择班次" @change="updateOrderList(form.shiftsName)">&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam" :key="iteam.shiftsId"/>&ndash;&gt;-->
+<!--&lt;!&ndash;          </el-select>&ndash;&gt;-->
+<!--          <el-input v-model="ShiftsName"-->
+<!--                    placeholder="请输入所属企业名称"-->
+<!--                    disabled="true"></el-input>-->
+<!--        </el-form-item>-->
+        <el-form-item label="班次名" prop="shiftsId">
+          <!--          <el-input v-model="form.shiftsName" placeholder="请输入班次名" />-->
+          <el-select v-model="form.shiftsName" placeholder="this.shiftsName" @change="updateOrderList(form.shiftsName)">
+            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam" :key="iteam.shiftsId"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="乘客名" prop="passengerName">
+          <!--          <el-input v-model="form.passengerName" placeholder="请输入乘客名" />-->
+          <el-select v-model="form.passengerName" placeholder="请选择乘客" @change="updateOrderList2(form.passengerName)">
+            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam" :key="iteam.passengerId"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预约的发车时间" prop="reservationTime">
+          <el-date-picker clearable
+                          v-model="form.reservationTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择预约的发车时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="创建时间" prop="creationTime">
+          <el-date-picker clearable
+                          v-model="form.creationTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择创建时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="车牌号" prop="vehiclesLicensePlate">
+          <el-input v-model="form.vehiclesLicensePlate" placeholder="请输入车牌号" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="司机姓名" prop="driversName">
+          <el-input v-model="form.driversName" :value="shiftsList.driversName" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="司机联系电话" prop="driversPhone">
+          <el-input v-model="form.driversPhone" placeholder="请输入司机联系电话" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="车长姓名" prop="leaderName">
+          <el-input v-model="form.leaderName" placeholder="请输入车长姓名" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="车长联系电话" prop="leaderPhone">
+          <el-input v-model="form.leaderPhone" placeholder="请输入车长联系电话" disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客所属部门" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门"  disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客所属企业" prop="enterpriseName">
+          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业"  disabled="true"/>
+        </el-form-item>
+        <el-form-item label="乘客联系电话" prop="passengerPhone">
+          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话"  disabled="true"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+    <div>
+      <table>
+        <thead>
+        <tr>
+          <th>编号</th>
+          <th>名字</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in list" :key="index">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.gender }}</td>
+          <td>
+            <button @click="edit(item)">修改</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <label for="name">名字：</label>
+        <select id="name" v-model="selectedName">
+          <option v-for="name in nameList" :key="name">{{ name }}</option>
+        </select>
+      </div>
+    </div>
   </div>
+
+<!--  测试-->
+
 </template>
 
 <script>
-import { listReservation, getReservation, delReservation, addReservation, updateReservation } from "@/api/biz/reservation";
+import {
+  addReservation,
+  delReservation,
+  getReservation,
+  listReservation,
+  updateReservation
+} from "@/api/biz/reservation";
+import {listShifts} from "@/api/biz/shifts";
+import {listPassenger} from "@/api/biz/passenger";
 
 export default {
   name: "Reservation",
@@ -188,27 +405,103 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      openUpdate:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        shiftsId: null,
-        passengerId: null,
+        shiftsName: null,
+        vehiclesLicensePlate: null,
+        driversName: null,
+        driversPhone: null,
+        leaderName: null,
+        leaderPhone: null,
         reservationTime: null,
+        passengerName: null,
+        deptName: null,
+        enterpriseName: null,
+        passengerPhone: null,
         creationTime: null,
         reservationStatus: null
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {},
+      shiftsList: [],
+      passengerList:[],
+      ShiftsName:null,
+    //   测试
+      list: [
+        {
+          id: 1,
+          name: '张三',
+          gender: '男'
+        },
+        {
+          id: 2,
+          name: '李四',
+          gender: '女'
+        },
+        {
+          id: 3,
+          name: '王五',
+          gender: '男'
+        }
+      ],
+      nameList: [], // 存储所有的名字数据
+      selectedName: '' // 存储用户选择的名字数据
     };
+  },
+  mounted() {
+    this.getShiftsList();
+    this.getPassengerList();
   },
   created() {
     this.getList();
+    this.updateNameList(); // 组件创建时，初始化名字列表数据
   },
   methods: {
+
+    edit(item) {
+      this.selectedName = item.name; // 获取当前行的名字数据，并传递到下拉框中
+    },
+    updateNameList() {
+      this.nameList = this.list.map(item => item.name); // 更新名字列表数据
+    },
+
+    updateOrderList(iteam) {
+      this.form.vehiclesLicensePlate = iteam.vehiclesLicensePlate;
+      this.form.driversName = iteam.driversName;
+      this.form.driversPhone = iteam.driversPhone;
+      this.form.leaderName = iteam.leaderName;
+      this.form.leaderPhone = iteam.leaderPhone;
+    },
+    updateOrderList2(iteam) {
+      this.form.passengerName = iteam.passengerName;
+      this.form.enterpriseName = iteam.enterpriseName;
+      this.form.deptName = iteam.deptName;
+      this.form.passengerPhone = iteam.passengerPhone;
+    },
+
+    /** 查询所有班次名*/
+    getShiftsList() {
+      this.loading = true;
+      listShifts(this.queryParams).then((response) => {
+        this.shiftsList = response.rows;
+
+        this.loading = false;
+      });
+    },
+
+    /** 查询所有乘客名*/
+    getPassengerList() {
+      this.loading = true;
+      listPassenger(this.queryParams).then((response) => {
+        this.passengerList = response.rows;
+        this.loading = false;
+      });
+    },
     /** 查询预约管理列表 */
     getList() {
       this.loading = true;
@@ -221,15 +514,24 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.openUpdate=false;
       this.reset();
     },
     // 表单重置
     reset() {
       this.form = {
         reservationId: null,
-        shiftsId: null,
-        passengerId: null,
+        shiftsName: null,
+        vehiclesLicensePlate: null,
+        driversName: null,
+        driversPhone: null,
+        leaderName: null,
+        leaderPhone: null,
         reservationTime: null,
+        passengerName: null,
+        deptName: null,
+        enterpriseName: null,
+        passengerPhone: null,
         creationTime: null,
         reservationStatus: null
       };
@@ -248,7 +550,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.reservationId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -258,12 +560,14 @@ export default {
       this.title = "添加预约管理";
     },
     /** 修改按钮操作 */
+    /********************需要改这里***********************/
     handleUpdate(row) {
       this.reset();
       const reservationId = row.reservationId || this.ids
+      this.form.shiftsName=row.shiftsName;
       getReservation(reservationId).then(response => {
         this.form = response.data;
-        this.open = true;
+        this.openUpdate = true;
         this.title = "修改预约管理";
       });
     },
@@ -274,7 +578,7 @@ export default {
           if (this.form.reservationId != null) {
             updateReservation(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              this.openUpdate = false;
               this.getList();
             });
           } else {
@@ -290,12 +594,13 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const reservationIds = row.reservationId || this.ids;
-      this.$modal.confirm('是否确认删除预约管理编号为"' + reservationIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除预约管理编号为"' + reservationIds + '"的数据项？').then(function () {
         return delReservation(reservationIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

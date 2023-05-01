@@ -10,8 +10,8 @@ import com.ruoyi.biz.service.ITqcglPassengerService;
 /**
  * 乘客管理Service业务层处理
  * 
- * @author ruoyi
- * @date 2023-04-25
+ * @author zhu
+ * @date 2023-05-01
  */
 @Service
 public class TqcglPassengerServiceImpl implements ITqcglPassengerService 

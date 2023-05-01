@@ -139,9 +139,7 @@
         <el-form-item label="联系电话" prop="leaderPhone">
           <el-input v-model="form.leaderPhone" placeholder="请输入联系电话" />
         </el-form-item>
-        <!--        <el-form-item label="所属企业名称" prop="enterpriseName">-->
-        <!--          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />-->
-        <!--        </el-form-item>-->
+
         <el-form-item label="下拉所属企业名称" prop="enterpriseId">
           <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">
             <el-option
@@ -175,11 +173,7 @@
             disabled="true"
           />
         </el-form-item>
-        <!--        <el-form-item label="下拉所属企业名称" prop="enterpriseId">-->
-        <!--          <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">-->
-        <!--            <el-option v-for="iteam in enterpriseList" :label="iteam.enterpriseName" :value="iteam.enterpriseId" :key="iteam.enterpriseId"/>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -226,6 +220,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        leaderId:null,
         leaderName: null,
         leaderPhone: null,
         enterpriseName: null,

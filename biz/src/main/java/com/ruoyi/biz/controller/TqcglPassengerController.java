@@ -24,8 +24,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 /**
  * 乘客管理Controller
  * 
- * @author ruoyi
- * @date 2023-04-25
+ * @author zhu
+ * @date 2023-05-01
  */
 @RestController
 @RequestMapping("/biz/passenger")

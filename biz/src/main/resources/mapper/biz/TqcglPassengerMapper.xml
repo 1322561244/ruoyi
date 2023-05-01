@@ -10,11 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="enterpriseId"    column="enterprise_id"    />
         <result property="deptId"    column="dept_id"    />
         <result property="passengerPhone"    column="passenger_phone"    />
-        <result property="passengerPhoto"    column="passenger_photo"    />
+        <result property="passengerPhoto1"    column="passenger_photo1"    />
+        <result property="passengerPhoto2"    column="passenger_photo2"    />
+        <result property="passengerPhoto3"    column="passenger_photo3"    />
+        <result property="userId"    column="user_id"    />
     </resultMap>
 
     <sql id="selectTqcglPassengerVo">
-        select passenger_id, passenger_name, enterprise_id, dept_id, passenger_phone, passenger_photo from tqcgl_passenger
+        select passenger_id, passenger_name, enterprise_id, dept_id, passenger_phone, passenger_photo1, passenger_photo2, passenger_photo3, user_id from tqcgl_passenger
     </sql>
 
     <select id="selectTqcglPassengerList" parameterType="TqcglPassenger" resultMap="TqcglPassengerResult">
@@ -24,7 +27,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
             <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="passengerPhone != null  and passengerPhone != ''"> and passenger_phone = #{passengerPhone}</if>
-            <if test="passengerPhoto != null  and passengerPhoto != ''"> and passenger_photo = #{passengerPhoto}</if>
+            <if test="passengerPhoto1 != null  and passengerPhoto1 != ''"> and passenger_photo1 = #{passengerPhoto1}</if>
+            <if test="passengerPhoto2 != null  and passengerPhoto2 != ''"> and passenger_photo2 = #{passengerPhoto2}</if>
+            <if test="passengerPhoto3 != null  and passengerPhoto3 != ''"> and passenger_photo3 = #{passengerPhoto3}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
         </where>
     </select>
     
@@ -40,14 +46,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="enterpriseId != null">enterprise_id,</if>
             <if test="deptId != null">dept_id,</if>
             <if test="passengerPhone != null and passengerPhone != ''">passenger_phone,</if>
-            <if test="passengerPhoto != null">passenger_photo,</if>
+            <if test="passengerPhoto1 != null">passenger_photo1,</if>
+            <if test="passengerPhoto2 != null">passenger_photo2,</if>
+            <if test="passengerPhoto3 != null">passenger_photo3,</if>
+            <if test="userId != null">user_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
             <if test="enterpriseId != null">#{enterpriseId},</if>
             <if test="deptId != null">#{deptId},</if>
             <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
-            <if test="passengerPhoto != null">#{passengerPhoto},</if>
+            <if test="passengerPhoto1 != null">#{passengerPhoto1},</if>
+            <if test="passengerPhoto2 != null">#{passengerPhoto2},</if>
+            <if test="passengerPhoto3 != null">#{passengerPhoto3},</if>
+            <if test="userId != null">#{userId},</if>
          </trim>
     </insert>
 
@@ -58,7 +70,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>
             <if test="passengerPhone != null and passengerPhone != ''">passenger_phone = #{passengerPhone},</if>
-            <if test="passengerPhoto != null">passenger_photo = #{passengerPhoto},</if>
+            <if test="passengerPhoto1 != null">passenger_photo1 = #{passengerPhoto1},</if>
+            <if test="passengerPhoto2 != null">passenger_photo2 = #{passengerPhoto2},</if>
+            <if test="passengerPhoto3 != null">passenger_photo3 = #{passengerPhoto3},</if>
+            <if test="userId != null">user_id = #{userId},</if>
         </trim>
         where passenger_id = #{passengerId}
     </update>

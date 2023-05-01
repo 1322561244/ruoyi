@@ -9,18 +9,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业ID" prop="enterpriseId">
+      <el-form-item label="所属企业名称" prop="enterpriseName">
         <el-input
-          v-model="queryParams.enterpriseId"
-          placeholder="请输入所属企业ID"
+          v-model="queryParams.enterpriseName"
+          placeholder="请输入所属企业名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属部门ID" prop="deptId">
+      <el-form-item label="所属部门名称" prop="deptName">
         <el-input
-          v-model="queryParams.deptId"
-          placeholder="请输入所属部门ID"
+          v-model="queryParams.deptName"
+          placeholder="请输入所属部门名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -97,8 +97,8 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" />
       <el-table-column label="乘客姓名" align="center" prop="passengerName" />
-      <el-table-column label="所属企业ID" align="center" prop="enterpriseId" />
-      <el-table-column label="所属部门ID" align="center" prop="deptId" />
+      <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
+      <el-table-column label="所属部门名称" align="center" prop="deptName" />
       <el-table-column label="联系电话" align="center" prop="passengerPhone" />
       <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" width="100">
         <template slot-scope="scope">
@@ -135,7 +135,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -150,11 +150,11 @@
         <el-form-item label="乘客姓名" prop="passengerName">
           <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
         </el-form-item>
-        <el-form-item label="所属企业ID" prop="enterpriseId">
-          <el-input v-model="form.enterpriseId" placeholder="请输入所属企业ID" />
+        <el-form-item label="所属企业名称" prop="enterpriseName">
+          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />
         </el-form-item>
-        <el-form-item label="所属部门ID" prop="deptId">
-          <el-input v-model="form.deptId" placeholder="请输入所属部门ID" />
+        <el-form-item label="所属部门名称" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入所属部门名称" />
         </el-form-item>
         <el-form-item label="联系电话" prop="passengerPhone">
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
@@ -210,8 +210,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         passengerName: null,
-        enterpriseId: null,
-        deptId: null,
+        enterpriseName: null,
+        deptName: null,
         passengerPhone: null,
         passengerPhoto1: null,
         passengerPhoto2: null,
@@ -254,8 +254,8 @@ export default {
       this.form = {
         passengerId: null,
         passengerName: null,
-        enterpriseId: null,
-        deptId: null,
+        enterpriseName: null,
+        deptName: null,
         passengerPhone: null,
         passengerPhoto1: null,
         passengerPhoto2: null,

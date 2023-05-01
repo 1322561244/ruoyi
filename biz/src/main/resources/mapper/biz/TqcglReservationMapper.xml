@@ -37,6 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </sql>
 
+    <sql id="selectTqcglReservationVo3">
+        select reservation_id, s.shifts_id, v.vehicles_license_plate,d.drivers_name,d.drivers_phone,
+               l.leader_name,l.leader_phone,r.reservation_time,p.passenger_id,e.enterprise_name,dept.dept_name,
+               p.passenger_phone,r.creation_time,r.reservation_status
+        from tqcgl_reservation r,tqcgl_shifts s,tqcgl_vehicles v,tqcgl_drivers d,tqcgl_leader l,tqcgl_passenger p,tqcgl_enterprise e,sys_dept dept
+
+    </sql>
+
     <select id="selectTqcglReservationList2" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo2"/>
         <where>
@@ -68,7 +76,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTqcglReservationVo"/>
         where reservation_id = #{reservationId}
     </select>
-        
+
+    <select id="selectTqcglReservationByReservationId2" parameterType="Long" resultMap="TqcglReservationResult">
+        <include refid="selectTqcglReservationVo3"/>
+        where reservation_id = #{reservationId}
+        and r.shifts_id=s.shifts_id
+        and v.vehicles_id=s.vehicles_id
+        and d.drivers_id=s.drivers_id
+        and l.leader_id=s.leader_id
+        and r.passenger_id=p.passenger_id
+        and p.dept_id=dept.dept_id
+        and p.enterprise_id=e.enterprise_id
+    </select>
+
     <insert id="insertTqcglReservation" parameterType="TqcglReservation" useGeneratedKeys="true" keyProperty="reservationId">
         insert into tqcgl_reservation
         <trim prefix="(" suffix=")" suffixOverrides=",">

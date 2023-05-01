@@ -101,4 +101,15 @@ public class TqcglShiftsController extends BaseController
     {
         return toAjax(tqcglShiftsService.deleteTqcglShiftsByShiftsIds(shiftsIds));
     }
+
+
+    /**
+     * 获取班次管理详细信息
+     */
+    @GetMapping(value = "/2{shiftsId}")
+    public AjaxResult getInfo2(@PathVariable("shiftsId") Long shiftsId)
+    {
+        return success(tqcglShiftsService.selectTqcglShiftsByShiftsId2(shiftsId));
+    }
+
 }

@@ -19,6 +19,16 @@ public interface ITqcglPassengerService
      */
     public TqcglPassenger selectTqcglPassengerByPassengerId(Long passengerId);
 
+
+    /**
+     * 查询乘客管理
+     *
+     * @param passengerId 乘客管理主键
+     * @return 乘客管理
+     */
+    public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId);
+
+
     /**
      * 查询乘客管理列表
      * 

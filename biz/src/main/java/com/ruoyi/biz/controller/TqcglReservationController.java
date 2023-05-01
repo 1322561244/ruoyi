@@ -101,4 +101,15 @@ public class TqcglReservationController extends BaseController
     {
         return toAjax(tqcglReservationService.deleteTqcglReservationByReservationIds(reservationIds));
     }
+
+
+    /**
+     * 获取预约管理详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('biz:reservation:query')")
+    @GetMapping(value = "/2{reservationId}")
+    public AjaxResult getInfo2(@PathVariable("reservationId") Long reservationId)
+    {
+        return success(tqcglReservationService.selectTqcglReservationByReservationId2(reservationId));
+    }
 }

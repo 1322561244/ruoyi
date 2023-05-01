@@ -100,4 +100,5 @@ public class TqcglLeaderController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] leaderIds) {
         return toAjax(tqcglLeaderService.deleteTqcglLeaderByLeaderIds(leaderIds));
     }
+
 }

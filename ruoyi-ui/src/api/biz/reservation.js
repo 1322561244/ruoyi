@@ -42,3 +42,12 @@ export function delReservation(reservationId) {
     method: 'delete'
   })
 }
+
+
+// 查询预约管理详细
+export function getReservation2(reservationId) {
+  return request({
+    url: '/biz/reservation/2' + reservationId,
+    method: 'get'
+  })
+}

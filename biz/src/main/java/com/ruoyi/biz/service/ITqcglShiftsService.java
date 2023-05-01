@@ -20,6 +20,14 @@ public interface ITqcglShiftsService
     public TqcglShifts selectTqcglShiftsByShiftsId(Long shiftsId);
 
     /**
+     * 查询班次管理
+     *
+     * @param shiftsId 班次管理主键
+     * @return 班次管理
+     */
+    public TqcglShifts selectTqcglShiftsByShiftsId2(Long shiftsId);
+
+    /**
      * 查询班次管理列表
      * 
      * @param tqcglShifts 班次管理

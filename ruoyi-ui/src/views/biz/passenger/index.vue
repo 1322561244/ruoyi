@@ -9,18 +9,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业ID" prop="enterpriseId">
+      <el-form-item label="所属企业名" prop="enterpriseName">
         <el-input
-          v-model="queryParams.enterpriseId"
-          placeholder="请输入所属企业ID"
+          v-model="queryParams.enterpriseName"
+          placeholder="请输入所属企业名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属部门ID" prop="deptId">
+      <el-form-item label="所属部门名" prop="deptName">
         <el-input
-          v-model="queryParams.deptId"
-          placeholder="请输入所属部门ID"
+          v-model="queryParams.deptName"
+          placeholder="请输入所属部门名"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -29,6 +29,14 @@
         <el-input
           v-model="queryParams.passengerPhone"
           placeholder="请输入联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="账号id" prop="userId">
+        <el-input
+          v-model="queryParams.userId"
+          placeholder="请输入账号id"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -89,10 +97,13 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" />
       <el-table-column label="乘客姓名" align="center" prop="passengerName" />
-      <el-table-column label="所属企业ID" align="center" prop="enterpriseId" />
-      <el-table-column label="所属部门ID" align="center" prop="deptId" />
+      <el-table-column label="所属企业名" align="center" prop="enterpriseName" />
+      <el-table-column label="所属部门名" align="center" prop="deptName" />
       <el-table-column label="联系电话" align="center" prop="passengerPhone" />
-      <el-table-column label="乘客照片" align="center" prop="passengerPhoto" />
+      <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" />
+      <el-table-column label="乘客照片2" align="center" prop="passengerPhoto2" />
+      <el-table-column label="乘客照片3" align="center" prop="passengerPhoto3" />
+      <el-table-column label="账号id" align="center" prop="userId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -112,7 +123,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -127,14 +138,17 @@
         <el-form-item label="乘客姓名" prop="passengerName">
           <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
         </el-form-item>
-        <el-form-item label="所属企业ID" prop="enterpriseId">
-          <el-input v-model="form.enterpriseId" placeholder="请输入所属企业ID" />
+        <el-form-item label="所属企业名" prop="enterpriseName">
+          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业ID" />
         </el-form-item>
-        <el-form-item label="所属部门ID" prop="deptId">
-          <el-input v-model="form.deptId" placeholder="请输入所属部门ID" />
+        <el-form-item label="所属部门名" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入所属部门ID" />
         </el-form-item>
         <el-form-item label="联系电话" prop="passengerPhone">
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
+        </el-form-item>
+        <el-form-item label="账号id" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入账号id" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -178,7 +192,10 @@ export default {
         enterpriseId: null,
         deptId: null,
         passengerPhone: null,
-        passengerPhoto: null
+        passengerPhoto1: null,
+        passengerPhoto2: null,
+        passengerPhoto3: null,
+        userId: null
       },
       // 表单参数
       form: {},
@@ -218,8 +235,13 @@ export default {
         passengerName: null,
         enterpriseId: null,
         deptId: null,
+        enterpriseName: null,
+        deptName: null,
         passengerPhone: null,
-        passengerPhoto: null
+        passengerPhoto1: null,
+        passengerPhoto2: null,
+        passengerPhoto3: null,
+        userId: null
       };
       this.resetForm("form");
     },

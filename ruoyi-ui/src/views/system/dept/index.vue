@@ -199,6 +199,7 @@
   </div>
 </template>
 
+
 <script>
 import { listEnterprise } from "@/api/biz/enterprise";
 import {
@@ -269,9 +270,6 @@ export default {
   },
   created() {
     this.getList();
-  },
-  mounted() {
-    this.getEnterpriseList();
   },
   methods: {
     /** 查询企业管理列表 */

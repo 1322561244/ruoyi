@@ -5,15 +5,15 @@ import com.ruoyi.biz.domain.TqcglPassenger;
 
 /**
  * 乘客管理Service接口
- * 
- * @author ruoyi
- * @date 2023-04-25
+ *
+ * @author zhu
+ * @date 2023-05-01
  */
-public interface ITqcglPassengerService 
+public interface ITqcglPassengerService
 {
     /**
      * 查询乘客管理
-     * 
+     *
      * @param passengerId 乘客管理主键
      * @return 乘客管理
      */
@@ -21,7 +21,7 @@ public interface ITqcglPassengerService
 
     /**
      * 查询乘客管理列表
-     * 
+     *
      * @param tqcglPassenger 乘客管理
      * @return 乘客管理集合
      */
@@ -29,7 +29,7 @@ public interface ITqcglPassengerService
 
     /**
      * 新增乘客管理
-     * 
+     *
      * @param tqcglPassenger 乘客管理
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface ITqcglPassengerService
 
     /**
      * 修改乘客管理
-     * 
+     *
      * @param tqcglPassenger 乘客管理
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface ITqcglPassengerService
 
     /**
      * 批量删除乘客管理
-     * 
+     *
      * @param passengerIds 需要删除的乘客管理主键集合
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface ITqcglPassengerService
 
     /**
      * 删除乘客管理信息
-     * 
+     *
      * @param passengerId 乘客管理主键
      * @return 结果
      */

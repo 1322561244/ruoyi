@@ -23,9 +23,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 乘客管理Controller
- * 
- * @author ruoyi
- * @date 2023-04-25
+ *
+ * @author zhu
+ * @date 2023-05-01
  */
 @RestController
 @RequestMapping("/biz/passenger")
@@ -96,7 +96,7 @@ public class TqcglPassengerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:passenger:remove')")
     @Log(title = "乘客管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{passengerIds}")
+    @DeleteMapping("/{passengerIds}")
     public AjaxResult remove(@PathVariable Long[] passengerIds)
     {
         return toAjax(tqcglPassengerService.deleteTqcglPassengerByPassengerIds(passengerIds));

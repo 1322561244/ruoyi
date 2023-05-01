@@ -19,6 +19,16 @@ public interface TqcglReservationMapper
      */
     public TqcglReservation selectTqcglReservationByReservationId(Long reservationId);
 
+
+    /**
+     * 查询预约管理
+     *
+     * @param reservationId 预约管理主键
+     * @return 预约管理
+     */
+    public TqcglReservation selectTqcglReservationByReservationId2(Long reservationId);
+
+
     /**
      * 查询预约管理列表
      * 

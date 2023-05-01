@@ -32,6 +32,18 @@ public class TqcglReservationServiceImpl implements ITqcglReservationService
     }
 
     /**
+     * 查询预约管理
+     *
+     * @param reservationId 预约管理主键
+     * @return 预约管理
+     */
+    @Override
+    public TqcglReservation selectTqcglReservationByReservationId2(Long reservationId)
+    {
+        return tqcglReservationMapper.selectTqcglReservationByReservationId2(reservationId);
+    }
+
+    /**
      * 查询预约管理列表
      * 
      * @param tqcglReservation 预约管理

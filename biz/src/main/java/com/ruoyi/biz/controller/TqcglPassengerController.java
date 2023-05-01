@@ -101,4 +101,14 @@ public class TqcglPassengerController extends BaseController
     {
         return toAjax(tqcglPassengerService.deleteTqcglPassengerByPassengerIds(passengerIds));
     }
+
+    /**
+     * 获取乘客管理详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('biz:passenger:query')")
+    @GetMapping(value = "/2{passengerId}")
+    public AjaxResult getInfo2(@PathVariable("passengerId") Long passengerId)
+    {
+        return success(tqcglPassengerService.selectTqcglPassengerByPassengerId2(passengerId));
+    }
 }

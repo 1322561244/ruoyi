@@ -42,3 +42,11 @@ export function delPassenger(passengerId) {
     method: 'delete'
   })
 }
+
+// 查询乘客管理详细
+export function getPassenger2(passengerId) {
+  return request({
+    url: '/biz/passenger/2' + passengerId,
+    method: 'get'
+  })
+}

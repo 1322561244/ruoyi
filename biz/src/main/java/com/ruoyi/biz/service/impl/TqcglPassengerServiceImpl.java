@@ -31,6 +31,19 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
         return tqcglPassengerMapper.selectTqcglPassengerByPassengerId(passengerId);
     }
 
+
+    /**
+     * 查询乘客管理
+     *
+     * @param passengerId 乘客管理主键
+     * @return 乘客管理
+     */
+    @Override
+    public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId)
+    {
+        return tqcglPassengerMapper.selectTqcglPassengerByPassengerId2(passengerId);
+    }
+
     /**
      * 查询乘客管理列表
      * 

@@ -48,7 +48,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTqcglShiftsVo"/>
         where shifts_id = #{shiftsId}
     </select>
-        
+
+    <select id="selectTqcglShiftsByShiftsId2" parameterType="Long" resultMap="TqcglShiftsResult">
+        <include refid="selectTqcglShiftsVo2"/>
+        where shifts_id = #{shiftsId}
+        and s.leader_id=l.leader_id
+        and s.drivers_id=d.drivers_id
+        and s.vehicles_id=v.vehicles_id
+    </select>
+
     <insert id="insertTqcglShifts" parameterType="TqcglShifts" useGeneratedKeys="true" keyProperty="shiftsId">
         insert into tqcgl_shifts
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -42,3 +42,12 @@ export function delShifts(shiftsId) {
     method: 'delete'
   })
 }
+
+
+// 查询班次管理详细
+export function getShifts2(shiftsId) {
+  return request({
+    url: '/biz/shifts/2' + shiftsId,
+    method: 'get'
+  })
+}

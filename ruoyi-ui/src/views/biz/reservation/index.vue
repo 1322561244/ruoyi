@@ -218,8 +218,10 @@
         </el-form-item>
         <el-form-item label="乘客名" prop="passengerName">
           <!--          <el-input v-model="form.passengerName" placeholder="请输入乘客名" />-->
-          <el-select v-model="form.passengerName" placeholder="请选择乘客" @change="updateOrderList2(form.passengerName)">
-            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam" :key="iteam.passengerId"/>
+          <el-select v-model="form.passengerName" placeholder="请选择乘客"
+                     @change="updateOrderList2(form.passengerName)">
+            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam"
+                       :key="iteam.passengerId"/>
           </el-select>
         </el-form-item>
         <el-form-item label="预约的发车时间" prop="reservationTime">
@@ -254,13 +256,13 @@
           <el-input v-model="form.leaderPhone" placeholder="请输入车长联系电话" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客所属部门" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门"  disabled="true"/>
+          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客所属企业" prop="enterpriseName">
-          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业"  disabled="true"/>
+          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客联系电话" prop="passengerPhone">
-          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话"  disabled="true"/>
+          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话" disabled="true"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -272,24 +274,18 @@
     <!-- 修改预约管理对话框 -->
     <el-dialog :title="title" :visible.sync="openUpdate" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-<!--        <el-form-item label="班次名" prop="shiftsId">-->
-<!--&lt;!&ndash;          <el-select v-model="form.shiftsName" placeholder="请选择班次" @change="updateOrderList(form.shiftsName)">&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam" :key="iteam.shiftsId"/>&ndash;&gt;-->
-<!--&lt;!&ndash;          </el-select>&ndash;&gt;-->
-<!--          <el-input v-model="ShiftsName"-->
-<!--                    placeholder="请输入所属企业名称"-->
-<!--                    disabled="true"></el-input>-->
-<!--        </el-form-item>-->
         <el-form-item label="班次名" prop="shiftsId">
           <!--          <el-input v-model="form.shiftsName" placeholder="请输入班次名" />-->
-          <el-select v-model="form.shiftsName" placeholder="this.shiftsName" @change="updateOrderList(form.shiftsName)">
-            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam" :key="iteam.shiftsId"/>
+          <el-select v-model="form.shiftsId" placeholder="请选择班次名" @change="updateOrderList3(form.shiftsId)">
+            <el-option v-for="iteam in shiftsList" :label="iteam.shiftsName" :value="iteam.shiftsId"
+                       :key="iteam.shiftsId"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="乘客名" prop="passengerName">
+        <el-form-item label="乘客名" prop="passengerId">
           <!--          <el-input v-model="form.passengerName" placeholder="请输入乘客名" />-->
-          <el-select v-model="form.passengerName" placeholder="请选择乘客" @change="updateOrderList2(form.passengerName)">
-            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam" :key="iteam.passengerId"/>
+          <el-select v-model="form.passengerId" placeholder="请选择乘客" @change="updateOrderList4(form.passengerId)">
+            <el-option v-for="iteam in passengerList" :label="iteam.passengerName" :value="iteam.passengerId"
+                       :key="iteam.passengerId"/>
           </el-select>
         </el-form-item>
         <el-form-item label="预约的发车时间" prop="reservationTime">
@@ -324,13 +320,13 @@
           <el-input v-model="form.leaderPhone" placeholder="请输入车长联系电话" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客所属部门" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门"  disabled="true"/>
+          <el-input v-model="form.deptName" placeholder="请输入乘客所属部门" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客所属企业" prop="enterpriseName">
-          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业"  disabled="true"/>
+          <el-input v-model="form.enterpriseName" placeholder="请输入乘客所属企业" disabled="true"/>
         </el-form-item>
         <el-form-item label="乘客联系电话" prop="passengerPhone">
-          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话"  disabled="true"/>
+          <el-input v-model="form.passengerPhone" placeholder="请输入乘客联系电话" disabled="true"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -338,37 +334,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <div>
-      <table>
-        <thead>
-        <tr>
-          <th>编号</th>
-          <th>名字</th>
-          <th>性别</th>
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item, index) in list" :key="index">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.gender }}</td>
-          <td>
-            <button @click="edit(item)">修改</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div>
-        <label for="name">名字：</label>
-        <select id="name" v-model="selectedName">
-          <option v-for="name in nameList" :key="name">{{ name }}</option>
-        </select>
-      </div>
-    </div>
   </div>
-
-<!--  测试-->
 
 </template>
 
@@ -376,12 +342,12 @@
 import {
   addReservation,
   delReservation,
-  getReservation,
+  getReservation, getReservation2,
   listReservation,
   updateReservation
 } from "@/api/biz/reservation";
-import {listShifts} from "@/api/biz/shifts";
-import {listPassenger} from "@/api/biz/passenger";
+import {getShifts2, listShifts} from "@/api/biz/shifts";
+import {getPassenger2, listPassenger} from "@/api/biz/passenger";
 
 export default {
   name: "Reservation",
@@ -405,7 +371,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
-      openUpdate:false,
+      openUpdate: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -429,28 +395,9 @@ export default {
       // 表单校验
       rules: {},
       shiftsList: [],
-      passengerList:[],
-      ShiftsName:null,
-    //   测试
-      list: [
-        {
-          id: 1,
-          name: '张三',
-          gender: '男'
-        },
-        {
-          id: 2,
-          name: '李四',
-          gender: '女'
-        },
-        {
-          id: 3,
-          name: '王五',
-          gender: '男'
-        }
-      ],
-      nameList: [], // 存储所有的名字数据
-      selectedName: '' // 存储用户选择的名字数据
+      passengerList: [],
+      ShiftsName: null,
+      //   测试
     };
   },
   mounted() {
@@ -459,16 +406,8 @@ export default {
   },
   created() {
     this.getList();
-    this.updateNameList(); // 组件创建时，初始化名字列表数据
   },
   methods: {
-
-    edit(item) {
-      this.selectedName = item.name; // 获取当前行的名字数据，并传递到下拉框中
-    },
-    updateNameList() {
-      this.nameList = this.list.map(item => item.name); // 更新名字列表数据
-    },
 
     updateOrderList(iteam) {
       this.form.vehiclesLicensePlate = iteam.vehiclesLicensePlate;
@@ -482,6 +421,24 @@ export default {
       this.form.enterpriseName = iteam.enterpriseName;
       this.form.deptName = iteam.deptName;
       this.form.passengerPhone = iteam.passengerPhone;
+    },
+    updateOrderList3(shiftsId) {
+      getShifts2(shiftsId).then(response => {
+        this.form.shiftsName = response.data.shiftsName;
+        this.form.vehiclesLicensePlate = response.data.vehiclesLicensePlate;
+        this.form.driversName = response.data.driversName;
+        this.form.driversPhone = response.data.driversPhone;
+        this.form.leaderName = response.data.leaderName;
+        this.form.leaderPhone = response.data.leaderPhone;
+      });
+    },
+    updateOrderList4(passengerId) {
+      getPassenger2(passengerId).then(response => {
+        this.form.passengerName = response.data.passengerName;
+        this.form.enterpriseName = response.data.enterpriseName;
+        this.form.deptName = response.data.deptName;
+        this.form.passengerPhone = response.data.passengerPhone;
+      });
     },
 
     /** 查询所有班次名*/
@@ -514,7 +471,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.openUpdate=false;
+      this.openUpdate = false;
       this.reset();
     },
     // 表单重置
@@ -563,13 +520,22 @@ export default {
     /********************需要改这里***********************/
     handleUpdate(row) {
       this.reset();
-      const reservationId = row.reservationId || this.ids
-      this.form.shiftsName=row.shiftsName;
-      getReservation(reservationId).then(response => {
+      const reservationId = row.reservationId || this.ids;
+      this.form.vehiclesLicensePlate = row.vehiclesLicensePlate;
+      this.form.driversName = row.driversName;
+      this.form.driversPhone = row.driversName;
+      this.form.leaderName = row.leaderName;
+      this.form.leaderPhone = row.leaderPhone;
+      this.form.passengerName = row.passengerName;
+      this.form.deptName = row.deptName;
+      this.form.enterpriseName = row.enterpriseName;
+      this.form.passengerPhone = row.passengerPhone;
+      getReservation2(reservationId).then(response => {
         this.form = response.data;
         this.openUpdate = true;
         this.title = "修改预约管理";
       });
+
     },
     /** 提交按钮 */
     submitForm() {

@@ -32,6 +32,18 @@ public class TqcglShiftsServiceImpl implements ITqcglShiftsService
     }
 
     /**
+     * 查询班次管理
+     *
+     * @param shiftsId 班次管理主键
+     * @return 班次管理
+     */
+    @Override
+    public TqcglShifts selectTqcglShiftsByShiftsId2(Long shiftsId)
+    {
+        return tqcglShiftsMapper.selectTqcglShiftsByShiftsId2(shiftsId);
+    }
+
+    /**
      * 查询班次管理列表
      * 
      * @param tqcglShifts 班次管理

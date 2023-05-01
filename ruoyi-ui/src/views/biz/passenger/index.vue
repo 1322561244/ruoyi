@@ -9,18 +9,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业名" prop="enterpriseName">
+      <el-form-item label="所属企业ID" prop="enterpriseId">
         <el-input
-          v-model="queryParams.enterpriseName"
-          placeholder="请输入所属企业名"
+          v-model="queryParams.enterpriseId"
+          placeholder="请输入所属企业ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属部门名" prop="deptName">
+      <el-form-item label="所属部门ID" prop="deptId">
         <el-input
-          v-model="queryParams.deptName"
-          placeholder="请输入所属部门名"
+          v-model="queryParams.deptId"
+          placeholder="请输入所属部门ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -97,12 +97,24 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" />
       <el-table-column label="乘客姓名" align="center" prop="passengerName" />
-      <el-table-column label="所属企业名" align="center" prop="enterpriseName" />
-      <el-table-column label="所属部门名" align="center" prop="deptName" />
+      <el-table-column label="所属企业ID" align="center" prop="enterpriseId" />
+      <el-table-column label="所属部门ID" align="center" prop="deptId" />
       <el-table-column label="联系电话" align="center" prop="passengerPhone" />
-      <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" />
-      <el-table-column label="乘客照片2" align="center" prop="passengerPhoto2" />
-      <el-table-column label="乘客照片3" align="center" prop="passengerPhoto3" />
+      <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="乘客照片2" align="center" prop="passengerPhoto2" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="乘客照片3" align="center" prop="passengerPhoto3" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
       <el-table-column label="账号id" align="center" prop="userId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -123,7 +135,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -138,14 +150,23 @@
         <el-form-item label="乘客姓名" prop="passengerName">
           <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
         </el-form-item>
-        <el-form-item label="所属企业名" prop="enterpriseName">
-          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业ID" />
+        <el-form-item label="所属企业ID" prop="enterpriseId">
+          <el-input v-model="form.enterpriseId" placeholder="请输入所属企业ID" />
         </el-form-item>
-        <el-form-item label="所属部门名" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入所属部门ID" />
+        <el-form-item label="所属部门ID" prop="deptId">
+          <el-input v-model="form.deptId" placeholder="请输入所属部门ID" />
         </el-form-item>
         <el-form-item label="联系电话" prop="passengerPhone">
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
+        </el-form-item>
+        <el-form-item label="乘客照片1" prop="passengerPhoto1">
+          <image-upload v-model="form.passengerPhoto1"/>
+        </el-form-item>
+        <el-form-item label="乘客照片2" prop="passengerPhoto2">
+          <image-upload v-model="form.passengerPhoto2"/>
+        </el-form-item>
+        <el-form-item label="乘客照片3" prop="passengerPhoto3">
+          <image-upload v-model="form.passengerPhoto3"/>
         </el-form-item>
         <el-form-item label="账号id" prop="userId">
           <el-input v-model="form.userId" placeholder="请输入账号id" />
@@ -235,8 +256,6 @@ export default {
         passengerName: null,
         enterpriseId: null,
         deptId: null,
-        enterpriseName: null,
-        deptName: null,
         passengerPhone: null,
         passengerPhoto1: null,
         passengerPhoto2: null,

@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 乘客管理对象 tqcgl_passenger
- *
+ * 
  * @author zhu
  * @date 2023-05-01
  */
@@ -50,125 +50,100 @@ public class TqcglPassenger extends BaseEntity
     @Excel(name = "账号id")
     private Long userId;
 
-
-
-    /**企业名*/
-    @Excel(name = "所属企业名")
-    private String enterpriseName;
-
-    @Excel(name = "所属部门名")
-    private String deptName;
-    public void setPassengerId(Long passengerId)
+    public void setPassengerId(Long passengerId) 
     {
         this.passengerId = passengerId;
     }
 
-    public Long getPassengerId()
+    public Long getPassengerId() 
     {
         return passengerId;
     }
-    public void setPassengerName(String passengerName)
+    public void setPassengerName(String passengerName) 
     {
         this.passengerName = passengerName;
     }
 
-    public String getPassengerName()
+    public String getPassengerName() 
     {
         return passengerName;
     }
-    public void setEnterpriseId(Long enterpriseId)
+    public void setEnterpriseId(Long enterpriseId) 
     {
         this.enterpriseId = enterpriseId;
     }
 
-    public Long getEnterpriseId()
+    public Long getEnterpriseId() 
     {
         return enterpriseId;
     }
-    public void setDeptId(Long deptId)
+    public void setDeptId(Long deptId) 
     {
         this.deptId = deptId;
     }
 
-    public Long getDeptId()
+    public Long getDeptId() 
     {
         return deptId;
     }
-    public void setPassengerPhone(String passengerPhone)
+    public void setPassengerPhone(String passengerPhone) 
     {
         this.passengerPhone = passengerPhone;
     }
 
-    public String getPassengerPhone()
+    public String getPassengerPhone() 
     {
         return passengerPhone;
     }
-    public void setPassengerPhoto1(String passengerPhoto1)
+    public void setPassengerPhoto1(String passengerPhoto1) 
     {
         this.passengerPhoto1 = passengerPhoto1;
     }
 
-    public String getPassengerPhoto1()
+    public String getPassengerPhoto1() 
     {
         return passengerPhoto1;
     }
-    public void setPassengerPhoto2(String passengerPhoto2)
+    public void setPassengerPhoto2(String passengerPhoto2) 
     {
         this.passengerPhoto2 = passengerPhoto2;
     }
 
-    public String getPassengerPhoto2()
+    public String getPassengerPhoto2() 
     {
         return passengerPhoto2;
     }
-    public void setPassengerPhoto3(String passengerPhoto3)
+    public void setPassengerPhoto3(String passengerPhoto3) 
     {
         this.passengerPhoto3 = passengerPhoto3;
     }
 
-    public String getPassengerPhoto3()
+    public String getPassengerPhoto3() 
     {
         return passengerPhoto3;
     }
-    public void setUserId(Long userId)
+    public void setUserId(Long userId) 
     {
         this.userId = userId;
     }
 
-    public Long getUserId()
+    public Long getUserId() 
     {
         return userId;
     }
 
-    public String getEnterpriseName() {
-        return enterpriseName;
-    }
-
-    public void setEnterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("passengerId", getPassengerId())
-                .append("passengerName", getPassengerName())
-                .append("enterpriseId", getEnterpriseId())
-                .append("deptId", getDeptId())
-                .append("passengerPhone", getPassengerPhone())
-                .append("passengerPhoto1", getPassengerPhoto1())
-                .append("passengerPhoto2", getPassengerPhoto2())
-                .append("passengerPhoto3", getPassengerPhoto3())
-                .append("userId", getUserId())
-                .append("deptName",getDeptName())
-                .append("enterpriseName",getEnterpriseName())
-                .toString();
+            .append("passengerId", getPassengerId())
+            .append("passengerName", getPassengerName())
+            .append("enterpriseId", getEnterpriseId())
+            .append("deptId", getDeptId())
+            .append("passengerPhone", getPassengerPhone())
+            .append("passengerPhoto1", getPassengerPhoto1())
+            .append("passengerPhoto2", getPassengerPhoto2())
+            .append("passengerPhoto3", getPassengerPhoto3())
+            .append("userId", getUserId())
+            .toString();
     }
 }

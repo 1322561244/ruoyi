@@ -6,8 +6,8 @@ import com.ruoyi.biz.domain.TqcglPassenger;
 /**
  * 乘客管理Mapper接口
  * 
- * @author ruoyi
- * @date 2023-04-25
+ * @author zhu
+ * @date 2023-05-01
  */
 public interface TqcglPassengerMapper 
 {

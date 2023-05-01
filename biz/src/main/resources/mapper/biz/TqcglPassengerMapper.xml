@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.biz.mapper.TqcglPassengerMapper">
-
+    
     <resultMap type="TqcglPassenger" id="TqcglPassengerResult">
         <result property="passengerId"    column="passenger_id"    />
         <result property="passengerName"    column="passenger_name"    />
@@ -14,39 +14,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="passengerPhoto2"    column="passenger_photo2"    />
         <result property="passengerPhoto3"    column="passenger_photo3"    />
         <result property="userId"    column="user_id"    />
-        <result property="enterpriseName" column="enterprise_name"/>
-        <result property="deptName" column="dept_name"/>
-
     </resultMap>
 
     <sql id="selectTqcglPassengerVo">
-        select passenger_id, passenger_name, enterprise_id, dept_id, passenger_phone, passenger_photo1 from tqcgl_passenger
+        select passenger_id, passenger_name, enterprise_id, dept_id, passenger_phone, passenger_photo1, passenger_photo2, passenger_photo3, user_id from tqcgl_passenger
     </sql>
 
-    <sql id="selectTqcglPassengerVo2">
-        select passenger_id, passenger_name, e.enterprise_name, d.dept_name, passenger_phone, passenger_photo1,passenger_photo2,passenger_photo3
-        from tqcgl_passenger p,tqcgl_enterprise e,sys_dept d
-    </sql>
     <select id="selectTqcglPassengerList" parameterType="TqcglPassenger" resultMap="TqcglPassengerResult">
-        <include refid="selectTqcglPassengerVo2"/>
-        <where>
+        <include refid="selectTqcglPassengerVo"/>
+        <where>  
             <if test="passengerName != null  and passengerName != ''"> and passenger_name like concat('%', #{passengerName}, '%')</if>
-            <if test="enterpriseName !=null and enterpriseName !=''">enterprise_name= #{enterprise_name}</if>
-            <if test="deptName !=null and deptName !=''">dept_name= #{dept_name}</if>
+            <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="passengerPhone != null  and passengerPhone != ''"> and passenger_phone = #{passengerPhone}</if>
             <if test="passengerPhoto1 != null  and passengerPhoto1 != ''"> and passenger_photo1 = #{passengerPhoto1}</if>
             <if test="passengerPhoto2 != null  and passengerPhoto2 != ''"> and passenger_photo2 = #{passengerPhoto2}</if>
             <if test="passengerPhoto3 != null  and passengerPhoto3 != ''"> and passenger_photo3 = #{passengerPhoto3}</if>
-            and d.dept_id=p.dept_id
-            and p.enterprise_id=e.enterprise_id
+            <if test="userId != null "> and user_id = #{userId}</if>
         </where>
     </select>
-
+    
     <select id="selectTqcglPassengerByPassengerId" parameterType="Long" resultMap="TqcglPassengerResult">
         <include refid="selectTqcglPassengerVo"/>
         where passenger_id = #{passengerId}
     </select>
-
+        
     <insert id="insertTqcglPassenger" parameterType="TqcglPassenger" useGeneratedKeys="true" keyProperty="passengerId">
         insert into tqcgl_passenger
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -58,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="passengerPhoto2 != null">passenger_photo2,</if>
             <if test="passengerPhoto3 != null">passenger_photo3,</if>
             <if test="userId != null">user_id,</if>
-        </trim>
+         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
             <if test="enterpriseId != null">#{enterpriseId},</if>
@@ -68,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="passengerPhoto2 != null">#{passengerPhoto2},</if>
             <if test="passengerPhoto3 != null">#{passengerPhoto3},</if>
             <if test="userId != null">#{userId},</if>
-        </trim>
+         </trim>
     </insert>
 
     <update id="updateTqcglPassenger" parameterType="TqcglPassenger">
@@ -91,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTqcglPassengerByPassengerIds" parameterType="String">
-        delete from tqcgl_passenger where passenger_id in
+        delete from tqcgl_passenger where passenger_id in 
         <foreach item="passengerId" collection="array" open="(" separator="," close=")">
             #{passengerId}
         </foreach>

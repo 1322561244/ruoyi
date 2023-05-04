@@ -1,12 +1,13 @@
 package com.ruoyi.biz.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 班次管理对象 tqcgl_shifts
@@ -31,8 +32,8 @@ public class TqcglShifts extends BaseEntity {
     /**
      * 发车时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date shiftsDepartureTime;
 
     /**
@@ -52,7 +53,6 @@ public class TqcglShifts extends BaseEntity {
      */
     @Excel(name = "车辆ID")
     private Long vehiclesId;
-
 
     /**
      * 车长名
@@ -83,7 +83,6 @@ public class TqcglShifts extends BaseEntity {
      */
     @Excel(name = "车牌号")
     private String vehiclesLicensePlate;
-
 
     public void setLeaderName(String leaderName) {
         this.leaderName = leaderName;
@@ -124,7 +123,6 @@ public class TqcglShifts extends BaseEntity {
     public String getVehiclesLicensePlate() {
         return vehiclesLicensePlate;
     }
-
 
     public void setShiftsId(Long shiftsId) {
         this.shiftsId = shiftsId;

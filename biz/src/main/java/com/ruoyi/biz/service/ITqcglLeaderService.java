@@ -19,7 +19,6 @@ public interface ITqcglLeaderService {
      */
     public TqcglLeader selectTqcglLeaderByLeaderId(Long leaderId);
 
-
     /**
      * 查询车长管理列表
      * 
@@ -59,4 +58,5 @@ public interface ITqcglLeaderService {
      * @return 结果
      */
     public int deleteTqcglLeaderByLeaderId(Long leaderId);
+
 }

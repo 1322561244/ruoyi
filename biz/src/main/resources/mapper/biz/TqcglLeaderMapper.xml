@@ -8,6 +8,8 @@
         <result property="leaderPhone" column="leader_phone" />
         <result property="enterpriseName" column="enterprise_name" />
         <result property="enterpriseId" column="enterprise_id" />
+        <result property="userId" column="user_id" />
+
     </resultMap>
 
 
@@ -40,13 +42,17 @@
             <if test="leaderPhone != null">
         leader_phone,</if>
             <if test="enterpriseId != null">enterprise_id,</if>
+            <if
+                test="userId != null">user_id,</if>
         </trim>
         <trim
             prefix="values (" suffix=")" suffixOverrides=",">
             <if test="leaderName != null">#{leaderName},</if>
             <if test="leaderPhone != null">
         #{leaderPhone},</if>
-            <if test="enterpriseId != null">#{enterpriseId}</if>
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+            <if
+                test="userId != null">#{userId},</if>
         </trim>
     </insert>
 
@@ -70,4 +76,6 @@
 
     <select id="checkNameUnique" parameterType="String" resultMap="TqcglLeaderResult"> select
         leader_id, leader_name from tqcgl_leader where leader_name = #{leaderName} limit 1 </select>
+
+
 </mapper>

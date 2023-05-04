@@ -1,6 +1,7 @@
 package com.ruoyi.biz.service;
 
 import java.util.List;
+
 import com.ruoyi.biz.domain.TqcglPassenger;
 
 /**
@@ -9,8 +10,7 @@ import com.ruoyi.biz.domain.TqcglPassenger;
  * @author zhu
  * @date 2023-05-01
  */
-public interface ITqcglPassengerService 
-{
+public interface ITqcglPassengerService {
     /**
      * 查询乘客管理
      * 
@@ -19,7 +19,6 @@ public interface ITqcglPassengerService
      */
     public TqcglPassenger selectTqcglPassengerByPassengerId(Long passengerId);
 
-
     /**
      * 查询乘客管理
      *
@@ -27,7 +26,6 @@ public interface ITqcglPassengerService
      * @return 乘客管理
      */
     public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId);
-
 
     /**
      * 查询乘客管理列表
@@ -68,4 +66,5 @@ public interface ITqcglPassengerService
      * @return 结果
      */
     public int deleteTqcglPassengerByPassengerId(Long passengerId);
+
 }

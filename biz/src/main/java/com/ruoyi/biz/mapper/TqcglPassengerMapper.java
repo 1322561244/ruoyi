@@ -1,6 +1,7 @@
 package com.ruoyi.biz.mapper;
 
 import java.util.List;
+
 import com.ruoyi.biz.domain.TqcglPassenger;
 
 /**
@@ -9,8 +10,7 @@ import com.ruoyi.biz.domain.TqcglPassenger;
  * @author zhu
  * @date 2023-05-01
  */
-public interface TqcglPassengerMapper 
-{
+public interface TqcglPassengerMapper {
     /**
      * 查询乘客管理
      * 
@@ -26,7 +26,6 @@ public interface TqcglPassengerMapper
      * @return 乘客管理
      */
     public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId);
-
 
     /**
      * 查询乘客管理列表
@@ -67,4 +66,5 @@ public interface TqcglPassengerMapper
      * @return 结果
      */
     public int deleteTqcglPassengerByPassengerIds(Long[] passengerIds);
+
 }

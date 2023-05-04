@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="乘客姓名" prop="passengerName">
         <el-input
           v-model="queryParams.passengerName"
@@ -42,7 +49,9 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
+          >搜索</el-button
+        >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
@@ -56,7 +65,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:passenger:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -67,7 +77,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:passenger:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -78,7 +89,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:passenger:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,31 +100,51 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:passenger:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="passengerList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="passengerList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" />
       <el-table-column label="乘客姓名" align="center" prop="passengerName" />
       <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
       <el-table-column label="所属部门名称" align="center" prop="deptName" />
       <el-table-column label="联系电话" align="center" prop="passengerPhone" />
-      <el-table-column label="乘客照片1" align="center" prop="passengerPhoto1" width="100">
+      <el-table-column
+        label="乘客照片1"
+        align="center"
+        prop="passengerPhoto1"
+        width="100"
+      >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50"/>
+          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50" />
         </template>
       </el-table-column>
-      <el-table-column label="乘客照片2" align="center" prop="passengerPhoto2" width="100">
+      <el-table-column
+        label="乘客照片2"
+        align="center"
+        prop="passengerPhoto2"
+        width="100"
+      >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50"/>
+          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50" />
         </template>
       </el-table-column>
-      <el-table-column label="乘客照片3" align="center" prop="passengerPhoto3" width="100">
+      <el-table-column
+        label="乘客照片3"
+        align="center"
+        prop="passengerPhoto3"
+        width="100"
+      >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50"/>
+          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="账号id" align="center" prop="userId" />
@@ -124,20 +156,22 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:passenger:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:passenger:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -160,13 +194,13 @@
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
         </el-form-item>
         <el-form-item label="乘客照片1" prop="passengerPhoto1">
-          <image-upload v-model="form.passengerPhoto1"/>
+          <image-upload v-model="form.passengerPhoto1" :limit="1" />
         </el-form-item>
         <el-form-item label="乘客照片2" prop="passengerPhoto2">
-          <image-upload v-model="form.passengerPhoto2"/>
+          <image-upload v-model="form.passengerPhoto2" :limit="1" />
         </el-form-item>
         <el-form-item label="乘客照片3" prop="passengerPhoto3">
-          <image-upload v-model="form.passengerPhoto3"/>
+          <image-upload v-model="form.passengerPhoto3" :limit="1" />
         </el-form-item>
         <el-form-item label="账号id" prop="userId">
           <el-input v-model="form.userId" placeholder="请输入账号id" />
@@ -181,7 +215,13 @@
 </template>
 
 <script>
-import { listPassenger, getPassenger, delPassenger, addPassenger, updatePassenger } from "@/api/biz/passenger";
+import {
+  addPassenger,
+  delPassenger,
+  getPassenger,
+  listPassenger,
+  updatePassenger,
+} from "@/api/biz/passenger";
 
 export default {
   name: "Passenger",
@@ -216,19 +256,17 @@ export default {
         passengerPhoto1: null,
         passengerPhoto2: null,
         passengerPhoto3: null,
-        userId: null
+        userId: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        passengerName: [
-          { required: true, message: "乘客姓名不能为空", trigger: "blur" }
-        ],
+        passengerName: [{ required: true, message: "乘客姓名不能为空", trigger: "blur" }],
         passengerPhone: [
-          { required: true, message: "联系电话不能为空", trigger: "blur" }
+          { required: true, message: "联系电话不能为空", trigger: "blur" },
         ],
-      }
+      },
     };
   },
   created() {
@@ -238,7 +276,7 @@ export default {
     /** 查询乘客管理列表 */
     getList() {
       this.loading = true;
-      listPassenger(this.queryParams).then(response => {
+      listPassenger(this.queryParams).then((response) => {
         this.passengerList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -260,7 +298,7 @@ export default {
         passengerPhoto1: null,
         passengerPhoto2: null,
         passengerPhoto3: null,
-        userId: null
+        userId: null,
       };
       this.resetForm("form");
     },
@@ -276,9 +314,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.passengerId)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.passengerId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -289,8 +327,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const passengerId = row.passengerId || this.ids
-      getPassenger(passengerId).then(response => {
+      const passengerId = row.passengerId || this.ids;
+      getPassenger(passengerId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改乘客管理";
@@ -298,16 +336,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.passengerId != null) {
-            updatePassenger(this.form).then(response => {
+            updatePassenger(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addPassenger(this.form).then(response => {
+            addPassenger(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -319,19 +357,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const passengerIds = row.passengerId || this.ids;
-      this.$modal.confirm('是否确认删除乘客管理编号为"' + passengerIds + '"的数据项？').then(function() {
-        return delPassenger(passengerIds);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除乘客管理编号为"' + passengerIds + '"的数据项？')
+        .then(function () {
+          return delPassenger(passengerIds);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('biz/passenger/export', {
-        ...this.queryParams
-      }, `passenger_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "biz/passenger/export",
+        {
+          ...this.queryParams,
+        },
+        `passenger_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

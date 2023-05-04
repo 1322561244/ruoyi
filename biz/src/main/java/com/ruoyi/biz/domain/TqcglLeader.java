@@ -2,6 +2,7 @@ package com.ruoyi.biz.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -11,12 +12,15 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2023-04-25
  */
-public class TqcglLeader extends BaseEntity
-{
+public class TqcglLeader extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 车长ID，自增长 */
     private Long leaderId;
+
+    /** 账号ID */
+    @Excel(name = "账号id")
+    private Long userId;
 
     /** 车长姓名 */
     @Excel(name = "车长姓名")
@@ -33,61 +37,62 @@ public class TqcglLeader extends BaseEntity
     @Excel(name = "所属企业名称")
     private String enterpriseName;
 
-    public void setLeaderId(Long leaderId) 
-    {
+    public void setLeaderId(Long leaderId) {
         this.leaderId = leaderId;
     }
 
-    public Long getLeaderId() 
-    {
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getLeaderId() {
         return leaderId;
     }
-    public void setLeaderName(String leaderName) 
-    {
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setLeaderName(String leaderName) {
         this.leaderName = leaderName;
     }
 
-    public String getLeaderName() 
-    {
+    public String getLeaderName() {
         return leaderName;
     }
-    public void setLeaderPhone(String leaderPhone) 
-    {
+
+    public void setLeaderPhone(String leaderPhone) {
         this.leaderPhone = leaderPhone;
     }
 
-    public String getLeaderPhone() 
-    {
+    public String getLeaderPhone() {
         return leaderPhone;
     }
-    public void setEnterpriseId(Long enterpriseId) 
-    {
+
+    public void setEnterpriseId(Long enterpriseId) {
         this.enterpriseId = enterpriseId;
     }
 
-    public Long getEnterpriseId() 
-    {
+    public Long getEnterpriseId() {
         return enterpriseId;
     }
 
-    public void setEnterpriseName(String enterpriseName) 
-    {
+    public void setEnterpriseName(String enterpriseName) {
         this.enterpriseName = enterpriseName;
     }
 
-    public String getEnterpriseName() 
-    {
+    public String getEnterpriseName() {
         return enterpriseName;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("leaderId", getLeaderId())
-            .append("leaderName", getLeaderName())
-            .append("leaderPhone", getLeaderPhone())
-            .append("enterpriseName", getEnterpriseName())
-            .append("enterpriseId",getEnterpriseId())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("leaderId", getLeaderId())
+                .append("leaderName", getLeaderName())
+                .append("leaderPhone", getLeaderPhone())
+                .append("enterpriseName", getEnterpriseName())
+                .append("enterpriseId", getEnterpriseId())
+                .toString();
     }
 }

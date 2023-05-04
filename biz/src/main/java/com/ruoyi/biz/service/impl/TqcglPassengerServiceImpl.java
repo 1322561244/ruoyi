@@ -1,10 +1,12 @@
 package com.ruoyi.biz.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.biz.mapper.TqcglPassengerMapper;
+
 import com.ruoyi.biz.domain.TqcglPassenger;
+import com.ruoyi.biz.mapper.TqcglPassengerMapper;
 import com.ruoyi.biz.service.ITqcglPassengerService;
 
 /**
@@ -14,8 +16,7 @@ import com.ruoyi.biz.service.ITqcglPassengerService;
  * @date 2023-05-01
  */
 @Service
-public class TqcglPassengerServiceImpl implements ITqcglPassengerService 
-{
+public class TqcglPassengerServiceImpl implements ITqcglPassengerService {
     @Autowired
     private TqcglPassengerMapper tqcglPassengerMapper;
 
@@ -26,11 +27,9 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 乘客管理
      */
     @Override
-    public TqcglPassenger selectTqcglPassengerByPassengerId(Long passengerId)
-    {
+    public TqcglPassenger selectTqcglPassengerByPassengerId(Long passengerId) {
         return tqcglPassengerMapper.selectTqcglPassengerByPassengerId(passengerId);
     }
-
 
     /**
      * 查询乘客管理
@@ -39,8 +38,7 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 乘客管理
      */
     @Override
-    public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId)
-    {
+    public TqcglPassenger selectTqcglPassengerByPassengerId2(Long passengerId) {
         return tqcglPassengerMapper.selectTqcglPassengerByPassengerId2(passengerId);
     }
 
@@ -51,8 +49,7 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 乘客管理
      */
     @Override
-    public List<TqcglPassenger> selectTqcglPassengerList(TqcglPassenger tqcglPassenger)
-    {
+    public List<TqcglPassenger> selectTqcglPassengerList(TqcglPassenger tqcglPassenger) {
         return tqcglPassengerMapper.selectTqcglPassengerList(tqcglPassenger);
     }
 
@@ -63,8 +60,7 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 结果
      */
     @Override
-    public int insertTqcglPassenger(TqcglPassenger tqcglPassenger)
-    {
+    public int insertTqcglPassenger(TqcglPassenger tqcglPassenger) {
         return tqcglPassengerMapper.insertTqcglPassenger(tqcglPassenger);
     }
 
@@ -75,8 +71,7 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 结果
      */
     @Override
-    public int updateTqcglPassenger(TqcglPassenger tqcglPassenger)
-    {
+    public int updateTqcglPassenger(TqcglPassenger tqcglPassenger) {
         return tqcglPassengerMapper.updateTqcglPassenger(tqcglPassenger);
     }
 
@@ -87,8 +82,7 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 结果
      */
     @Override
-    public int deleteTqcglPassengerByPassengerIds(Long[] passengerIds)
-    {
+    public int deleteTqcglPassengerByPassengerIds(Long[] passengerIds) {
         return tqcglPassengerMapper.deleteTqcglPassengerByPassengerIds(passengerIds);
     }
 
@@ -99,8 +93,8 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService
      * @return 结果
      */
     @Override
-    public int deleteTqcglPassengerByPassengerId(Long passengerId)
-    {
+    public int deleteTqcglPassengerByPassengerId(Long passengerId) {
         return tqcglPassengerMapper.deleteTqcglPassengerByPassengerId(passengerId);
     }
+
 }

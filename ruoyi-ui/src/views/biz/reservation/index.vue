@@ -190,7 +190,6 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="预约id" align="center" prop="reservationId" /> -->
       <el-table-column label="班次名" align="center" prop="shiftsName" />
       <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate" />
       <el-table-column label="司机姓名" align="center" prop="driversName" />
@@ -204,7 +203,7 @@
         width="180"
       >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.reservationTime, "{y}-{m}-{d}") }}</span>
+          <span>{{ parseTime(scope.row.reservationTime, "{y}-{m}-{ds}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="乘客名" align="center" prop="passengerName" />
@@ -216,13 +215,14 @@
           <span>{{ parseTime(scope.row.creationTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column
-        label="预约状态1代表已预约，0代表已取消"
-        align="center"
-        prop="reservationStatus"
-      />
-
+      <el-table-column label="预约状态" align="center" prop="reservationStatus">
+        <template slot-scope="scope">
+          <dict-tag
+            :options="dict.type.reservation_status"
+            :value="scope.row.reservationStatus"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="取消预约人的姓名" align="center" prop="cancelOperator" />
       <el-table-column label="取消预约的时间" align="center" prop="cancelDatetime" width="180">
         <template slot-scope="scope">
@@ -297,16 +297,6 @@
             type="date"
             value-format="yyyy-MM-dd"
             placeholder="请选择预约的发车时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="创建时间" prop="creationTime">
-          <el-date-picker
-            clearable
-            v-model="form.creationTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择创建时间"
           >
           </el-date-picker>
         </el-form-item>
@@ -415,16 +405,18 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="创建时间" prop="creationTime">
-          <el-date-picker
-            clearable
-            v-model="form.creationTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择创建时间"
-          >
-          </el-date-picker>
+
+        <el-form-item label="预约状态" prop="reservationStatus">
+          <el-select v-model="form.reservationStatus">
+            <el-option
+              v-for="dict in dict.type.reservation_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
+          </el-select>
         </el-form-item>
+
         <el-form-item label="车牌号" prop="vehiclesLicensePlate">
           <el-input
             v-model="form.vehiclesLicensePlate"
@@ -500,8 +492,11 @@ import {
   updateReservation,
 } from "@/api/biz/reservation";
 import { getShifts2, listShifts } from "@/api/biz/shifts";
+import DictData from "@/components/DictData";
+DictData.install();
 
 export default {
+  dicts: ["reservation_status"],
   name: "Reservation",
   data() {
     return {
@@ -675,8 +670,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const reservationId = row.reservationId || this.ids;
-      this.form.shiftsName=row.shiftsName;
-      this.form.passengerName=row.passengerName;
+      this.form.shiftsName = row.shiftsName;
+      this.form.passengerName = row.passengerName;
       getReservation2(reservationId).then((response) => {
         this.form = response.data;
         this.openUpdate = true;

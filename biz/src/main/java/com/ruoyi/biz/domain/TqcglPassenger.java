@@ -1,9 +1,10 @@
 package com.ruoyi.biz.domain;
 
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 乘客管理对象 tqcgl_passenger
@@ -43,7 +44,6 @@ public class TqcglPassenger extends BaseEntity {
     @Excel(name = "所属企业名")
     private String enterpriseName;
 
-
     /**
      * 所属部门名
      */
@@ -80,6 +80,15 @@ public class TqcglPassenger extends BaseEntity {
     @Excel(name = "账号id")
     private Long userId;
 
+    /**
+     * 账号名
+     */
+    @Excel(name = "账号名")
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
 
     public String getEnterpriseName() {
         return enterpriseName;
@@ -96,7 +105,6 @@ public class TqcglPassenger extends BaseEntity {
     public void setDeptName(String deptName) {
         this.deptName = deptName;
     }
-
 
     public void setPassengerId(Long passengerId) {
         this.passengerId = passengerId;
@@ -185,5 +193,9 @@ public class TqcglPassenger extends BaseEntity {
                 .append("enterpriseName", getEnterpriseName())
                 .append("deptName", getDeptName())
                 .toString();
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -7,9 +7,10 @@
         <result property="driversName" column="drivers_name" />
         <result property="driversPhone" column="drivers_phone" />
         <result property="driversSupplier" column="drivers_supplier" />
+        <result property="createTime" column="create_time" />
     </resultMap>
 
-    <sql id="selectTqcglDriversVo"> select drivers_id, drivers_name, drivers_phone, drivers_supplier
+    <sql id="selectTqcglDriversVo"> select drivers_id, drivers_name, drivers_phone, drivers_supplier,create_time
         from tqcgl_drivers </sql>
 
     <select id="selectTqcglDriversList" parameterType="TqcglDrivers" resultMap="TqcglDriversResult">
@@ -19,57 +20,43 @@
         #{driversName}, '%')</if>
             <if test="driversPhone != null  and driversPhone != ''"> and
         drivers_phone = #{driversPhone}</if>
-            <if
-                test="driversSupplier != null  and driversSupplier != ''"> and drivers_supplier =
+            <if test="driversSupplier != null  and driversSupplier != ''"> and drivers_supplier =
         #{driversSupplier}</if>
         </where>
     </select>
 
     <select id="selectTqcglDriversByDriversId" parameterType="Long" resultMap="TqcglDriversResult">
-        <include refid="selectTqcglDriversVo" /> where drivers_id = #{driversId} </select>
+        <include refid="selectTqcglDriversVo" />
+ where drivers_id = #{driversId} </select>
 
-    <insert id="insertTqcglDrivers" parameterType="TqcglDrivers" useGeneratedKeys="true"
-        keyProperty="driversId">insert into tqcgl_drivers
-        <trim prefix="(" suffix=")"
-              suffixOverrides=",">
-            <if test="driversName != null and driversName != ''">drivers_name,</if>
-            <if
-                    test="driversPhone != null and driversPhone != ''">drivers_phone,
-            </if>
-            <if
-                    test="driversSupplier != null and driversSupplier != ''">drivers_supplier,
-            </if>
-        </trim>
-        <trim
-                prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="driversName != null and driversName != ''">#{driversName},</if>
-            <if
-                    test="driversPhone != null and driversPhone != ''">#{driversPhone},
-            </if>
-            <if
-                    test="driversSupplier != null and driversSupplier != ''">#{driversSupplier},
-            </if>
-        </trim>
-    </insert>
+    <insert id="insertTqcglDrivers" parameterType="TqcglDrivers" useGeneratedKeys="true" keyProperty="driversId"> insert into tqcgl_drivers <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="driversName != null and driversName != ''">drivers_name,</if>
+        <if test="driversPhone != null and driversPhone != ''">drivers_phone,</if>
+        <if test="driversSupplier != null and driversSupplier != ''">drivers_supplier,</if>
+        create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="driversName != null and driversName != ''">#{driversName},</if>
+        <if test="driversPhone != null and driversPhone != ''">#{driversPhone},</if>
+        <if test="driversSupplier != null and driversSupplier != ''">#{driversSupplier},</if>
+        sysdate()
+    </trim>
+</insert>
 
-    <update id="updateTqcglDrivers" parameterType="TqcglDrivers"> update tqcgl_drivers <trim
-            prefix="SET" suffixOverrides=",">
-            <if test="driversName != null and driversName != ''">drivers_name = #{driversName},</if>
-            <if
-                test="driversPhone != null and driversPhone != ''">drivers_phone = #{driversPhone},</if>
-            <if
-                test="driversSupplier != null and driversSupplier != ''">drivers_supplier =
+<update id="updateTqcglDrivers" parameterType="TqcglDrivers"> update tqcgl_drivers <trim prefix="SET" suffixOverrides=",">
+    <if test="driversName != null and driversName != ''">drivers_name = #{driversName},</if>
+    <if test="driversPhone != null and driversPhone != ''">drivers_phone = #{driversPhone},</if>
+    <if test="driversSupplier != null and driversSupplier != ''">drivers_supplier =
         #{driversSupplier},</if>
-        </trim> where drivers_id = #{driversId} </update>
+</trim> where drivers_id = #{driversId} </update>
 
-    <delete id="deleteTqcglDriversByDriversId" parameterType="Long"> delete from tqcgl_drivers where
+<delete id="deleteTqcglDriversByDriversId" parameterType="Long"> delete from tqcgl_drivers where
         drivers_id = #{driversId} </delete>
 
-    <delete id="deleteTqcglDriversByDriversIds" parameterType="String"> delete from tqcgl_drivers
-        where drivers_id in <foreach item="driversId" collection="array" open="(" separator=","
-            close=")"> #{driversId} </foreach>
-    </delete>
+<delete id="deleteTqcglDriversByDriversIds" parameterType="String"> delete from tqcgl_drivers
+        where drivers_id in <foreach item="driversId" collection="array" open="(" separator="," close=")"> #{driversId} </foreach>
+</delete>
 
-    <select id="checkNameUnique" parameterType="String" resultMap="TqcglDriversResult"> select
+<select id="checkNameUnique" parameterType="String" resultMap="TqcglDriversResult"> select
         drivers_id, drivers_name from tqcgl_drivers where drivers_name = #{driversName} limit 1 </select>
 </mapper>

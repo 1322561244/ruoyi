@@ -2,6 +2,7 @@ package com.ruoyi.biz.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -11,8 +12,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2023-04-25
  */
-public class TqcglDrivers extends BaseEntity
-{
+public class TqcglDrivers extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 每个司机记录的唯一标识符 */
@@ -30,50 +30,45 @@ public class TqcglDrivers extends BaseEntity
     @Excel(name = "提供该司机的公司或供应商名称")
     private String driversSupplier;
 
-    public void setDriversId(Long driversId) 
-    {
+    public void setDriversId(Long driversId) {
         this.driversId = driversId;
     }
 
-    public Long getDriversId() 
-    {
+    public Long getDriversId() {
         return driversId;
     }
-    public void setDriversName(String driversName) 
-    {
+
+    public void setDriversName(String driversName) {
         this.driversName = driversName;
     }
 
-    public String getDriversName() 
-    {
+    public String getDriversName() {
         return driversName;
     }
-    public void setDriversPhone(String driversPhone) 
-    {
+
+    public void setDriversPhone(String driversPhone) {
         this.driversPhone = driversPhone;
     }
 
-    public String getDriversPhone() 
-    {
+    public String getDriversPhone() {
         return driversPhone;
     }
-    public void setDriversSupplier(String driversSupplier) 
-    {
+
+    public void setDriversSupplier(String driversSupplier) {
         this.driversSupplier = driversSupplier;
     }
 
-    public String getDriversSupplier() 
-    {
+    public String getDriversSupplier() {
         return driversSupplier;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("driversId", getDriversId())
-            .append("driversName", getDriversName())
-            .append("driversPhone", getDriversPhone())
-            .append("driversSupplier", getDriversSupplier())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("driversId", getDriversId())
+                .append("driversName", getDriversName())
+                .append("driversPhone", getDriversPhone())
+                .append("driversSupplier", getDriversSupplier())
+                .toString();
     }
 }

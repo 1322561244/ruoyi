@@ -12,6 +12,7 @@
         <result property="passengerPhoto2" column="passenger_photo2" />
         <result property="passengerPhoto3" column="passenger_photo3" />
         <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
         <result property="enterpriseName" column="enterprise_name" />
         <result property="deptName" column="dept_name" />
     </resultMap>
@@ -29,11 +30,12 @@
 	passenger_photo1,
 	passenger_photo2,
 	passenger_photo3,
-	user_id 
+	user_name 
 FROM
 	tqcgl_passenger p
 	LEFT JOIN tqcgl_enterprise e ON p.enterprise_id = e.enterprise_id
-	LEFT JOIN sys_dept d ON p.dept_id = d.dept_id </sql>
+	LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+    LEFT JOIN sys_user u ON u.user_id = p.user_id </sql>
 
 
     <select id="selectTqcglPassengerList" parameterType="TqcglPassenger" resultMap="TqcglPassengerResult">
@@ -53,7 +55,7 @@ FROM
         passenger_photo2 = #{passengerPhoto2}</if>
             <if test="passengerPhoto3 != null  and passengerPhoto3 != ''"> and passenger_photo3 =
         #{passengerPhoto3}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userName != null "> and user_name = #{userName}</if>
         </where>
     </select>
 

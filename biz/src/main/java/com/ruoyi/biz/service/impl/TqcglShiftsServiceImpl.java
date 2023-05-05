@@ -102,4 +102,20 @@ public class TqcglShiftsServiceImpl implements ITqcglShiftsService
     {
         return tqcglShiftsMapper.deleteTqcglShiftsByShiftsId(shiftsId);
     }
+
+    /**
+     * 搜索当前班次的限载人数
+     */
+    public int selectVehicleCapacityByShiftsId(Long shiftsId){
+        return tqcglShiftsMapper.selectVehicleCapacityByShiftsId(shiftsId);
+    }
+
+
+
+    /**
+     * 当满人时更新b班次的可预约状态为不可预约
+     * */
+    public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts){
+        return tqcglShiftsMapper.updateTqcglShiftsStatus(tqcglShifts);
+    }
 }

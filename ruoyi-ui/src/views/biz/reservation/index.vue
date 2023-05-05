@@ -108,6 +108,24 @@
         >
         </el-date-picker>
       </el-form-item>
+      <el-form-item label="取消预约的人" prop="cancelOperator">
+        <el-input
+          v-model="queryParams.cancelOperator"
+          placeholder="取消预约人的姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="取消预约时间" prop="cancelDatetime">
+        <el-date-picker
+          clearable
+          v-model="queryParams.cancelDatetime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择取消预约的时间"
+        >
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
           >搜索</el-button
@@ -198,11 +216,19 @@
           <span>{{ parseTime(scope.row.creationTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
+
       <el-table-column
         label="预约状态1代表已预约，0代表已取消"
         align="center"
         prop="reservationStatus"
       />
+
+      <el-table-column label="取消预约人的姓名" align="center" prop="cancelOperator" />
+      <el-table-column label="取消预约的时间" align="center" prop="cancelDatetime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.cancelDatetime, "{y}-{m}-{d}") }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -515,6 +541,8 @@ export default {
         passengerPhone: null,
         creationTime: null,
         reservationStatus: null,
+        cancelDatetime:null,
+        cancelOperator:null,
       },
       // 表单参数
       form: {},

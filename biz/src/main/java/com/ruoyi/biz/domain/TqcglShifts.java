@@ -1,13 +1,12 @@
 package com.ruoyi.biz.domain;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
 
 /**
  * 班次管理对象 tqcgl_shifts
@@ -78,6 +77,12 @@ public class TqcglShifts extends BaseEntity {
     @Excel(name = "司机联系电话")
     private String driversPhone;
 
+
+    /**
+     * 预约状态，可预约时为1，不可预约为0
+     */
+    @Excel(name = "班次的状态")
+    private int shiftsStatus;
     /**
      * 车牌号
      */
@@ -172,6 +177,14 @@ public class TqcglShifts extends BaseEntity {
         return vehiclesId;
     }
 
+    public int getShiftsStatus() {
+        return shiftsStatus;
+    }
+
+    public void setShiftsStatus(int shiftsStatus) {
+        this.shiftsStatus = shiftsStatus;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -186,6 +199,7 @@ public class TqcglShifts extends BaseEntity {
                 .append("driversName", getDriversName())
                 .append("driversPhone", getDriversPhone())
                 .append("vehiclesLicensePlate", getVehiclesLicensePlate())
+                .append("shiftsStatus", getShiftsStatus())
                 .toString();
     }
 }

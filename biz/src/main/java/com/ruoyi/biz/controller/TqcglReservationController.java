@@ -1,7 +1,13 @@
 package com.ruoyi.biz.controller;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.service.ISysUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +39,9 @@ public class TqcglReservationController extends BaseController
 {
     @Autowired
     private ITqcglReservationService tqcglReservationService;
+
+    @Autowired
+    private ISysUserService userService;
 
     /**
      * 查询预约管理列表
@@ -88,6 +97,13 @@ public class TqcglReservationController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody TqcglReservation tqcglReservation)
     {
+        String username;
+        Date now=new Date();
+        if(tqcglReservation.getReservationStatus()==2){
+            username = SecurityUtils.getUsername();
+            tqcglReservation.setCancelOperator(username);
+            tqcglReservation.setCancelDatetime(now);
+        }
         return toAjax(tqcglReservationService.updateTqcglReservation(tqcglReservation));
     }
 
@@ -112,4 +128,14 @@ public class TqcglReservationController extends BaseController
     {
         return success(tqcglReservationService.selectTqcglReservationByReservationId2(reservationId));
     }
+
+    @PostMapping("/userinfo")
+    public AjaxResult getUserInfo() {
+        // 获取当前登录用户名
+        String username = SecurityUtils.getUsername();
+        // 加载用户信息
+        SysUser user = userService.selectUserByUserName(username);
+        return AjaxResult.success(user);
+    }
+
 }

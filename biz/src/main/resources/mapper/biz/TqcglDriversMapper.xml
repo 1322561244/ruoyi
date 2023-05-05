@@ -29,21 +29,26 @@
         <include refid="selectTqcglDriversVo" /> where drivers_id = #{driversId} </select>
 
     <insert id="insertTqcglDrivers" parameterType="TqcglDrivers" useGeneratedKeys="true"
-        keyProperty="driversId"> insert into tqcgl_drivers <trim prefix="(" suffix=")"
-            suffixOverrides=",">
+        keyProperty="driversId">insert into tqcgl_drivers
+        <trim prefix="(" suffix=")"
+              suffixOverrides=",">
             <if test="driversName != null and driversName != ''">drivers_name,</if>
             <if
-                test="driversPhone != null and driversPhone != ''">drivers_phone,</if>
+                    test="driversPhone != null and driversPhone != ''">drivers_phone,
+            </if>
             <if
-                test="driversSupplier != null and driversSupplier != ''">drivers_supplier,</if>
+                    test="driversSupplier != null and driversSupplier != ''">drivers_supplier,
+            </if>
         </trim>
         <trim
-            prefix="values (" suffix=")" suffixOverrides=",">
+                prefix="values (" suffix=")" suffixOverrides=",">
             <if test="driversName != null and driversName != ''">#{driversName},</if>
             <if
-                test="driversPhone != null and driversPhone != ''">#{driversPhone},</if>
+                    test="driversPhone != null and driversPhone != ''">#{driversPhone},
+            </if>
             <if
-                test="driversSupplier != null and driversSupplier != ''">#{driversSupplier},</if>
+                    test="driversSupplier != null and driversSupplier != ''">#{driversSupplier},
+            </if>
         </trim>
     </insert>
 

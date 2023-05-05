@@ -39,7 +39,7 @@ public interface ITqcglReservationService
 
     /**
      * 新增预约管理
-     * 
+     *
      * @param tqcglReservation 预约管理
      * @return 结果
      */
@@ -68,4 +68,15 @@ public interface ITqcglReservationService
      * @return 结果
      */
     public int deleteTqcglReservationByReservationId(Long reservationId);
+
+    /**
+     * 新增预约管理
+     *
+     * @param tqcglReservation 预约管理
+     * @return 结果
+     */
+//    public String insertTqcglReservation2(TqcglReservation tqcglReservation);
+//
+//
+//    public int selectShiftsCountById(Long shiftsId);
 }

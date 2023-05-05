@@ -20,7 +20,7 @@
         <el-date-picker
           clearable
           v-model="queryParams.shiftsDepartureTime"
-          type="date"
+          type="datetime"
           value-format="yyyy-MM-dd HH:mm:ss"
           placeholder="请选择发车时间"
         >
@@ -130,7 +130,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班次id" align="center" prop="shiftsId" />
+      <!-- <el-table-column label="班次id" align="center" prop="shiftsId" /> -->
       <el-table-column label="班次名" align="center" prop="shiftsName" />
       <el-table-column
         label="发车时间"
@@ -139,9 +139,7 @@
         width="180"
       >
         <template slot-scope="scope">
-          <span>{{
-            parseTime(scope.row.shiftsDepartureTime, "{y}-{m}-{d} {h}:{i}:{s}")
-          }}</span>
+          <span>{{ parseTime(scope.row.shiftsDepartureTime, "{h}:{i}:{s}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="车长名" align="center" prop="leaderName" />

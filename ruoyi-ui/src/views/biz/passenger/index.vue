@@ -112,7 +112,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" />
+      <!-- <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" /> -->
       <el-table-column label="乘客姓名" align="center" prop="passengerName" />
       <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
       <el-table-column label="所属部门名称" align="center" prop="deptName" />

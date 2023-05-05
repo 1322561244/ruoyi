@@ -96,7 +96,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="车长ID，自增长" align="center" prop="leaderId" />
+      <!-- <el-table-column label="车长ID，自增长" align="center" prop="leaderId" /> -->
       <el-table-column label="车长姓名" align="center" prop="leaderName" />
       <el-table-column label="联系电话" align="center" prop="leaderPhone" />
       <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
@@ -173,7 +173,6 @@
             disabled="true"
           />
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -220,7 +219,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        leaderId:null,
+        leaderId: null,
         leaderName: null,
         leaderPhone: null,
         enterpriseName: null,

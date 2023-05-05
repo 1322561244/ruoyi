@@ -48,11 +48,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  LEFT JOIN tqcgl_shifts s ON r.shifts_id=s.shifts_id
 
                  LEFT JOIN tqcgl_vehicles v ON s.vehicles_id=v.vehicles_id
-                 LEFT JOIN tqcgl_drivers d ON  s.drivers_id=d.drivers_id
-                 LEFT JOIN tqcgl_leader l ON  s.leader_id=l.leader_id
+                 LEFT JOIN tqcgl_drivers d ON s.drivers_id=d.drivers_id
+                 LEFT JOIN tqcgl_leader l ON s.leader_id=l.leader_id
 
-                 LEFT JOIN tqcgl_enterprise e ON  p.enterprise_id=e.enterprise_id
-                 LEFT JOIN sys_dept dept ON  p.dept_id=dept.dept_id
+                 LEFT JOIN tqcgl_enterprise e ON p.enterprise_id=e.enterprise_id
+                 LEFT JOIN sys_dept dept ON p.dept_id=dept.dept_id
     </sql>
 
     <sql id="selectTqcglReservationVo3">
@@ -78,12 +78,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  LEFT JOIN tqcgl_shifts s ON r.shifts_id=s.shifts_id
 
                  LEFT JOIN tqcgl_vehicles v ON s.vehicles_id=v.vehicles_id
-                 LEFT JOIN tqcgl_drivers d ON  s.drivers_id=d.drivers_id
-                 LEFT JOIN tqcgl_leader l ON  s.leader_id=l.leader_id
+                 LEFT JOIN tqcgl_drivers d ON s.drivers_id=d.drivers_id
+                 LEFT JOIN tqcgl_leader l ON s.leader_id=l.leader_id
 
-                 LEFT JOIN tqcgl_enterprise e ON  p.enterprise_id=e.enterprise_id
-                 LEFT JOIN sys_dept dept ON  p.dept_id=dept.dept_id
-        </sql>
+                 LEFT JOIN tqcgl_enterprise e ON p.enterprise_id=e.enterprise_id
+                 LEFT JOIN sys_dept dept ON p.dept_id=dept.dept_id
+    </sql>
 
     <select id="selectTqcglReservationList2" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo2"/>
@@ -128,14 +128,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shiftsId != null">shifts_id,</if>
             <if test="passengerId != null">passenger_id,</if>
             <if test="reservationTime != null">reservation_time,</if>
-            <if test="creationTime != null">creation_time,</if>
+            creation_time,
             <if test="reservationStatus != null">reservation_status,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shiftsId != null">#{shiftsId},</if>
             <if test="passengerId != null">#{passengerId},</if>
             <if test="reservationTime != null">#{reservationTime},</if>
-            <if test="creationTime != null">#{creationTime},</if>
+            <if test="creationTime != null">sysdate(),</if>
             <if test="reservationStatus != null">#{reservationStatus},</if>
         </trim>
     </insert>
@@ -164,7 +164,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
 
-<!--点击修改后返回的-->
+    <!--点击修改后返回的-->
     <select id="selectTqcglReservationList" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo2"/>
         <where>

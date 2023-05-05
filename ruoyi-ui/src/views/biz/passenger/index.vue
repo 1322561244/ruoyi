@@ -147,7 +147,7 @@
           <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50" />
         </template>
       </el-table-column>
-      <el-table-column label="账号id" align="center" prop="userId" />
+      <el-table-column label="账号名" align="center" prop="userName" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -202,9 +202,9 @@
         <el-form-item label="乘客照片3" prop="passengerPhoto3">
           <image-upload v-model="form.passengerPhoto3" :limit="1" />
         </el-form-item>
-        <el-form-item label="账号id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入账号id" />
-        </el-form-item>
+        <!-- <el-form-item label="账号名" prop="userName">
+          <el-input v-model="form.userId" placeholder="请输入账号名" />
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

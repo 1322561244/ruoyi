@@ -172,7 +172,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="预约id" align="center" prop="reservationId" />
+      <!-- <el-table-column label="预约id" align="center" prop="reservationId" /> -->
       <el-table-column label="班次名" align="center" prop="shiftsName" />
       <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate" />
       <el-table-column label="司机姓名" align="center" prop="driversName" />

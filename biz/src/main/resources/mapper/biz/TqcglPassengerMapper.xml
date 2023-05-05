@@ -20,12 +20,23 @@
         passenger_phone, passenger_photo1, passenger_photo2, passenger_photo3, user_id from
         tqcgl_passenger </sql>
 
-    <sql id="selectTqcglPassengerVo2"> select passenger_id, passenger_name, enterprise_name,
-        dept_name, passenger_phone, passenger_photo1, passenger_photo2, passenger_photo3, user_id
-        from tqcgl_passenger p,tqcgl_enterprise e,sys_dept d </sql>
+    <sql id="selectTqcglPassengerVo2"> SELECT
+	passenger_id,
+	passenger_name,
+	enterprise_name,
+	dept_name,
+	passenger_phone,
+	passenger_photo1,
+	passenger_photo2,
+	passenger_photo3,
+	user_id 
+FROM
+	tqcgl_passenger p
+	LEFT JOIN tqcgl_enterprise e ON p.enterprise_id = e.enterprise_id
+	LEFT JOIN sys_dept d ON p.dept_id = d.dept_id </sql>
 
-    <select id="selectTqcglPassengerList" parameterType="TqcglPassenger"
-        resultMap="TqcglPassengerResult">
+
+    <select id="selectTqcglPassengerList" parameterType="TqcglPassenger" resultMap="TqcglPassengerResult">
         <include refid="selectTqcglPassengerVo2" />
         <where>
             <if test="passengerName != null  and passengerName != ''"> and passenger_name like
@@ -36,91 +47,73 @@
         #{dept_name}</if>
             <if test="passengerPhone != null  and passengerPhone != ''"> and
         passenger_phone = #{passengerPhone}</if>
-            <if
-                test="passengerPhoto1 != null  and passengerPhoto1 != ''"> and passenger_photo1 =
+            <if test="passengerPhoto1 != null  and passengerPhoto1 != ''"> and passenger_photo1 =
         #{passengerPhoto1}</if>
             <if test="passengerPhoto2 != null  and passengerPhoto2 != ''"> and
         passenger_photo2 = #{passengerPhoto2}</if>
-            <if
-                test="passengerPhoto3 != null  and passengerPhoto3 != ''"> and passenger_photo3 =
+            <if test="passengerPhoto3 != null  and passengerPhoto3 != ''"> and passenger_photo3 =
         #{passengerPhoto3}</if>
-            <if test="userId != null "> and user_id = #{userId}</if> and
-        e.enterprise_id=p.enterprise_id and d.dept_id=p.dept_id </where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+        </where>
     </select>
 
-    <select id="selectTqcglPassengerByPassengerId" parameterType="Long"
-        resultMap="TqcglPassengerResult">
-        <include refid="selectTqcglPassengerVo" /> where passenger_id = #{passengerId} </select>
+    <select id="selectTqcglPassengerByPassengerId" parameterType="Long" resultMap="TqcglPassengerResult">
+        <include refid="selectTqcglPassengerVo" />
+ where passenger_id = #{passengerId} </select>
 
 
-    <select id="selectTqcglPassengerByPassengerId2" parameterType="Long"
-        resultMap="TqcglPassengerResult">
-        <include refid="selectTqcglPassengerVo2" /> where passenger_id = #{passengerId} and
-        e.enterprise_id=p.enterprise_id and d.dept_id=p.dept_id </select>
+    <select id="selectTqcglPassengerByPassengerId2" parameterType="Long" resultMap="TqcglPassengerResult">
+        <include refid="selectTqcglPassengerVo2" />
+ where passenger_id = #{passengerId} and e.enterprise_id=p.enterprise_id and d.dept_id=p.dept_id </select>
 
 
-    <insert id="insertTqcglPassenger" parameterType="TqcglPassenger" useGeneratedKeys="true"
-        keyProperty="passengerId"> insert into tqcgl_passenger <trim prefix="(" suffix=")"
-            suffixOverrides=",">
-            <if test="passengerName != null and passengerName != ''">passenger_name,</if>
-            <if
-                test="enterpriseId != null">enterprise_id,</if>
-            <if test="deptId != null">dept_id,</if>
-            <if
-                test="passengerPhone != null and passengerPhone != ''">passenger_phone,</if>
-            <if
-                test="passengerPhoto1 != null">passenger_photo1,</if>
-            <if
-                test="passengerPhoto2 != null">passenger_photo2,</if>
-            <if
-                test="passengerPhoto3 != null">passenger_photo3,</if>
-            <if test="userId != null">
+    <insert id="insertTqcglPassenger" parameterType="TqcglPassenger" useGeneratedKeys="true" keyProperty="passengerId"> insert into tqcgl_passenger <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="passengerName != null and passengerName != ''">passenger_name,</if>
+        <if test="enterpriseId != null">enterprise_id,</if>
+        <if test="deptId != null">dept_id,</if>
+        <if test="passengerPhone != null and passengerPhone != ''">passenger_phone,</if>
+        <if test="passengerPhoto1 != null">passenger_photo1,</if>
+        <if test="passengerPhoto2 != null">passenger_photo2,</if>
+        <if test="passengerPhoto3 != null">passenger_photo3,</if>
+        <if test="userId != null">
         user_id,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
-            <if
-                test="enterpriseId != null">#{enterpriseId},</if>
-            <if test="deptId != null">
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
+        <if test="enterpriseId != null">#{enterpriseId},</if>
+        <if test="deptId != null">
         #{deptId},</if>
-            <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
-            <if
-                test="passengerPhoto1 != null">#{passengerPhoto1},</if>
-            <if
-                test="passengerPhoto2 != null">#{passengerPhoto2},</if>
-            <if
-                test="passengerPhoto3 != null">#{passengerPhoto3},</if>
-            <if test="userId != null">
+        <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
+        <if test="passengerPhoto1 != null">#{passengerPhoto1},</if>
+        <if test="passengerPhoto2 != null">#{passengerPhoto2},</if>
+        <if test="passengerPhoto3 != null">#{passengerPhoto3},</if>
+        <if test="userId != null">
         #{userId},</if>
-        </trim>
-    </insert>
+    </trim>
+</insert>
 
-    <update id="updateTqcglPassenger" parameterType="TqcglPassenger"> update tqcgl_passenger <trim
-            prefix="SET" suffixOverrides=",">
-            <if test="passengerName != null and passengerName != ''">passenger_name =
+<update id="updateTqcglPassenger" parameterType="TqcglPassenger"> update tqcgl_passenger <trim prefix="SET" suffixOverrides=",">
+    <if test="passengerName != null and passengerName != ''">passenger_name =
         #{passengerName},</if>
-            <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
-            <if
-                test="deptId != null">dept_id = #{deptId},</if>
-            <if
-                test="passengerPhone != null and passengerPhone != ''">passenger_phone =
+    <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+    <if test="deptId != null">dept_id = #{deptId},</if>
+    <if test="passengerPhone != null and passengerPhone != ''">passenger_phone =
         #{passengerPhone},</if>
-            <if test="passengerPhoto1 != null">passenger_photo1 =
+    <if test="passengerPhoto1 != null">passenger_photo1 =
         #{passengerPhoto1},</if>
-            <if test="passengerPhoto2 != null">passenger_photo2 =
+    <if test="passengerPhoto2 != null">passenger_photo2 =
         #{passengerPhoto2},</if>
-            <if test="passengerPhoto3 != null">passenger_photo3 =
+    <if test="passengerPhoto3 != null">passenger_photo3 =
         #{passengerPhoto3},</if>
-            <if test="userId != null">user_id = #{userId},</if>
-        </trim>
+    <if test="userId != null">user_id = #{userId},</if>
+</trim>
         where passenger_id = #{passengerId} </update>
 
-    <delete id="deleteTqcglPassengerByPassengerId" parameterType="Long"> delete from tqcgl_passenger
+<delete id="deleteTqcglPassengerByPassengerId" parameterType="Long"> delete from tqcgl_passenger
         where passenger_id = #{passengerId} </delete>
 
-    <delete id="deleteTqcglPassengerByPassengerIds" parameterType="String"> delete from
-        tqcgl_passenger where passenger_id in <foreach item="passengerId" collection="array"
-            open="(" separator="," close=")"> #{passengerId} </foreach>
-    </delete>
+<delete id="deleteTqcglPassengerByPassengerIds" parameterType="String"> delete from
+        tqcgl_passenger where passenger_id in <foreach item="passengerId" collection="array" open="(" separator="," close=")"> #{passengerId} </foreach>
+</delete>
 
 </mapper>

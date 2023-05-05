@@ -3,26 +3,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.biz.mapper.TqcglReservationMapper">
-    
-    <resultMap type="TqcglReservation" id="TqcglReservationResult">
-        <result property="reservationId"    column="reservation_id"    />
-        <result property="shiftsId"    column="shifts_id"    />
-        <result property="passengerId"    column="passenger_id"    />
-        <result property="reservationTime"    column="reservation_time"    />
-        <result property="creationTime"    column="creation_time"    />
-        <result property="reservationStatus"    column="reservation_status"    />
 
-        <result property="shiftsName"    column="shifts_name"    />
-        <result property="vehiclesLicensePlate"    column="vehicles_license_plate"    />
-        <result property="driversName"    column="drivers_name"    />
-        <result property="driversPhone"    column="drivers_phone"    />
-        <result property="leaderName"    column="leader_name"    />
-        <result property="leaderPhone"    column="leader_phone"    />
-        <result property="reservationTime"    column="reservation_time"    />
-        <result property="passengerName"    column="passenger_name"    />
-        <result property="deptName"    column="dept_name"    />
-        <result property="enterpriseName"    column="enterprise_name"    />
-        <result property="passengerPhone"    column="passenger_phone"    />
+    <resultMap type="TqcglReservation" id="TqcglReservationResult">
+        <result property="reservationId" column="reservation_id" />
+        <result property="shiftsId" column="shifts_id" />
+        <result property="passengerId" column="passenger_id" />
+        <result property="reservationTime" column="reservation_time" />
+        <result property="creationTime" column="creation_time" />
+        <result property="reservationStatus" column="reservation_status" />
+        <result property="shiftsName" column="shifts_name" />
+        <result property="vehiclesLicensePlate" column="vehicles_license_plate" />
+        <result property="driversName" column="drivers_name" />
+        <result property="driversPhone" column="drivers_phone" />
+        <result property="leaderName" column="leader_name" />
+        <result property="leaderPhone" column="leader_phone" />
+        <result property="reservationTime" column="reservation_time" />
+        <result property="passengerName" column="passenger_name" />
+        <result property="deptName" column="dept_name" />
+        <result property="enterpriseName" column="enterprise_name" />
+        <result property="passengerPhone" column="passenger_phone" />
     </resultMap>
 
     <sql id="selectTqcglReservationVo">
@@ -71,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
 
     </select>
-    
+
     <select id="selectTqcglReservationByReservationId" parameterType="Long" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo"/>
         where reservation_id = #{reservationId}
@@ -97,14 +96,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reservationTime != null">reservation_time,</if>
             <if test="creationTime != null">creation_time,</if>
             <if test="reservationStatus != null">reservation_status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shiftsId != null">#{shiftsId},</if>
             <if test="passengerId != null">#{passengerId},</if>
             <if test="reservationTime != null">#{reservationTime},</if>
             <if test="creationTime != null">#{creationTime},</if>
             <if test="reservationStatus != null">#{reservationStatus},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateTqcglReservation" parameterType="TqcglReservation">

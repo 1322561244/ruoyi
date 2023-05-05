@@ -3,96 +3,116 @@
 <mapper namespace="com.ruoyi.biz.mapper.TqcglShiftsMapper">
 
     <resultMap type="TqcglShifts" id="TqcglShiftsResult">
-        <result property="shiftsId" column="shifts_id" />
-        <result property="shiftsName" column="shifts_name" />
-        <result property="shiftsDepartureTime" column="shifts_departure_time" />
-        <result property="leaderId" column="leader_id" />
-        <result property="driversId" column="drivers_id" />
-        <result property="vehiclesId" column="vehicles_id" />
-        <result property="leaderName" column="leader_name" />
-        <result property="leaderPhone" column="leader_phone" />
-        <result property="driversName" column="drivers_name" />
-        <result property="driversPhone" column="drivers_phone" />
-        <result property="vehiclesLicensePlate" column="vehicles_license_plate" />
+        <result property="shiftsId" column="shifts_id"/>
+        <result property="shiftsName" column="shifts_name"/>
+        <result property="shiftsDepartureTime" column="shifts_departure_time"/>
+        <result property="leaderId" column="leader_id"/>
+        <result property="driversId" column="drivers_id"/>
+        <result property="vehiclesId" column="vehicles_id"/>
+        <result property="leaderName" column="leader_name"/>
+        <result property="leaderPhone" column="leader_phone"/>
+        <result property="driversName" column="drivers_name"/>
+        <result property="driversPhone" column="drivers_phone"/>
+        <result property="vehiclesLicensePlate" column="vehicles_license_plate"/>
     </resultMap>
 
-    <sql id="selectTqcglShiftsVo"> select shifts_id, shifts_name, shifts_departure_time, leader_id,
-        drivers_id, vehicles_id from tqcgl_shifts </sql>
+    <sql id="selectTqcglShiftsVo"> select shifts_id,
+                                          shifts_name,
+                                          shifts_departure_time,
+                                          leader_id,
+                                          drivers_id,
+                                          vehicles_id
+                                   from tqcgl_shifts </sql>
 
-    <sql id="selectTqcglShiftsVo2"> SELECT
-    s.shifts_id,
-    s.shifts_name,
-    s.shifts_departure_time,
-    l.leader_name,
-    l.leader_phone,
-    d.drivers_name,
-    d.drivers_phone,
-    v.vehicles_license_plate 
-FROM
-    tqcgl_shifts s
-    LEFT JOIN tqcgl_leader l ON s.leader_id = l.leader_id
-    LEFT JOIN tqcgl_drivers d ON s.drivers_id = d.drivers_id
-    LEFT JOIN tqcgl_vehicles v ON s.vehicles_id = v.vehicles_id </sql>
+    <sql id="selectTqcglShiftsVo2"> SELECT s.shifts_id,
+                                           s.shifts_name,
+                                           s.shifts_departure_time,
+                                           l.leader_name,
+                                           l.leader_phone,
+                                           d.drivers_name,
+                                           d.drivers_phone,
+                                           v.vehicles_license_plate
+                                    FROM tqcgl_shifts s
+                                             LEFT JOIN tqcgl_leader l ON s.leader_id = l.leader_id
+                                             LEFT JOIN tqcgl_drivers d ON s.drivers_id = d.drivers_id
+                                             LEFT JOIN tqcgl_vehicles v ON s.vehicles_id = v.vehicles_id </sql>
 
     <select id="selectTqcglShiftsList" parameterType="TqcglShifts" resultMap="TqcglShiftsResult">
-        <include refid="selectTqcglShiftsVo2" />
+        <include refid="selectTqcglShiftsVo2"/>
         <where>
-            <if test="shiftsName != null  and shiftsName != ''"> and shifts_name like concat('%',
-        #{shiftsName}, '%')</if>
-            <if test="shiftsDepartureTime != null  and shiftsDepartureTime != ''"> and
-        shifts_departure_time = #{shiftsDepartureTime}</if>
-            <if test="leaderName != null  and leaderName != ''"> and leader_name like concat('%',
-        #{leaderName}, '%')</if>
-            <if test="leaderPhone != null  and leaderPhone != ''"> and
-        leader_phone like concat('%', #{leaderPhone}, '%')</if>
-            <if test="driversName != null  and driversName != ''"> and drivers_name like concat('%',
-        #{driversName}, '%')</if>
-            <if test="driversPhone != null  and driversPhone != ''"> and
-        drivers_phone like concat('%', #{driversPhone}, '%')</if>
-            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''"> and
-        vehicles_license_plate like concat('%', #{vehiclesLicensePlate}, '%')</if>
+            <if test="shiftsName != null  and shiftsName != ''">and shifts_name like concat('%',
+                #{shiftsName}, '%')
+            </if>
+            <if test="shiftsDepartureTime != null  and shiftsDepartureTime != ''">and
+                shifts_departure_time = #{shiftsDepartureTime}
+            </if>
+            <if test="leaderName != null  and leaderName != ''">and leader_name like concat('%',
+                #{leaderName}, '%')
+            </if>
+            <if test="leaderPhone != null  and leaderPhone != ''">and
+                leader_phone like concat('%', #{leaderPhone}, '%')
+            </if>
+            <if test="driversName != null  and driversName != ''">and drivers_name like concat('%',
+                #{driversName}, '%')
+            </if>
+            <if test="driversPhone != null  and driversPhone != ''">and
+                drivers_phone like concat('%', #{driversPhone}, '%')
+            </if>
+            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''">and
+                vehicles_license_plate like concat('%', #{vehiclesLicensePlate}, '%')
+            </if>
         </where>
     </select>
 
     <select id="selectTqcglShiftsByShiftsId" parameterType="Long" resultMap="TqcglShiftsResult">
-        <include refid="selectTqcglShiftsVo" />
- where shifts_id = #{shiftsId} </select>
+        <include refid="selectTqcglShiftsVo"/>
+        where shifts_id = #{shiftsId}
+    </select>
 
     <select id="selectTqcglShiftsByShiftsId2" parameterType="Long" resultMap="TqcglShiftsResult">
-        <include refid="selectTqcglShiftsVo2" />
- where shifts_id = #{shiftsId} and s.leader_id=l.leader_id and s.drivers_id=d.drivers_id and s.vehicles_id=v.vehicles_id </select>
+        <include refid="selectTqcglShiftsVo2"/>
+        where shifts_id = #{shiftsId}
+    </select>
 
-    <insert id="insertTqcglShifts" parameterType="TqcglShifts" useGeneratedKeys="true" keyProperty="shiftsId"> insert into tqcgl_shifts <trim prefix="(" suffix=")" suffixOverrides=",">
-        <if test="shiftsName != null and shiftsName != ''">shifts_name,</if>
-        <if test="shiftsDepartureTime != null">shifts_departure_time,</if>
-        <if test="leaderId != null">leader_id,</if>
-        <if test="driversId != null">drivers_id,</if>
-        <if test="vehiclesId != null">vehicles_id,</if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-        <if test="shiftsName != null and shiftsName != ''">#{shiftsName},</if>
-        <if test="shiftsDepartureTime != null">#{shiftsDepartureTime},</if>
-        <if test="leaderId != null">#{leaderId},</if>
-        <if test="driversId != null">#{driversId},</if>
-        <if test="vehiclesId != null">#{vehiclesId},</if>
-    </trim>
-</insert>
+    <insert id="insertTqcglShifts" parameterType="TqcglShifts" useGeneratedKeys="true" keyProperty="shiftsId">insert
+        into tqcgl_shifts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shiftsName != null and shiftsName != ''">shifts_name,</if>
+            <if test="shiftsDepartureTime != null">shifts_departure_time,</if>
+            <if test="leaderId != null">leader_id,</if>
+            <if test="driversId != null">drivers_id,</if>
+            <if test="vehiclesId != null">vehicles_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shiftsName != null and shiftsName != ''">#{shiftsName},</if>
+            <if test="shiftsDepartureTime != null">#{shiftsDepartureTime},</if>
+            <if test="leaderId != null">#{leaderId},</if>
+            <if test="driversId != null">#{driversId},</if>
+            <if test="vehiclesId != null">#{vehiclesId},</if>
+        </trim>
+    </insert>
 
-<update id="updateTqcglShifts" parameterType="TqcglShifts"> update tqcgl_shifts <trim prefix="SET" suffixOverrides=",">
-    <if test="shiftsName != null and shiftsName != ''">shifts_name = #{shiftsName},</if>
-    <if test="shiftsDepartureTime != null">shifts_departure_time = #{shiftsDepartureTime},</if>
-    <if test="leaderId != null">leader_id = #{leaderId},</if>
-    <if test="driversId != null">drivers_id
-        = #{driversId},</if>
-    <if test="vehiclesId != null">vehicles_id = #{vehiclesId},</if>
-</trim>
-        where shifts_id = #{shiftsId} </update>
+    <update id="updateTqcglShifts" parameterType="TqcglShifts">update tqcgl_shifts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shiftsName != null and shiftsName != ''">shifts_name = #{shiftsName},</if>
+            <if test="shiftsDepartureTime != null">shifts_departure_time = #{shiftsDepartureTime},</if>
+            <if test="leaderId != null">leader_id = #{leaderId},</if>
+            <if test="driversId != null">drivers_id
+                = #{driversId},
+            </if>
+            <if test="vehiclesId != null">vehicles_id = #{vehiclesId},</if>
+        </trim>
+        where shifts_id = #{shiftsId}
+    </update>
 
-<delete id="deleteTqcglShiftsByShiftsId" parameterType="Long"> delete from tqcgl_shifts where
-        shifts_id = #{shiftsId} </delete>
+    <delete id="deleteTqcglShiftsByShiftsId" parameterType="Long"> delete
+                                                                   from tqcgl_shifts
+                                                                   where shifts_id = #{shiftsId} </delete>
 
-<delete id="deleteTqcglShiftsByShiftsIds" parameterType="String"> delete from tqcgl_shifts where
-        shifts_id in <foreach item="shiftsId" collection="array" open="(" separator="," close=")">
-        #{shiftsId} </foreach>
-</delete>
+    <delete id="deleteTqcglShiftsByShiftsIds" parameterType="String">delete from tqcgl_shifts where
+        shifts_id in
+        <foreach item="shiftsId" collection="array" open="(" separator="," close=")">
+            #{shiftsId}
+        </foreach>
+    </delete>
 </mapper>

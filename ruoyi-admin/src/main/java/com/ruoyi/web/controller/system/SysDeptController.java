@@ -129,4 +129,17 @@ public class SysDeptController extends BaseController
         deptService.checkDeptDataScope(deptId);
         return toAjax(deptService.deleteDeptById(deptId));
     }
+
+
+    /**
+     * 根据所属企业编号获取详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('system:dept:query')")
+    @GetMapping(value = "/2{enterpriseId}")
+    public AjaxResult getInfo2(@PathVariable Long enterpriseId)
+    {
+        SysDept dept=new SysDept();
+        dept.setEnterpriseId(enterpriseId);
+        return success(deptService.selectDeptByEnterpriseId(dept));
+    }
 }

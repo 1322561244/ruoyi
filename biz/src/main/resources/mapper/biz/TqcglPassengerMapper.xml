@@ -63,8 +63,9 @@ FROM
 
 
     <select id="selectTqcglPassengerByPassengerId2" parameterType="Long" resultMap="TqcglPassengerResult">
-        <include refid="selectTqcglPassengerVo2" />
- where passenger_id = #{passengerId} and e.enterprise_id=p.enterprise_id and d.dept_id=p.dept_id </select>
+        <include refid="selectTqcglPassengerVo2"/>
+        where passenger_id = #{passengerId}
+    </select>
 
 
     <insert id="insertTqcglPassenger" parameterType="TqcglPassenger" useGeneratedKeys="true" keyProperty="passengerId"> insert into tqcgl_passenger <trim prefix="(" suffix=")" suffixOverrides=",">

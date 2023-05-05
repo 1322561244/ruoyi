@@ -50,3 +50,11 @@ export function delDept(deptId) {
     method: 'delete'
   })
 }
+
+//根据所属部门查找部门id和部门名
+export function selectDept(enterpriseId){
+  return request({
+    url: '/system/dept/2' + enterpriseId,
+    method: 'get'
+  })
+}

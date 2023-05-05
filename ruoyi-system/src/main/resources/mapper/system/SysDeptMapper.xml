@@ -145,4 +145,17 @@
 	<delete id="deleteDeptById" parameterType="Long"> update sys_dept set del_flag = '2' where
 		dept_id = #{deptId} </delete>
 
+
+	<select id="selectDeptByEnterpriseId" parameterType="SysDept" resultMap="SysDeptResult">select * from sys_dept
+            <if test="enterpriseId != null">where enterprise_id = #{enterpriseId}</if>
+
+    </select>
+
+
+	<select id="selectDeptList2" parameterType="SysDept" resultMap="SysDeptResult">
+		select d.dept_id,d.dept_name, e.enterprise_id,e.enterprise_name from sys_dept d
+		    left join tqclg_enterprise e ON d.enterprise_id=e.enterprise_id
+		<if test="enterpriseId != null">where enterprise_id = #{enterpriseId}</if>
+
+	</select>
 </mapper> 

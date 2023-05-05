@@ -366,7 +366,6 @@
           </el-select>
         </el-form-item>
         <el-form-item label="乘客名" prop="passengerId">
-          <!--          <el-input v-model="form.passengerName" placeholder="请输入乘客名" />-->
           <el-select
             v-model="form.passengerId"
             placeholder="请选择乘客"
@@ -550,6 +549,7 @@ export default {
     },
     updateOrderList3(shiftsId) {
       getShifts2(shiftsId).then((response) => {
+        this.form.shiftsId = response.data.shiftsId;
         this.form.shiftsName = response.data.shiftsName;
         this.form.vehiclesLicensePlate = response.data.vehiclesLicensePlate;
         this.form.driversName = response.data.driversName;
@@ -647,15 +647,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const reservationId = row.reservationId || this.ids;
-      this.form.vehiclesLicensePlate = row.vehiclesLicensePlate;
-      this.form.driversName = row.driversName;
-      this.form.driversPhone = row.driversName;
-      this.form.leaderName = row.leaderName;
-      this.form.leaderPhone = row.leaderPhone;
-      this.form.passengerName = row.passengerName;
-      this.form.deptName = row.deptName;
-      this.form.enterpriseName = row.enterpriseName;
-      this.form.passengerPhone = row.passengerPhone;
+      this.form.shiftsName=row.shiftsName;
+      this.form.passengerName=row.passengerName;
       getReservation2(reservationId).then((response) => {
         this.form = response.data;
         this.openUpdate = true;

@@ -303,4 +303,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     private boolean hasChild(List<SysDept> list, SysDept t) {
         return getChildList(list, t).size() > 0;
     }
+
+
+    public List<SysDept> selectDeptByEnterpriseId(SysDept dept){
+        return deptMapper.selectDeptByEnterpriseId(dept);
+    }
+
+    public List<SysDept> selectDeptList2(){
+        return deptMapper.selectDeptList2();
+    }
+
 }

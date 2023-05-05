@@ -117,4 +117,12 @@ public interface SysDeptMapper {
      * @return 结果
      */
     public int deleteDeptById(Long deptId);
+
+
+    public List<SysDept> selectDeptByEnterpriseId(SysDept dept);
+
+
+    /**
+     * 获取所有部门的名称及其对应的所属企业名*/
+    public List<SysDept> selectDeptList2();
 }

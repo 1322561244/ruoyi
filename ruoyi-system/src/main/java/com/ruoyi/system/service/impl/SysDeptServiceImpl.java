@@ -296,7 +296,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
         }
         return tlist;
     }
-
     /**
      * 判断是否有子节点
      */
@@ -304,13 +303,5 @@ public class SysDeptServiceImpl implements ISysDeptService {
         return getChildList(list, t).size() > 0;
     }
 
-
-    public List<SysDept> selectDeptByEnterpriseId(SysDept dept){
-        return deptMapper.selectDeptByEnterpriseId(dept);
-    }
-
-    public List<SysDept> selectDeptList2(){
-        return deptMapper.selectDeptList2();
-    }
 
 }

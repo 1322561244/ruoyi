@@ -98,6 +98,7 @@ public class TqcglReservationController extends BaseController
     public AjaxResult edit(@RequestBody TqcglReservation tqcglReservation)
     {
         String username;
+        Long userId=SecurityUtils.getUserId();
         Date now=new Date();
         if(tqcglReservation.getReservationStatus()==2){
             username = SecurityUtils.getUsername();

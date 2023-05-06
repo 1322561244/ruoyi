@@ -154,8 +154,8 @@
             <if test="reservationTime != null">reservation_time = #{reservationTime},</if>
             <if test="creationTime != null">creation_time = #{creationTime},</if>
             <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>
-            <if test="cancelOperator != null ">cancel_operator = #{cancelOperator}</if>
-            <if test="cancelDatetime != null ">cancel_datetime = #{cancelDatetime}</if>
+            <if test="cancelOperator != null ">cancel_operator = #{cancelOperator},</if>
+            <if test="cancelDatetime != null ">cancel_datetime = #{cancelDatetime},</if>
         </trim>
         where reservation_id = #{reservationId}
     </update>
@@ -190,6 +190,5 @@
             <if test="creationTime != null "> and r.creation_time = #{creationTime}</if>
             <if test="reservationStatus != null "> and r.reservation_status = #{reservationStatus}</if>
         </where>
-
     </select>
 </mapper>

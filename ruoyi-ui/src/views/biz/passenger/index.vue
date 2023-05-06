@@ -50,7 +50,8 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
-          >搜索</el-button
+        >搜索
+        </el-button
         >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
@@ -65,7 +66,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:passenger:add']"
-          >新增</el-button
+        >新增
+        </el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -77,7 +79,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:passenger:edit']"
-          >修改</el-button
+        >修改
+        </el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -89,7 +92,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:passenger:remove']"
-          >删除</el-button
+        >删除
+        </el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -100,7 +104,8 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:passenger:export']"
-          >导出</el-button
+        >导出
+        </el-button
         >
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -111,12 +116,12 @@
       :data="passengerList"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="55" align="center"/>
       <!-- <el-table-column label="乘客ID，自增长" align="center" prop="passengerId" /> -->
-      <el-table-column label="乘客姓名" align="center" prop="passengerName" />
-      <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
-      <el-table-column label="所属部门名称" align="center" prop="deptName" />
-      <el-table-column label="联系电话" align="center" prop="passengerPhone" />
+      <el-table-column label="乘客姓名" align="center" prop="passengerName"/>
+      <el-table-column label="所属企业名称" align="center" prop="enterpriseName"/>
+      <el-table-column label="所属部门名称" align="center" prop="deptName"/>
+      <el-table-column label="联系电话" align="center" prop="passengerPhone"/>
       <el-table-column
         label="乘客照片1"
         align="center"
@@ -124,7 +129,7 @@
         width="100"
       >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50" />
+          <image-preview :src="scope.row.passengerPhoto1" :width="50" :height="50"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -134,7 +139,7 @@
         width="100"
       >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50" />
+          <image-preview :src="scope.row.passengerPhoto2" :width="50" :height="50"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -144,10 +149,10 @@
         width="100"
       >
         <template slot-scope="scope">
-          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50" />
+          <image-preview :src="scope.row.passengerPhoto3" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="账号名" align="center" prop="userName" />
+      <el-table-column label="账号名" align="center" prop="userName"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -156,7 +161,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:passenger:edit']"
-            >修改</el-button
+          >修改
+          </el-button
           >
           <el-button
             size="mini"
@@ -164,7 +170,8 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:passenger:remove']"
-            >删除</el-button
+          >删除
+          </el-button
           >
         </template>
       </el-table-column>
@@ -182,25 +189,39 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="乘客姓名" prop="passengerName">
-          <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
+          <el-input v-model="form.passengerName" placeholder="请输入乘客姓名"/>
         </el-form-item>
-        <el-form-item label="所属企业名称" prop="enterpriseName">
-          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />
+        <el-form-item label="所属企业名称" prop="enterpriseId">
+          <el-select v-model="form.enterpriseId" placeholder="请选择所属企业" @change="UpdateDept(form.enterpriseId)">
+            <el-option
+              v-for="iteam in enterpriseList"
+              :label="iteam.enterpriseName"
+              :value="iteam.enterpriseId"
+              :key="iteam.enterpriseId"
+            />
+          </el-select>
         </el-form-item>
-        <el-form-item label="所属部门名称" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入所属部门名称" />
+        <el-form-item label="所属部门名称" prop="deptId">
+          <el-select v-model="form.deptId" placeholder="请选择所属部门">
+            <el-option
+              v-for="iteam in deptList"
+              :label="iteam.deptName"
+              :value="iteam.deptId"
+              :key="iteam.deptId"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="联系电话" prop="passengerPhone">
-          <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
+          <el-input v-model="form.passengerPhone" placeholder="请输入联系电话"/>
         </el-form-item>
         <el-form-item label="乘客照片1" prop="passengerPhoto1">
-          <image-upload v-model="form.passengerPhoto1" :limit="1" />
+          <image-upload v-model="form.passengerPhoto1" :limit="1"/>
         </el-form-item>
         <el-form-item label="乘客照片2" prop="passengerPhoto2">
-          <image-upload v-model="form.passengerPhoto2" :limit="1" />
+          <image-upload v-model="form.passengerPhoto2" :limit="1"/>
         </el-form-item>
         <el-form-item label="乘客照片3" prop="passengerPhoto3">
-          <image-upload v-model="form.passengerPhoto3" :limit="1" />
+          <image-upload v-model="form.passengerPhoto3" :limit="1"/>
         </el-form-item>
         <!-- <el-form-item label="账号名" prop="userName">
           <el-input v-model="form.userId" placeholder="请输入账号名" />
@@ -215,13 +236,9 @@
 </template>
 
 <script>
-import {
-  addPassenger,
-  delPassenger,
-  getPassenger,
-  listPassenger,
-  updatePassenger,
-} from "@/api/biz/passenger";
+import {addPassenger, delPassenger, getPassenger, listPassenger, updatePassenger,} from "@/api/biz/passenger";
+import {selectDept} from "@/api/system/dept";
+import {listEnterprise} from "@/api/biz/enterprise";
 
 export default {
   name: "Passenger",
@@ -262,17 +279,35 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        passengerName: [{ required: true, message: "乘客姓名不能为空", trigger: "blur" }],
+        passengerName: [{required: true, message: "乘客姓名不能为空", trigger: "blur"}],
         passengerPhone: [
-          { required: true, message: "联系电话不能为空", trigger: "blur" },
+          {required: true, message: "联系电话不能为空", trigger: "blur"},
         ],
       },
+
     };
+  },
+  mounted() {
+    this.getEnterpriseList();
   },
   created() {
     this.getList();
   },
   methods: {
+    getEnterpriseList() {
+      this.loading = true;
+      listEnterprise(this.queryParams).then((response) => {
+        this.enterpriseList = response.rows;
+        this.loading = false;
+      });
+    },
+    UpdateDept(enterpriseId) {
+      selectDept(enterpriseId).then((response) => {
+        this.deptList = response.data;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
     /** 查询乘客管理列表 */
     getList() {
       this.loading = true;
@@ -366,7 +401,8 @@ export default {
           this.getList();
           this.$modal.msgSuccess("删除成功");
         })
-        .catch(() => {});
+        .catch(() => {
+        });
     },
     /** 导出按钮操作 */
     handleExport() {

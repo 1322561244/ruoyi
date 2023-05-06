@@ -123,11 +123,6 @@ public interface ISysDeptService {
     public int deleteDeptById(Long deptId);
 
 
-    public List<SysDept> selectDeptByEnterpriseId(SysDept dept);
 
-    /***
-     * 获取部门名及其对应的所属企业名
-     */
-    public List<SysDept> selectDeptList2();
 
 }

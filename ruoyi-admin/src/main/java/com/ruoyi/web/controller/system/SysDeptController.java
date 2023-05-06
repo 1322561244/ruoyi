@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -131,15 +133,5 @@ public class SysDeptController extends BaseController
     }
 
 
-    /**
-     * 根据所属企业编号获取详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('system:dept:query')")
-    @GetMapping(value = "/2{enterpriseId}")
-    public AjaxResult getInfo2(@PathVariable Long enterpriseId)
-    {
-        SysDept dept=new SysDept();
-        dept.setEnterpriseId(enterpriseId);
-        return success(deptService.selectDeptByEnterpriseId(dept));
-    }
+
 }

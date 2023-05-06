@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.WeChat.mapper.WeChatReservationMapper">
+
+    <resultMap type="WeChatReservation" id="WeChatReservationResult">
+        <result property="shiftsId" column="shifts_id"/>
+        <result property="shiftsName" column="shifts_name"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+
+    <!--    索引所有班次的信息-->
+    <select id="selectShiftsList" parameterType="WeChatReservation" resultMap="WeChatReservationResult">
+        select shifts_id, shifts_name
+        from tqcgl_shifts
+    </select>
+
+    <!--    通过开始和结束时间索引班次的预约信息-->
+    <select id="selectShiftsListByTime" parameterType="WeChatReservation" resultMap="WeChatReservationResult">
+        select d.date_format(d.date_time, '%y-%m-%d'), date_format(s.shifts_departure_time, '%h:%i:%s'), s.shifts_status
+        from tqcgl_shifts s
+                 left join tqcgl_shifts_date d on d.shifts_id = s.shifts_id
+        where date_time between #{startTime} and #{endTime}
+          and s.shifts_id = #{shiftsId}
+    </select>
+
+
+</mapper>

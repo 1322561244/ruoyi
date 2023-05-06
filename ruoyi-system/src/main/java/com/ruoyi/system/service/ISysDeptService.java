@@ -124,9 +124,4 @@ public interface ISysDeptService {
 
     public List<SysDept> selectDeptByEnterpriseId(Long enterpriseId);
 
-    /***
-     * 获取部门名及其对应的所属企业名
-     */
-    public List<SysDept> selectDeptList2();
-
 }

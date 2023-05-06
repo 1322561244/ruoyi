@@ -83,6 +83,8 @@ public class TqcglShifts extends BaseEntity {
      */
     @Excel(name = "班次的状态")
     private int shiftsStatus;
+
+
     /**
      * 车牌号
      */

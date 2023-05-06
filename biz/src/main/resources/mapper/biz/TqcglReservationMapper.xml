@@ -190,6 +190,5 @@
             <if test="creationTime != null "> and r.creation_time = #{creationTime}</if>
             <if test="reservationStatus != null "> and r.reservation_status = #{reservationStatus}</if>
         </where>
-
     </select>
 </mapper>

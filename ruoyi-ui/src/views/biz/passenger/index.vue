@@ -42,8 +42,8 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
-          >搜索</el-button
-        >
+          >搜索
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
@@ -57,8 +57,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:passenger:add']"
-          >新增</el-button
-        >
+          >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -69,8 +69,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:passenger:edit']"
-          >修改</el-button
-        >
+          >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -81,8 +81,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:passenger:remove']"
-          >删除</el-button
-        >
+          >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -92,8 +92,8 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:passenger:export']"
-          >导出</el-button
-        >
+          >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -153,16 +153,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:passenger:edit']"
-            >修改</el-button
-          >
+            >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:passenger:remove']"
-            >删除</el-button
-          >
+            >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

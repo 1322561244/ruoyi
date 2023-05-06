@@ -5,12 +5,12 @@
     <resultMap type="TqcglEnterprise" id="TqcglEnterpriseResult">
         <result property="enterpriseId" column="enterprise_id" />
         <result property="enterpriseName" column="enterprise_name" />
+        <result property="createTime" column="create_time" />
     </resultMap>
 
-    <sql id="selectTqcglEnterpriseVo"> select enterprise_id, enterprise_name from tqcgl_enterprise </sql>
+    <sql id="selectTqcglEnterpriseVo"> select enterprise_id, enterprise_name,create_time from tqcgl_enterprise </sql>
 
-    <select id="selectTqcglEnterpriseList" parameterType="TqcglEnterprise"
-        resultMap="TqcglEnterpriseResult">
+    <select id="selectTqcglEnterpriseList" parameterType="TqcglEnterprise" resultMap="TqcglEnterpriseResult">
         <include refid="selectTqcglEnterpriseVo" />
         <where>
             <if test="enterpriseName != null  and enterpriseName != ''"> and enterprise_name like
@@ -18,40 +18,37 @@
         </where>
     </select>
 
-    <select id="selectTqcglEnterpriseByEnterpriseId" parameterType="Long"
-        resultMap="TqcglEnterpriseResult">
-        <include refid="selectTqcglEnterpriseVo" /> where enterprise_id = #{enterpriseId} </select>
+    <select id="selectTqcglEnterpriseByEnterpriseId" parameterType="Long" resultMap="TqcglEnterpriseResult">
+        <include refid="selectTqcglEnterpriseVo" />
+ where enterprise_id = #{enterpriseId} </select>
 
-    <insert id="insertTqcglEnterprise" parameterType="TqcglEnterprise" useGeneratedKeys="true"
-        keyProperty="enterpriseId"> insert into tqcgl_enterprise <trim prefix="(" suffix=")"
-            suffixOverrides=",">
-            <if test="enterpriseName != null and enterpriseName != ''">enterprise_name,</if>
-        </trim>
-        <trim
-            prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="enterpriseName != null and enterpriseName != ''">#{enterpriseName},</if>
-        </trim>
-    </insert>
+    <insert id="insertTqcglEnterprise" parameterType="TqcglEnterprise" useGeneratedKeys="true" keyProperty="enterpriseId"> insert into tqcgl_enterprise <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="enterpriseName != null and enterpriseName != ''">enterprise_name,</if>
+            create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="enterpriseName != null and enterpriseName != ''">#{enterpriseName},</if>
+            sysdate()
+    </trim>
+</insert>
 
-    <update id="updateTqcglEnterprise" parameterType="TqcglEnterprise"> update tqcgl_enterprise <trim
-            prefix="SET" suffixOverrides=",">
-            <if test="enterpriseName != null and enterpriseName != ''">enterprise_name =
+<update id="updateTqcglEnterprise" parameterType="TqcglEnterprise"> update tqcgl_enterprise <trim prefix="SET" suffixOverrides=",">
+    <if test="enterpriseName != null and enterpriseName != ''">enterprise_name =
         #{enterpriseName},</if>
-        </trim> where enterprise_id = #{enterpriseId} </update>
+</trim> where enterprise_id = #{enterpriseId} </update>
 
-    <delete id="deleteTqcglEnterpriseByEnterpriseId" parameterType="Long"> delete from
+<delete id="deleteTqcglEnterpriseByEnterpriseId" parameterType="Long"> delete from
         tqcgl_enterprise where enterprise_id = #{enterpriseId} </delete>
 
-    <delete id="deleteTqcglEnterpriseByEnterpriseIds" parameterType="String"> delete from
-        tqcgl_enterprise where enterprise_id in <foreach item="enterpriseId" collection="array"
-            open="(" separator="," close=")"> #{enterpriseId} </foreach>
-    </delete>
+<delete id="deleteTqcglEnterpriseByEnterpriseIds" parameterType="String"> delete from
+        tqcgl_enterprise where enterprise_id in <foreach item="enterpriseId" collection="array" open="(" separator="," close=")"> #{enterpriseId} </foreach>
+</delete>
 
-    <select id="checkNameUnique" parameterType="String" resultMap="TqcglEnterpriseResult"> select
+<select id="checkNameUnique" parameterType="String" resultMap="TqcglEnterpriseResult"> select
         enterprise_id, enterprise_name from tqcgl_enterprise where enterprise_name =
         #{enterpriseName} limit 1 </select>
 
-    <select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+<select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
         total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_leader WHERE tqcgl_leader.enterprise_id
         = #{Id} UNION ALL SELECT COUNT(*) AS cnt FROM tqcgl_passenger WHERE
         tqcgl_passenger.enterprise_id = #{Id} )t</select>

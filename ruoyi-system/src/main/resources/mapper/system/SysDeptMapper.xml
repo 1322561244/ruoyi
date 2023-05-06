@@ -32,9 +32,10 @@
 		<if test="parentId != null and parentId != 0"> AND parent_id = #{parentId} </if>
 		<if test="deptName != null and deptName != ''"> AND dept_name like concat('%', #{deptName},
 		'%') </if>
+		<if test="enterpriseId != null and enterpriseId != ''"> AND e.enterprise_id = #{enterpriseId} </if>
 		<if test="status != null and status != ''"> AND status = #{status} </if>
 		<if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
-		concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=d.enterprise_id 		<!-- 数据范围过滤 -->
+		concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=d.enterprise_id 																		<!-- 数据范围过滤 -->
 		${params.dataScope} order by d.parent_id, d.order_num </select>
 
 	<select id="selectDeptListByRoleId" resultType="Long"> select d.dept_id from sys_dept d left
@@ -65,7 +66,7 @@
 		del_flag = '0' limit 1 </select>
 
 	<insert id="insertDept" parameterType="SysDept"> insert into sys_dept( <if test="deptId != null and deptId != 0">dept_id,</if>
-		<if test="parentId != null and parentId != 0">parent_id,</if>
+		parent_id,
 		<if test="deptName != null and deptName != ''">dept_name,</if>
 		<if test="ancestors != null and ancestors != ''">ancestors,</if>
 		<if test="orderNum != null">
@@ -78,7 +79,11 @@
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="enterpriseId != null and enterpriseId != ''">enterprise_id,</if> create_time
 		)values( <if test="deptId != null and deptId != 0">#{deptId},</if>
-		<if test="parentId != null and parentId != 0">#{parentId},</if>
+		<choose>
+			<when test="parentId != null and parentId != 0">#{parentId},</when>
+			<when test="parentId == null or parentId == 0">0,</when>
+			<otherwise>0,</otherwise>
+		</choose>
 		<if test="deptName != null and deptName != ''">#{deptName},</if>
 		<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
 		<if test="orderNum != null">#{orderNum},</if>
@@ -115,11 +120,9 @@
 		dept_id = #{deptId} </delete>
 
 
-<select id="selectDeptByEnterpriseId" parameterType="SysDept" resultMap="SysDeptResult">select * from sys_dept
+<select id="selectDeptByEnterpriseId" parameterType="Long" resultMap="SysDeptResult">select * from sys_dept
 	<if test="enterpriseId != null">where enterprise_id = #{enterpriseId}</if>
-
 </select>
-
 
 <select id="selectDeptList2" parameterType="SysDept" resultMap="SysDeptResult">
 		select d.dept_id,d.dept_name, e.enterprise_id,e.enterprise_name from sys_dept d
@@ -127,4 +130,5 @@
 	<if test="enterpriseId != null">where enterprise_id = #{enterpriseId}</if>
 
 </select>
+
 </mapper> 

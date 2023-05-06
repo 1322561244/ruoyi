@@ -15,6 +15,7 @@
         <result property="userName" column="user_name" />
         <result property="enterpriseName" column="enterprise_name" />
         <result property="deptName" column="dept_name" />
+        <result property="createTime" column="create_time" />
     </resultMap>
 
     <sql id="selectTqcglPassengerVo"> select passenger_id, passenger_name, enterprise_id, dept_id,
@@ -30,7 +31,8 @@
 	passenger_photo1,
 	passenger_photo2,
 	passenger_photo3,
-	user_name 
+	user_name,
+    p.create_time
 FROM
 	tqcgl_passenger p
 	LEFT JOIN tqcgl_enterprise e ON p.enterprise_id = e.enterprise_id
@@ -78,8 +80,8 @@ FROM
         <if test="passengerPhoto1 != null">passenger_photo1,</if>
         <if test="passengerPhoto2 != null">passenger_photo2,</if>
         <if test="passengerPhoto3 != null">passenger_photo3,</if>
-        <if test="userId != null">
-        user_id,</if>
+        <if test="userId != null">user_id,</if>
+        create_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
         <if test="passengerName != null and passengerName != ''">#{passengerName},</if>
@@ -90,8 +92,8 @@ FROM
         <if test="passengerPhoto1 != null">#{passengerPhoto1},</if>
         <if test="passengerPhoto2 != null">#{passengerPhoto2},</if>
         <if test="passengerPhoto3 != null">#{passengerPhoto3},</if>
-        <if test="userId != null">
-        #{userId},</if>
+        <if test="userId != null">#{userId},</if>
+        sysdate()
     </trim>
 </insert>
 

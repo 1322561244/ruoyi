@@ -40,14 +40,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="账号id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入账号id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
           >搜索</el-button
@@ -148,6 +140,11 @@
         </template>
       </el-table-column>
       <el-table-column label="账号名" align="center" prop="userName" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -184,11 +181,29 @@
         <el-form-item label="乘客姓名" prop="passengerName">
           <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
         </el-form-item>
-        <el-form-item label="所属企业名称" prop="enterpriseName">
-          <el-input v-model="form.enterpriseName" placeholder="请输入所属企业名称" />
+        <el-form-item label="所属企业名称" prop="enterpriseId">
+          <el-select
+            v-model="form.enterpriseId"
+            placeholder="请选择所属企业"
+            @change="UpdateDept(form.enterpriseId)"
+          >
+            <el-option
+              v-for="iteam in enterpriseList"
+              :label="iteam.enterpriseName"
+              :value="iteam.enterpriseId"
+              :key="iteam.enterpriseId"
+            />
+          </el-select>
         </el-form-item>
-        <el-form-item label="所属部门名称" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入所属部门名称" />
+        <el-form-item label="所属部门名称" prop="deptId">
+          <el-select v-model="form.deptId" placeholder="请选择所属部门">
+            <el-option
+              v-for="iteam in deptList"
+              :label="iteam.deptName"
+              :value="iteam.deptId"
+              :key="iteam.deptId"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="联系电话" prop="passengerPhone">
           <el-input v-model="form.passengerPhone" placeholder="请输入联系电话" />
@@ -202,9 +217,6 @@
         <el-form-item label="乘客照片3" prop="passengerPhoto3">
           <image-upload v-model="form.passengerPhoto3" :limit="1" />
         </el-form-item>
-        <!-- <el-form-item label="账号名" prop="userName">
-          <el-input v-model="form.userId" placeholder="请输入账号名" />
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -215,6 +227,7 @@
 </template>
 
 <script>
+import { listEnterprise } from "@/api/biz/enterprise";
 import {
   addPassenger,
   delPassenger,
@@ -222,6 +235,7 @@ import {
   listPassenger,
   updatePassenger,
 } from "@/api/biz/passenger";
+import { selectDept } from "@/api/system/dept";
 
 export default {
   name: "Passenger",
@@ -257,6 +271,7 @@ export default {
         passengerPhoto2: null,
         passengerPhoto3: null,
         userId: null,
+        deptId: null,
       },
       // 表单参数
       form: {},
@@ -267,12 +282,32 @@ export default {
           { required: true, message: "联系电话不能为空", trigger: "blur" },
         ],
       },
+      deptList: [],
+      enterpriseList: [],
     };
+  },
+  mounted() {
+    this.getEnterpriseList();
   },
   created() {
     this.getList();
   },
   methods: {
+    /* 选择企业时关联部门 */
+    UpdateDept(enterpriseId) {
+      selectDept(enterpriseId).then((response) => {
+        this.deptList = response.data;
+        this.loading = false;
+      });
+    },
+    /** 查询企业管理列表 */
+    getEnterpriseList() {
+      this.loading = true;
+      listEnterprise(this.queryParams).then((response) => {
+        this.enterpriseList = response.rows;
+        this.loading = false;
+      });
+    },
     /** 查询乘客管理列表 */
     getList() {
       this.loading = true;

@@ -15,6 +15,7 @@
         <result property="driversPhone" column="drivers_phone"/>
         <result property="vehiclesLicensePlate" column="vehicles_license_plate"/>
         <result property="shiftsStatus" column="shifts_status"/>
+        <result property="createTime" column="create_time" />
     </resultMap>
 
     <sql id="selectTqcglShiftsVo"> select shifts_id,
@@ -32,7 +33,8 @@
                                            l.leader_phone,
                                            d.drivers_name,
                                            d.drivers_phone,
-                                           v.vehicles_license_plate
+                                           v.vehicles_license_plate,
+                                           s.create_time
                                     FROM tqcgl_shifts s
                                              LEFT JOIN tqcgl_leader l ON s.leader_id = l.leader_id
                                              LEFT JOIN tqcgl_drivers d ON s.drivers_id = d.drivers_id
@@ -83,6 +85,7 @@
             <if test="leaderId != null">leader_id,</if>
             <if test="driversId != null">drivers_id,</if>
             <if test="vehiclesId != null">vehicles_id,</if>
+            create_time
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shiftsName != null and shiftsName != ''">#{shiftsName},</if>
@@ -90,6 +93,7 @@
             <if test="leaderId != null">#{leaderId},</if>
             <if test="driversId != null">#{driversId},</if>
             <if test="vehiclesId != null">#{vehiclesId},</if>
+            sysdate()
         </trim>
     </insert>
 
@@ -118,20 +122,20 @@
     </delete>
 
 
-<!--    &lt;!&ndash;    班次的限载人数索引&ndash;&gt;-->
-<!--    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="TqcglShiftsResult">-->
-<!--        SELECT vehicles_capacity-->
-<!--        FROM tqcgl_vehicles v,-->
-<!--             tqcgl_shifts s-->
-<!--        where v.vehicles_id = s.vehicles_id-->
-<!--          AND s.shifts_id = #{shiftsId}-->
-<!--    </select>-->
-<!--    &lt;!&ndash;    更新当前班次的状态：可预约状态→不可预约状态（满人）&ndash;&gt;-->
-<!--    <update id="updateTqcglShiftsStatus" parameterType="TqcglShifts">-->
-<!--        update tqcgl_shifts-->
-<!--        <trim prefix="SET" suffixOverrides=",">-->
-<!--            <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>-->
-<!--        </trim>-->
-<!--        where shifts_id = #{shiftsId}-->
-<!--    </update>-->
+    <!--    &lt;!&ndash;    班次的限载人数索引&ndash;&gt;-->
+    <!--    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="TqcglShiftsResult">-->
+    <!--        SELECT vehicles_capacity-->
+    <!--        FROM tqcgl_vehicles v,-->
+    <!--             tqcgl_shifts s-->
+    <!--        where v.vehicles_id = s.vehicles_id-->
+    <!--          AND s.shifts_id = #{shiftsId}-->
+    <!--    </select>-->
+    <!--    &lt;!&ndash;    更新当前班次的状态：可预约状态→不可预约状态（满人）&ndash;&gt;-->
+    <!--    <update id="updateTqcglShiftsStatus" parameterType="TqcglShifts">-->
+    <!--        update tqcgl_shifts-->
+    <!--        <trim prefix="SET" suffixOverrides=",">-->
+    <!--            <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>-->
+    <!--        </trim>-->
+    <!--        where shifts_id = #{shiftsId}-->
+    <!--    </update>-->
 </mapper>

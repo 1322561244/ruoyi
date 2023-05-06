@@ -82,6 +82,11 @@
       <el-table-column type="selection" width="55" align="center" />
       <!-- <el-table-column label="每个企业记录的唯一标识符" align="center" prop="enterpriseId" /> -->
       <el-table-column label="企业名称" align="center" prop="enterpriseName" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

@@ -109,6 +109,7 @@
           <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
         </template>
       </el-table-column>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -165,11 +166,11 @@
 
 <script>
 import {
-  addDrivers,
-  delDrivers,
-  getDrivers,
-  listDrivers,
-  updateDrivers,
+addDrivers,
+delDrivers,
+getDrivers,
+listDrivers,
+updateDrivers,
 } from "@/api/biz/drivers";
 
 export default {

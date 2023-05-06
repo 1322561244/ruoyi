@@ -73,4 +73,8 @@
         leader_id, leader_name from tqcgl_leader where leader_name = #{leaderName} limit 1 </select>
 
 
+<select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+        total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_shifts WHERE tqcgl_shifts.leader_id
+        = #{Id})t</select>
+
 </mapper>

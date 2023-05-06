@@ -98,6 +98,11 @@ public class TqcglDriversController extends BaseController {
     @Log(title = "司机管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{driversIds}")
     public AjaxResult remove(@PathVariable Long[] driversIds) {
+        for (Long driversId : driversIds) {
+            if (tqcglDriversService.checkExistUser(driversId)) {
+                return warn("当前司机信息存在于信息中,不允许删除");
+            }
+        }
         return toAjax(tqcglDriversService.deleteTqcglDriversByDriversIds(driversIds));
     }
 }

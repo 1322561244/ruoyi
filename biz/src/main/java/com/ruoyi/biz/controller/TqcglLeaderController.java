@@ -98,6 +98,11 @@ public class TqcglLeaderController extends BaseController {
     @Log(title = "车长管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{leaderIds}")
     public AjaxResult remove(@PathVariable Long[] leaderIds) {
+        for (Long leaderId : leaderIds) {
+            if (tqcglLeaderService.checkExistUser(leaderId)) {
+                return warn("当前车长信息存在于信息中,不允许删除");
+            }
+        }
         return toAjax(tqcglLeaderService.deleteTqcglLeaderByLeaderIds(leaderIds));
     }
 

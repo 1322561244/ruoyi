@@ -59,4 +59,9 @@
 
 <select id="checkNameUnique" parameterType="String" resultMap="TqcglDriversResult"> select
         drivers_id, drivers_name from tqcgl_drivers where drivers_name = #{driversName} limit 1 </select>
+
+<select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+        total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_shifts WHERE tqcgl_shifts.drivers_id
+        = #{Id})t</select>
+
 </mapper>

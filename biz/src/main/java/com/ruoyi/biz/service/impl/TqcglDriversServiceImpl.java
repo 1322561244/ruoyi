@@ -102,4 +102,10 @@ public class TqcglDriversServiceImpl implements ITqcglDriversService {
     public int deleteTqcglDriversByDriversId(Long driversId) {
         return tqcglDriversMapper.deleteTqcglDriversByDriversId(driversId);
     }
+
+    @Override
+    public boolean checkExistUser(Long Id) {
+        int result = tqcglDriversMapper.checkExistUser(Id);
+        return result > 0;
+    }
 }

@@ -97,4 +97,10 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService {
         return tqcglPassengerMapper.deleteTqcglPassengerByPassengerId(passengerId);
     }
 
+    @Override
+    public boolean checkExistUser(Long Id) {
+        int result = tqcglPassengerMapper.checkExistUser(Id);
+        return result > 0;
+    }
+
 }

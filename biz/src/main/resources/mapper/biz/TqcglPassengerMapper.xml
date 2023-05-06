@@ -121,4 +121,9 @@ FROM
         tqcgl_passenger where passenger_id in <foreach item="passengerId" collection="array" open="(" separator="," close=")"> #{passengerId} </foreach>
 </delete>
 
+
+<select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+        total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_reservation WHERE tqcgl_reservation.passenger_id
+        = #{Id})t</select>
+
 </mapper>

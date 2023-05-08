@@ -97,6 +97,16 @@ public class TqcglReservation extends BaseEntity {
     @Excel(name = "乘客联系电话")
     private String passengerPhone;
 
+
+
+    /** 取消预约的人 */
+    @Excel(name = "取消预约的人")
+    private String cancelOperator;
+
+    /** 取消预约时间 */
+    @Excel(name = "取消预约时间")
+    private Date cancelDatetime;
+
     /**
      * 添加部分的get、set方法
      */
@@ -240,6 +250,22 @@ public class TqcglReservation extends BaseEntity {
     }
 
 
+
+    public String getCancelOperator() {
+        return cancelOperator;
+    }
+
+    public void setCancelOperator(String cancelOperator) {
+        this.cancelOperator = cancelOperator;
+    }
+
+    public Date getCancelDatetime() {
+        return cancelDatetime;
+    }
+
+    public void setCancelDatetime(Date cancelDatetime) {
+        this.cancelDatetime = cancelDatetime;
+    }
     /**
      * 添加的部分
      ***/
@@ -263,6 +289,8 @@ public class TqcglReservation extends BaseEntity {
                 .append("deptName", getDeptName())
                 .append("enterpriseName", getEnterpriseName())
                 .append("passengerPhone", getPassengerPhone())
+                .append("cancelOperator",getCancelOperator())
+                .append("cancelDatetime",getCancelDatetime())
                 .toString();
     }
 }

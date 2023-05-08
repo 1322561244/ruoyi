@@ -29,6 +29,8 @@ public interface TqcglReservationMapper
     public TqcglReservation selectTqcglReservationByReservationId2(Long reservationId);
 
 
+
+
     /**
      * 查询预约管理列表
      * 
@@ -36,6 +38,15 @@ public interface TqcglReservationMapper
      * @return 预约管理集合
      */
     public List<TqcglReservation> selectTqcglReservationList2(TqcglReservation tqcglReservation);
+
+
+    /**
+     * 查询预约管理列表
+     *
+     * @param tqcglReservation 预约管理
+     * @return 预约管理集合
+     */
+    public List<TqcglReservation> selectTqcglReservationList(TqcglReservation tqcglReservation);
 
     /**
      * 新增预约管理
@@ -68,4 +79,16 @@ public interface TqcglReservationMapper
      * @return 结果
      */
     public int deleteTqcglReservationByReservationIds(Long[] reservationIds);
+
+
+
+    /**
+     * 新增预约管理微信服务号接口
+     *
+     * @param tqcglReservation 预约管理
+     * @return 结果
+     */
+    //public String insertTqcglReservation2(TqcglReservation tqcglReservation);
+
+    //public int selectShiftsCountById(Long shiftsId);
 }

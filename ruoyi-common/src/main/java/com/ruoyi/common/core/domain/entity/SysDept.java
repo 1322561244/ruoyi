@@ -60,7 +60,12 @@ public class SysDept extends BaseEntity {
     /** 所述企业id */
     private Long enterpriseId;
 
+    /** 所述企业名 */
     private String enterpriseName;
+
+    public SysDept() {
+        this.parentId = 0L;
+    }
 
     public String getEnterpriseName() {
         return enterpriseName;

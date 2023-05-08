@@ -19,8 +19,6 @@ public interface TqcglLeaderMapper {
      */
     public TqcglLeader selectTqcglLeaderByLeaderId(Long leaderId);
 
-
-
     /**
      * 查询车长管理列表
      * 
@@ -68,4 +66,12 @@ public interface TqcglLeaderMapper {
      * @return 结果
      */
     public TqcglLeader checkNameUnique(String Name);
+
+    /**
+     * 查询是否存在用户
+     * 
+     * @param Id ID
+     * @return 结果
+     */
+    public int checkExistUser(Long Id);
 }

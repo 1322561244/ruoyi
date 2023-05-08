@@ -104,4 +104,11 @@ public class TqcglLeaderServiceImpl implements ITqcglLeaderService {
     public int deleteTqcglLeaderByLeaderId(Long leaderId) {
         return tqcglLeaderMapper.deleteTqcglLeaderByLeaderId(leaderId);
     }
+
+    @Override
+    public boolean checkExistUser(Long Id) {
+        int result = tqcglLeaderMapper.checkExistUser(Id);
+        return result > 0;
+    }
+
 }

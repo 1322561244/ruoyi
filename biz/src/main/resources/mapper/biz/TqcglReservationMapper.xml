@@ -1,48 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.biz.mapper.TqcglReservationMapper">
-    
-    <resultMap type="TqcglReservation" id="TqcglReservationResult">
-        <result property="reservationId"    column="reservation_id"    />
-        <result property="shiftsId"    column="shifts_id"    />
-        <result property="passengerId"    column="passenger_id"    />
-        <result property="reservationTime"    column="reservation_time"    />
-        <result property="creationTime"    column="creation_time"    />
-        <result property="reservationStatus"    column="reservation_status"    />
 
-        <result property="shiftsName"    column="shifts_name"    />
-        <result property="vehiclesLicensePlate"    column="vehicles_license_plate"    />
-        <result property="driversName"    column="drivers_name"    />
-        <result property="driversPhone"    column="drivers_phone"    />
-        <result property="leaderName"    column="leader_name"    />
-        <result property="leaderPhone"    column="leader_phone"    />
-        <result property="reservationTime"    column="reservation_time"    />
-        <result property="passengerName"    column="passenger_name"    />
-        <result property="deptName"    column="dept_name"    />
-        <result property="enterpriseName"    column="enterprise_name"    />
-        <result property="passengerPhone"    column="passenger_phone"    />
+    <resultMap type="TqcglReservation" id="TqcglReservationResult">
+        <result property="reservationId" column="reservation_id"/>
+        <result property="shiftsId" column="shifts_id"/>
+        <result property="passengerId" column="passenger_id"/>
+        <result property="reservationTime" column="reservation_time"/>
+        <result property="creationTime" column="creation_time"/>
+        <result property="reservationStatus" column="reservation_status"/>
+        <result property="shiftsName" column="shifts_name"/>
+        <result property="vehiclesLicensePlate" column="vehicles_license_plate"/>
+        <result property="driversName" column="drivers_name"/>
+        <result property="driversPhone" column="drivers_phone"/>
+        <result property="leaderName" column="leader_name"/>
+        <result property="leaderPhone" column="leader_phone"/>
+        <result property="reservationTime" column="reservation_time"/>
+        <result property="passengerName" column="passenger_name"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="enterpriseName" column="enterprise_name"/>
+        <result property="passengerPhone" column="passenger_phone"/>
+        <result property="cancelOperator" column="cancel_operator"/>
+        <result property="cancelDatetime" column="cancel_datetime"/>
     </resultMap>
 
     <sql id="selectTqcglReservationVo">
-        select reservation_id, shifts_id, passenger_id, reservation_time, creation_time, reservation_status from tqcgl_reservation
+        select reservation_id, shifts_id, passenger_id, reservation_time, creation_time, reservation_status,cancel_operator,cancel_datetime
+        from tqcgl_reservation
     </sql>
 
     <sql id="selectTqcglReservationVo2">
-        select reservation_id, s.shifts_name, v.vehicles_license_plate,d.drivers_name,d.drivers_phone,
-               l.leader_name,l.leader_phone,r.reservation_time,p.passenger_name,e.enterprise_name,dept.dept_name,
-               p.passenger_phone,r.creation_time,r.reservation_status
-        from tqcgl_reservation r,tqcgl_shifts s,tqcgl_vehicles v,tqcgl_drivers d,tqcgl_leader l,tqcgl_passenger p,tqcgl_enterprise e,sys_dept dept
+        select reservation_id,
+               s.shifts_name,
+               v.vehicles_license_plate,
+               d.drivers_name,
+               d.drivers_phone,
+               l.leader_name,
+               l.leader_phone,
+               r.reservation_time,
+               p.passenger_name,
+               e.enterprise_name,
+               dept.dept_name,
+               p.passenger_phone,
+               r.creation_time,
+               r.reservation_status,
+               r.cancel_operator,
+               r.cancel_datetime
+        from tqcgl_reservation r
+                 LEFT JOIN tqcgl_passenger p ON r.passenger_id=p.passenger_id
+                 LEFT JOIN tqcgl_shifts s ON r.shifts_id=s.shifts_id
 
+                 LEFT JOIN tqcgl_vehicles v ON s.vehicles_id=v.vehicles_id
+                 LEFT JOIN tqcgl_drivers d ON s.drivers_id=d.drivers_id
+                 LEFT JOIN tqcgl_leader l ON s.leader_id=l.leader_id
+
+                 LEFT JOIN tqcgl_enterprise e ON p.enterprise_id=e.enterprise_id
+                 LEFT JOIN sys_dept dept ON p.dept_id=dept.dept_id
     </sql>
 
     <sql id="selectTqcglReservationVo3">
-        select reservation_id, s.shifts_id, v.vehicles_license_plate,d.drivers_name,d.drivers_phone,
-               l.leader_name,l.leader_phone,r.reservation_time,p.passenger_id,e.enterprise_name,dept.dept_name,
-               p.passenger_phone,r.creation_time,r.reservation_status
-        from tqcgl_reservation r,tqcgl_shifts s,tqcgl_vehicles v,tqcgl_drivers d,tqcgl_leader l,tqcgl_passenger p,tqcgl_enterprise e,sys_dept dept
+        select reservation_id,
+               s.shifts_id,
+               s.shifts_name,
+               v.vehicles_license_plate,
+               d.drivers_name,
+               d.drivers_phone,
+               l.leader_name,
+               l.leader_phone,
+               r.reservation_time,
+               p.passenger_id,
+               p.passenger_name,
+               e.enterprise_name,
+               dept.dept_name,
+               p.passenger_phone,
+               r.creation_time,
+               r.reservation_status,
+               r.cancel_operator,
+               r.cancel_datetime
+        from tqcgl_reservation r
+                 LEFT JOIN tqcgl_passenger p ON r.passenger_id = p.passenger_id
+                 LEFT JOIN tqcgl_shifts s ON r.shifts_id = s.shifts_id
 
+                 LEFT JOIN tqcgl_vehicles v ON s.vehicles_id = v.vehicles_id
+                 LEFT JOIN tqcgl_drivers d ON s.drivers_id = d.drivers_id
+                 LEFT JOIN tqcgl_leader l ON s.leader_id = l.leader_id
+
+                 LEFT JOIN tqcgl_enterprise e ON p.enterprise_id = e.enterprise_id
+                 LEFT JOIN sys_dept dept ON p.dept_id = dept.dept_id
     </sql>
 
     <select id="selectTqcglReservationList2" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
@@ -71,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
 
     </select>
-    
+
     <select id="selectTqcglReservationByReservationId" parameterType="Long" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo"/>
         where reservation_id = #{reservationId}
@@ -80,13 +126,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTqcglReservationByReservationId2" parameterType="Long" resultMap="TqcglReservationResult">
         <include refid="selectTqcglReservationVo3"/>
         where reservation_id = #{reservationId}
-        and r.shifts_id=s.shifts_id
-        and v.vehicles_id=s.vehicles_id
-        and d.drivers_id=s.drivers_id
-        and l.leader_id=s.leader_id
-        and r.passenger_id=p.passenger_id
-        and p.dept_id=dept.dept_id
-        and p.enterprise_id=e.enterprise_id
     </select>
 
     <insert id="insertTqcglReservation" parameterType="TqcglReservation" useGeneratedKeys="true" keyProperty="reservationId">
@@ -95,16 +134,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shiftsId != null">shifts_id,</if>
             <if test="passengerId != null">passenger_id,</if>
             <if test="reservationTime != null">reservation_time,</if>
-            <if test="creationTime != null">creation_time,</if>
+            creation_time,
             <if test="reservationStatus != null">reservation_status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shiftsId != null">#{shiftsId},</if>
             <if test="passengerId != null">#{passengerId},</if>
             <if test="reservationTime != null">#{reservationTime},</if>
-            <if test="creationTime != null">#{creationTime},</if>
+            <if test="creationTime != null">sysdate(),</if>
             <if test="reservationStatus != null">#{reservationStatus},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateTqcglReservation" parameterType="TqcglReservation">
@@ -115,6 +154,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reservationTime != null">reservation_time = #{reservationTime},</if>
             <if test="creationTime != null">creation_time = #{creationTime},</if>
             <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>
+            <if test="cancelOperator != null ">cancel_operator = #{cancelOperator},</if>
+            <if test="cancelDatetime != null ">cancel_datetime = #{cancelDatetime},</if>
         </trim>
         where reservation_id = #{reservationId}
     </update>
@@ -129,4 +170,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{reservationId}
         </foreach>
     </delete>
+
+
+    <!--点击修改后返回的-->
+    <select id="selectTqcglReservationList" parameterType="TqcglReservation" resultMap="TqcglReservationResult">
+        <include refid="selectTqcglReservationVo2"/>
+        <where>
+            <if test="shiftsName != null  and shiftsName != ''"> and s.shifts_name like concat('%', #{shiftsName}, '%')</if>
+            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''"> and v.vehicles_license_plate = #{vehiclesLicensePlate}</if>
+            <if test="driversName != null  and driversName != ''"> and d.drivers_name like concat('%', #{driversName}, '%')</if>
+            <if test="driversPhone != null  and driversPhone != ''"> and d.drivers_phone like concat('%', #{driversPhone}, '%')</if>
+            <if test="leaderName != null  and leaderName != ''"> and l.leader_name like concat('%', #{leaderName}, '%')</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and l.leader_phone like concat('%', #{leaderPhone}, '%') </if>
+            <if test="reservationTime != null "> and r.reservation_time = #{reservationTime}</if>
+            <if test="passengerName != null  and passengerName != ''"> and p.passenger_name like concat('%', #{passengerName}, '%')</if>
+            <if test="deptName != null  and deptName != ''"> and dept.dept_name like concat('%',#{deptName}, '%') </if>
+            <if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like concat('%', #{enterpriseName}, '%')</if>
+            <if test="passengerPhone != null  and passengerPhone != ''"> and p.passenger_phone like concat('%', #{passengerPhone}, '%')</if>
+            <if test="creationTime != null "> and r.creation_time = #{creationTime}</if>
+            <if test="reservationStatus != null "> and r.reservation_status = #{reservationStatus}</if>
+        </where>
+    </select>
 </mapper>

@@ -8,15 +8,17 @@
         <result property="leaderPhone" column="leader_phone" />
         <result property="enterpriseName" column="enterprise_name" />
         <result property="enterpriseId" column="enterprise_id" />
+        <result property="userId" column="user_id" />
+        <result property="createTime" column="create_time" />
     </resultMap>
 
 
     <sql id="selectTqcglLeaderVo2"> select leader_id, leader_name, leader_phone, enterprise_id from
         tqcgl_leader </sql>
 
-
-    <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name
-        from tqcgl_leader l,tqcgl_enterprise e </sql>
+    <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name, l.create_time
+        from tqcgl_leader l
+        LEFT JOIN tqcgl_enterprise e ON l.enterprise_id = e.enterprise_id</sql>
 
     <select id="selectTqcglLeaderList" parameterType="TqcglLeader" resultMap="TqcglLeaderResult">
         <include refid="selectTqcglLeaderVo" />
@@ -25,49 +27,54 @@
         #{leaderName}, '%')</if>
             <if test="leaderPhone != null  and leaderPhone != ''"> and
         leader_phone = #{leaderPhone}</if>
-            <if
-                test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
-        concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=l.enterprise_id </where>
+            <if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
+        concat('%', #{enterpriseName}, '%')</if>
+        </where>
     </select>
 
     <select id="selectTqcglLeaderByLeaderId" parameterType="Long" resultMap="TqcglLeaderResult">
-        <include refid="selectTqcglLeaderVo2" /> where leader_id = #{leaderId} </select>
+        <include refid="selectTqcglLeaderVo2" />
+ where leader_id = #{leaderId} </select>
 
-    <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true"
-        keyProperty="leaderId"> insert into tqcgl_leader <trim prefix="(" suffix=")"
-            suffixOverrides=",">
-            <if test="leaderName != null">leader_name,</if>
-            <if test="leaderPhone != null">
+    <insert id="insertTqcglLeader" parameterType="TqcglLeader" useGeneratedKeys="true" keyProperty="leaderId"> insert into tqcgl_leader <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="leaderName != null">leader_name,</if>
+        <if test="leaderPhone != null">
         leader_phone,</if>
-            <if test="enterpriseId != null">enterprise_id,</if>
-        </trim>
-        <trim
-            prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="leaderName != null">#{leaderName},</if>
-            <if test="leaderPhone != null">
+        <if test="enterpriseId != null">enterprise_id,</if>
+        <if test="userId != null">user_id,</if>
+        create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="leaderName != null">#{leaderName},</if>
+        <if test="leaderPhone != null">
         #{leaderPhone},</if>
-            <if test="enterpriseId != null">#{enterpriseId}</if>
-        </trim>
-    </insert>
+        <if test="enterpriseId != null">#{enterpriseId},</if>
+        <if test="userId != null">#{userId},</if>
+        sysdate()
+    </trim>
+</insert>
 
-    <update id="updateTqcglLeader" parameterType="TqcglLeader"> update tqcgl_leader <trim
-            prefix="SET" suffixOverrides=",">
-            <if test="leaderName != null and leaderName != ''">leader_name = #{leaderName},</if>
-            <if
-                test="leaderPhone != null and leaderPhone != ''">leader_phone = #{leaderPhone},</if>
-            <if
-                test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
-        </trim>
+<update id="updateTqcglLeader" parameterType="TqcglLeader"> update tqcgl_leader <trim prefix="SET" suffixOverrides=",">
+    <if test="leaderName != null and leaderName != ''">leader_name = #{leaderName},</if>
+    <if test="leaderPhone != null and leaderPhone != ''">leader_phone = #{leaderPhone},</if>
+    <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+</trim>
         where leader_id = #{leaderId} </update>
 
-    <delete id="deleteTqcglLeaderByLeaderId" parameterType="Long"> delete from tqcgl_leader where
+<delete id="deleteTqcglLeaderByLeaderId" parameterType="Long"> delete from tqcgl_leader where
         leader_id = #{leaderId} </delete>
 
-    <delete id="deleteTqcglLeaderByLeaderIds" parameterType="String"> delete from tqcgl_leader where
+<delete id="deleteTqcglLeaderByLeaderIds" parameterType="String"> delete from tqcgl_leader where
         leader_id in <foreach item="leaderId" collection="array" open="(" separator="," close=")">
         #{leaderId} </foreach>
-    </delete>
+</delete>
 
-    <select id="checkNameUnique" parameterType="String" resultMap="TqcglLeaderResult"> select
+<select id="checkNameUnique" parameterType="String" resultMap="TqcglLeaderResult"> select
         leader_id, leader_name from tqcgl_leader where leader_name = #{leaderName} limit 1 </select>
+
+
+<select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
+        total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_shifts WHERE tqcgl_shifts.leader_id
+        = #{Id})t</select>
+
 </mapper>

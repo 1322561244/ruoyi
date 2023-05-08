@@ -66,4 +66,12 @@ public interface ITqcglShiftsService
      * @return 结果
      */
     public int deleteTqcglShiftsByShiftsId(Long shiftsId);
+
+    public int selectVehicleCapacityByShiftsId(Long shiftsId);
+
+
+    /**
+     * 当满人时更新b班次的可预约状态为不可预约
+     * */
+    public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts);
 }

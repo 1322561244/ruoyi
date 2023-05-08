@@ -68,4 +68,16 @@ public interface TqcglShiftsMapper
      * @return 结果
      */
     public int deleteTqcglShiftsByShiftsIds(Long[] shiftsIds);
+
+
+    public int selectVehicleCapacityByShiftsId(Long shiftsId);
+
+
+    /**
+     * 修改班次管理
+     *
+     * @param tqcglShifts 班次管理
+     * @return 结果
+     */
+    public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts);
 }

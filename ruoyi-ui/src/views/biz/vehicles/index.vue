@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="车辆的车牌号码" prop="vehiclesLicensePlate">
         <el-input
           v-model="queryParams.vehiclesLicensePlate"
@@ -34,7 +41,9 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
+          >搜索</el-button
+        >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
@@ -48,7 +57,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:vehicles:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +69,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:vehicles:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,7 +81,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:vehicles:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,18 +92,40 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:vehicles:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="vehiclesList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="vehiclesList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="每个车辆记录的唯一标识符" align="center" prop="vehiclesId" />
-      <el-table-column label="车辆的车牌号码" align="center" prop="vehiclesLicensePlate" />
+      <!-- <el-table-column label="每个车辆记录的唯一标识符" align="center" prop="vehiclesId" /> -->
+      <el-table-column
+        label="车辆的车牌号码"
+        align="center"
+        prop="vehiclesLicensePlate"
+      />
       <el-table-column label="车辆的型号" align="center" prop="vehiclesModel" />
-      <el-table-column label="车辆最多可搭载乘客数" align="center" prop="vehiclesCapacity" />
-      <el-table-column label="提供车辆的公司或供应商名称" align="center" prop="vehiclesSupplier" />
+      <el-table-column
+        label="车辆最多可搭载乘客数"
+        align="center"
+        prop="vehiclesCapacity"
+      />
+      <el-table-column
+        label="提供车辆的公司或供应商名称"
+        align="center"
+        prop="vehiclesSupplier"
+      />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -100,20 +134,22 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:vehicles:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:vehicles:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -124,16 +160,25 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="车辆的车牌号码" prop="vehiclesLicensePlate">
-          <el-input v-model="form.vehiclesLicensePlate" placeholder="请输入车辆的车牌号码" />
+          <el-input
+            v-model="form.vehiclesLicensePlate"
+            placeholder="请输入车辆的车牌号码"
+          />
         </el-form-item>
         <el-form-item label="车辆的型号" prop="vehiclesModel">
           <el-input v-model="form.vehiclesModel" placeholder="请输入车辆的型号" />
         </el-form-item>
         <el-form-item label="车辆最多可搭载乘客数" prop="vehiclesCapacity">
-          <el-input v-model="form.vehiclesCapacity" placeholder="请输入车辆最多可搭载乘客数" />
+          <el-input
+            v-model="form.vehiclesCapacity"
+            placeholder="请输入车辆最多可搭载乘客数"
+          />
         </el-form-item>
         <el-form-item label="提供车辆的公司或供应商名称" prop="vehiclesSupplier">
-          <el-input v-model="form.vehiclesSupplier" placeholder="请输入提供车辆的公司或供应商名称" />
+          <el-input
+            v-model="form.vehiclesSupplier"
+            placeholder="请输入提供车辆的公司或供应商名称"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -145,7 +190,13 @@
 </template>
 
 <script>
-import { listVehicles, getVehicles, delVehicles, addVehicles, updateVehicles } from "@/api/biz/vehicles";
+import {
+  addVehicles,
+  delVehicles,
+  getVehicles,
+  listVehicles,
+  updateVehicles,
+} from "@/api/biz/vehicles";
 
 export default {
   name: "Vehicles",
@@ -176,25 +227,29 @@ export default {
         vehiclesLicensePlate: null,
         vehiclesModel: null,
         vehiclesCapacity: null,
-        vehiclesSupplier: null
+        vehiclesSupplier: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         vehiclesLicensePlate: [
-          { required: true, message: "车辆的车牌号码不能为空", trigger: "blur" }
+          { required: true, message: "车辆的车牌号码不能为空", trigger: "blur" },
         ],
         vehiclesModel: [
-          { required: true, message: "车辆的型号不能为空", trigger: "blur" }
+          { required: true, message: "车辆的型号不能为空", trigger: "blur" },
         ],
         vehiclesCapacity: [
-          { required: true, message: "车辆最多可搭载乘客数不能为空", trigger: "blur" }
+          { required: true, message: "车辆最多可搭载乘客数不能为空", trigger: "blur" },
         ],
         vehiclesSupplier: [
-          { required: true, message: "提供车辆的公司或供应商名称不能为空", trigger: "blur" }
-        ]
-      }
+          {
+            required: true,
+            message: "提供车辆的公司或供应商名称不能为空",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   created() {
@@ -204,7 +259,7 @@ export default {
     /** 查询车辆管理列表 */
     getList() {
       this.loading = true;
-      listVehicles(this.queryParams).then(response => {
+      listVehicles(this.queryParams).then((response) => {
         this.vehiclesList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -222,7 +277,7 @@ export default {
         vehiclesLicensePlate: null,
         vehiclesModel: null,
         vehiclesCapacity: null,
-        vehiclesSupplier: null
+        vehiclesSupplier: null,
       };
       this.resetForm("form");
     },
@@ -238,9 +293,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.vehiclesId)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.vehiclesId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -251,8 +306,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const vehiclesId = row.vehiclesId || this.ids
-      getVehicles(vehiclesId).then(response => {
+      const vehiclesId = row.vehiclesId || this.ids;
+      getVehicles(vehiclesId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改车辆管理";
@@ -260,16 +315,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.vehiclesId != null) {
-            updateVehicles(this.form).then(response => {
+            updateVehicles(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addVehicles(this.form).then(response => {
+            addVehicles(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -281,19 +336,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const vehiclesIds = row.vehiclesId || this.ids;
-      this.$modal.confirm('是否确认删除车辆管理编号为"' + vehiclesIds + '"的数据项？').then(function() {
-        return delVehicles(vehiclesIds);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除车辆管理编号为"' + vehiclesIds + '"的数据项？')
+        .then(function () {
+          return delVehicles(vehiclesIds);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('biz/vehicles/export', {
-        ...this.queryParams
-      }, `vehicles_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "biz/vehicles/export",
+        {
+          ...this.queryParams,
+        },
+        `vehicles_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

@@ -96,10 +96,15 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="车长ID，自增长" align="center" prop="leaderId" />
+      <!-- <el-table-column label="车长ID，自增长" align="center" prop="leaderId" /> -->
       <el-table-column label="车长姓名" align="center" prop="leaderName" />
       <el-table-column label="联系电话" align="center" prop="leaderPhone" />
       <el-table-column label="所属企业名称" align="center" prop="enterpriseName" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -140,7 +145,7 @@
           <el-input v-model="form.leaderPhone" placeholder="请输入联系电话" />
         </el-form-item>
 
-        <el-form-item label="下拉所属企业名称" prop="enterpriseId">
+        <el-form-item label="所属企业名称" prop="enterpriseId">
           <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">
             <el-option
               v-for="iteam in enterpriseList"
@@ -173,7 +178,6 @@
             disabled="true"
           />
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -186,11 +190,11 @@
 <script>
 import { listEnterprise } from "@/api/biz/enterprise";
 import {
-  addLeader,
-  delLeader,
-  getLeader,
-  listLeader,
-  updateLeader,
+addLeader,
+delLeader,
+getLeader,
+listLeader,
+updateLeader,
 } from "@/api/biz/leader";
 
 export default {
@@ -220,7 +224,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        leaderId:null,
+        leaderId: null,
         leaderName: null,
         leaderPhone: null,
         enterpriseName: null,

@@ -197,10 +197,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public int insertDept(SysDept dept) {
         SysDept info = deptMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
+        if (info == null) {
+            dept.setAncestors("0");
+        } else if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
             throw new ServiceException("部门停用，不允许新增");
+        } else {
+            dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         }
-        dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
+
         return deptMapper.insertDept(dept);
     }
 
@@ -303,4 +307,13 @@ public class SysDeptServiceImpl implements ISysDeptService {
     private boolean hasChild(List<SysDept> list, SysDept t) {
         return getChildList(list, t).size() > 0;
     }
+
+    public List<SysDept> selectDeptByEnterpriseId(Long enterpriseId) {
+        return deptMapper.selectDeptByEnterpriseId(enterpriseId);
+    }
+
+    public List<SysDept> selectDeptList2() {
+        return deptMapper.selectDeptList2();
+    }
+
 }

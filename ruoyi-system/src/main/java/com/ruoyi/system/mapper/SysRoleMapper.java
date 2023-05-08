@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
 import com.ruoyi.common.core.domain.entity.SysRole;
 
 /**
@@ -8,8 +9,7 @@ import com.ruoyi.common.core.domain.entity.SysRole;
  * 
  * @author ruoyi
  */
-public interface SysRoleMapper
-{
+public interface SysRoleMapper {
     /**
      * 根据条件分页查询角色数据
      * 
@@ -104,4 +104,12 @@ public interface SysRoleMapper
      * @return 结果
      */
     public int deleteRoleByIds(Long[] roleIds);
+
+    /**
+     * 根据角色名查找角色ID
+     * 
+     * @param roleName 角色名
+     * @return 结果
+     */
+    public SysRole selectRoleId(String roleName);
 }

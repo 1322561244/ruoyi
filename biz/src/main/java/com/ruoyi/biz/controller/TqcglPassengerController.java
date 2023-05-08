@@ -1,25 +1,28 @@
 package com.ruoyi.biz.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ruoyi.biz.domain.TqcglPassenger;
+import com.ruoyi.biz.service.ITqcglPassengerService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.biz.domain.TqcglPassenger;
-import com.ruoyi.biz.service.ITqcglPassengerService;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
  * 乘客管理Controller
@@ -29,8 +32,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/biz/passenger")
-public class TqcglPassengerController extends BaseController
-{
+public class TqcglPassengerController extends BaseController {
     @Autowired
     private ITqcglPassengerService tqcglPassengerService;
 
@@ -39,8 +41,7 @@ public class TqcglPassengerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:passenger:list')")
     @GetMapping("/list")
-    public TableDataInfo list(TqcglPassenger tqcglPassenger)
-    {
+    public TableDataInfo list(TqcglPassenger tqcglPassenger) {
         startPage();
         List<TqcglPassenger> list = tqcglPassengerService.selectTqcglPassengerList(tqcglPassenger);
         return getDataTable(list);
@@ -52,8 +53,7 @@ public class TqcglPassengerController extends BaseController
     @PreAuthorize("@ss.hasPermi('biz:passenger:export')")
     @Log(title = "乘客管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, TqcglPassenger tqcglPassenger)
-    {
+    public void export(HttpServletResponse response, TqcglPassenger tqcglPassenger) {
         List<TqcglPassenger> list = tqcglPassengerService.selectTqcglPassengerList(tqcglPassenger);
         ExcelUtil<TqcglPassenger> util = new ExcelUtil<TqcglPassenger>(TqcglPassenger.class);
         util.exportExcel(response, list, "乘客管理数据");
@@ -64,8 +64,7 @@ public class TqcglPassengerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:passenger:query')")
     @GetMapping(value = "/{passengerId}")
-    public AjaxResult getInfo(@PathVariable("passengerId") Long passengerId)
-    {
+    public AjaxResult getInfo(@PathVariable("passengerId") Long passengerId) {
         return success(tqcglPassengerService.selectTqcglPassengerByPassengerId(passengerId));
     }
 
@@ -75,8 +74,7 @@ public class TqcglPassengerController extends BaseController
     @PreAuthorize("@ss.hasPermi('biz:passenger:add')")
     @Log(title = "乘客管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TqcglPassenger tqcglPassenger)
-    {
+    public AjaxResult add(@RequestBody TqcglPassenger tqcglPassenger) {
         return toAjax(tqcglPassengerService.insertTqcglPassenger(tqcglPassenger));
     }
 
@@ -86,8 +84,7 @@ public class TqcglPassengerController extends BaseController
     @PreAuthorize("@ss.hasPermi('biz:passenger:edit')")
     @Log(title = "乘客管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TqcglPassenger tqcglPassenger)
-    {
+    public AjaxResult edit(@RequestBody TqcglPassenger tqcglPassenger) {
         return toAjax(tqcglPassengerService.updateTqcglPassenger(tqcglPassenger));
     }
 
@@ -96,9 +93,13 @@ public class TqcglPassengerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:passenger:remove')")
     @Log(title = "乘客管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{passengerIds}")
-    public AjaxResult remove(@PathVariable Long[] passengerIds)
-    {
+    @DeleteMapping("/{passengerIds}")
+    public AjaxResult remove(@PathVariable Long[] passengerIds) {
+        for (Long passengerId : passengerIds) {
+            if (tqcglPassengerService.checkExistUser(passengerId)) {
+                return warn("当前乘客信息存在于信息中,不允许删除");
+            }
+        }
         return toAjax(tqcglPassengerService.deleteTqcglPassengerByPassengerIds(passengerIds));
     }
 
@@ -107,8 +108,7 @@ public class TqcglPassengerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:passenger:query')")
     @GetMapping(value = "/2{passengerId}")
-    public AjaxResult getInfo2(@PathVariable("passengerId") Long passengerId)
-    {
+    public AjaxResult getInfo2(@PathVariable("passengerId") Long passengerId) {
         return success(tqcglPassengerService.selectTqcglPassengerByPassengerId2(passengerId));
     }
 }

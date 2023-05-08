@@ -31,8 +31,8 @@ public class TqcglShifts extends BaseEntity {
     /**
      * 发车时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date shiftsDepartureTime;
 
     /**
@@ -52,7 +52,6 @@ public class TqcglShifts extends BaseEntity {
      */
     @Excel(name = "车辆ID")
     private Long vehiclesId;
-
 
     /**
      * 车长名
@@ -78,12 +77,19 @@ public class TqcglShifts extends BaseEntity {
     @Excel(name = "司机联系电话")
     private String driversPhone;
 
+
+    /**
+     * 预约状态，可预约时为1，不可预约为0
+     */
+    @Excel(name = "班次的状态")
+    private int shiftsStatus;
+
+
     /**
      * 车牌号
      */
     @Excel(name = "车牌号")
     private String vehiclesLicensePlate;
-
 
     public void setLeaderName(String leaderName) {
         this.leaderName = leaderName;
@@ -124,7 +130,6 @@ public class TqcglShifts extends BaseEntity {
     public String getVehiclesLicensePlate() {
         return vehiclesLicensePlate;
     }
-
 
     public void setShiftsId(Long shiftsId) {
         this.shiftsId = shiftsId;
@@ -174,6 +179,14 @@ public class TqcglShifts extends BaseEntity {
         return vehiclesId;
     }
 
+    public int getShiftsStatus() {
+        return shiftsStatus;
+    }
+
+    public void setShiftsStatus(int shiftsStatus) {
+        this.shiftsStatus = shiftsStatus;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -188,6 +201,7 @@ public class TqcglShifts extends BaseEntity {
                 .append("driversName", getDriversName())
                 .append("driversPhone", getDriversPhone())
                 .append("vehiclesLicensePlate", getVehiclesLicensePlate())
+                .append("shiftsStatus", getShiftsStatus())
                 .toString();
     }
 }

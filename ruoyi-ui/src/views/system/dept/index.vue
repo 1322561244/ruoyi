@@ -120,7 +120,11 @@
         <el-row>
           <el-col :span="24" v-if="form.parentId !== 0">
             <el-form-item label="所属企业名称" prop="enterpriseId">
-              <el-select v-model="form.enterpriseId" placeholder="请选择所属企业">
+              <el-select
+                v-model="form.enterpriseId"
+                placeholder="请选择所属企业"
+                @change="Update_Dept(form.enterpriseId)"
+              >
                 <el-option
                   v-for="iteam in enterpriseList"
                   :label="iteam.enterpriseName"
@@ -199,7 +203,6 @@
   </div>
 </template>
 
-
 <script>
 import { listEnterprise } from "@/api/biz/enterprise";
 import {
@@ -208,6 +211,7 @@ import {
   getDept,
   listDept,
   listDeptExcludeChild,
+  selectDept2,
   updateDept,
 } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
@@ -336,10 +340,15 @@ export default {
       }
       this.open = true;
       this.title = "添加部门";
-      listDept().then((response) => {
+    },
+
+    /* 选择企业时关联部门 */
+    Update_Dept(enterpriseId) {
+      selectDept2(enterpriseId).then((response) => {
         this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
+
     /** 展开/折叠操作 */
     toggleExpandAll() {
       this.refreshTable = false;

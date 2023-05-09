@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.mapper.TqcglDriversMapper">
+
+    <resultMap type="AppLeader" id="AppLeaderResult">
+        <result property="leaderId" column="leader_id"/>
+        <result property="shiftsId" column="shifts_id"/>
+        <result property="driversId" column="drivers_id"/>
+        <result property="vehiclesId" column="vehicles_id"/>
+        <result property="passengerId" column="passenger_id"/>
+        <result property="shiftsDepartureTime" column="shifts_departure_time"/>
+        <result property="reservationTime" column="reservation_time"/>
+        <result property="dateTime" column="date_time"/>
+        <result property="shiftsName" column="shifts_name"/>
+        <result property="driverName" column="driver_name"/>
+        <result property="driverPhone" column="driver_phone"/>
+        <result property="vehiclesLicensePlate" column="vehicles_license_plate"/>
+        <result property="passengerName" column="passenger_name"/>
+        <result property="passengerPhone" column="passenger_phone"/>
+        <result property="reservationStatus" column="reservation_status"/>
+    </resultMap>
+    <!--    通过车长账号对应的userid搜索到车长的id-->
+    <select id="findLeaderId" parameterType="Long" resultMap="Long">
+        select leader_id
+        FROM tqcgl_leader
+        where user_id = #{userId}
+    </select>
+
+    <select id="findShiftsByLeaderId" parameterType="Long" resultMap="AppLeaderResult">
+        select shifts_id,
+               shifts_name,
+               date_time,
+               shifts_departure_time,
+               drivers_name,
+               drivers_phone,
+               vehicles_license_plate,
+        from tqcgl_shifts s
+                 LEFT JOIN tqcgl_drivers d ON d.drivers_id = s.drivers_id
+                 LEFT JOIN tqcgl_vehicles v ON v.vehicles_id = s.vehicles_id
+                 LEFT JOIN tqcgl_shifts_date sd ON sd.shifts_id = s.shifts_id
+        where leader_id = #{leaderId}
+    </select>
+
+    <select id="findPassengerReservaionMessage" parameterType="AppLeader" resultMap="AppLeaderResult">
+        select reservation_id,
+                passenger_id,
+               passenger_name,
+               reservation_status,
+        from tqcgl_passenger p
+                 left JOIN tqcgl_reservation r ON r.passenger_id = p.passenger_id
+        where r.shifts_id = #{shiftsId}
+          AND r.reservation_time = #{reservationTime}
+    </select>
+
+
+    <select id="findPassengerMessage" parameterType="AppLeader" resultMap="AppLeaderResult">
+        SELECT passenger_id,
+               passenger_name,
+               enterprise_name,
+               dept_name,
+               passenger_phone,
+               passenger_photo1,
+               passenger_photo2,
+               passenger_photo3,
+        FROM tqcgl_passenger p
+                 LEFT JOIN tqcgl_enterprise e ON p.enterprise_id = e.enterprise_id
+                 LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                 LEFT JOIN tqcgl_reservation r ON r.passenger_id = p.passenger_id
+        where r.shifts_id = #{shiftsId}
+          AND r.reservation_time = #{reservationTime}
+    </select>
+
+    <update id="updateReservationStatus" parameterType="AppLeader">
+        <if test="reservationStatus != null">reservation_status =
+            #{driversSupplier},</if>
+        where reservation_id = #{reservation_id}
+    </update>
+
+    <update id="updateReservationStatus" parameterType="AppLeader">
+        <if test="reservationStatus != null">reservation_status =
+            #{driversSupplier},</if>
+        where reservation_id = #{reservation_id}
+    </update>
+
+    <update id="updateCancelReservation" parameterType="AppLeader">
+        <if test="reservationStatus != null">reservation_status =
+            #{driversSupplier},</if>
+        <if test="cancelOperator != null">cancel_operator =
+            #{cancelOperator},</if>
+        <if test="cancelDatetime != null">cancel_datetime =
+            #{cancelDatetime},</if>
+        where reservation_id = #{reservation_id}
+    </update>
+</mapper>

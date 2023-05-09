@@ -67,4 +67,12 @@ public interface ITqcglPassengerService {
      */
     public int deleteTqcglPassengerByPassengerId(Long passengerId);
 
+    /**
+     * 查询乘客是否存在其他表
+     * 
+     * @param Id ID
+     * @return 结果 true 存在 false 不存在
+     */
+    public boolean checkExistUser(Long Id);
+
 }

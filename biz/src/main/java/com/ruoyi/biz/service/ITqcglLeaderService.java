@@ -59,4 +59,12 @@ public interface ITqcglLeaderService {
      */
     public int deleteTqcglLeaderByLeaderId(Long leaderId);
 
+    /**
+     * 查询车长是否存在其他表
+     * 
+     * @param Id ID
+     * @return 结果 true 存在 false 不存在
+     */
+    public boolean checkExistUser(Long Id);
+
 }

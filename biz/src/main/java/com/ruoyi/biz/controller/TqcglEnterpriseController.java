@@ -100,7 +100,7 @@ public class TqcglEnterpriseController extends BaseController {
     @DeleteMapping("/{enterpriseIds}")
     public AjaxResult remove(@PathVariable Long enterpriseIds) {
         if (tqcglEnterpriseService.checkExistUser(enterpriseIds)) {
-            return warn("企业中存在员工,不允许删除");
+            return warn("当前企业信息存在于信息中,不允许删除");
         }
         return toAjax(tqcglEnterpriseService.deleteTqcglEnterpriseByEnterpriseId(enterpriseIds));
     }

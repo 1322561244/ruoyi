@@ -51,5 +51,6 @@
 <select id="checkExistUser" parameterType="Long" resultType="int"> SELECT SUM(cnt) AS
         total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_leader WHERE tqcgl_leader.enterprise_id
         = #{Id} UNION ALL SELECT COUNT(*) AS cnt FROM tqcgl_passenger WHERE
-        tqcgl_passenger.enterprise_id = #{Id} )t</select>
+        tqcgl_passenger.enterprise_id = #{Id} UNION ALL SELECT COUNT(*) AS cnt FROM sys_dept WHERE
+        sys_dept.enterprise_id = #{Id} )t</select>
 </mapper>

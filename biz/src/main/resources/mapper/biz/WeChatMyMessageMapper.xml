@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.WeChat.mapper.WeChatMyMessageMapper">
+
+    <resultMap type="WeChatMyMessage" id="WeChatMyMessageResult">
+        <result property="passengerId" column="passenger_id"/>
+        <result property="passengerName" column="passenger_name"/>
+        <result property="enterpriseId" column="enterprise_id"/>
+        <result property="enterpriseName" column="enterprise_name"/>
+
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="passengerPhone" column="passenger_phone"/>
+        <result property="passengerPhoto1" column="passenger_photo1"/>
+
+        <result property="passengerPhoto2" column="passenger_photo2"/>
+        <result property="passengerPhoto3" column="passenger_photo3"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <!--    索引所有部门及其所属企业的信息-->
+    <select id="selectDeptList" parameterType="WeChatMyMessage" resultMap="WeChatMyMessageResult">
+        select d.dept_id, d.dept_name, d.enterprise_id, e.enterprise_name
+        from sys_dept d
+                 left join tqcgl_enterprise e on e.enterprise_id = d.enterprise_id
+    </select>
+
+    <!--    索引该账号以前的数据-->
+    <select id="selectMessage" parameterType="WeChatMyMessage" resultMap="WeChatMyMessageResult">
+        select p.passenger_id,
+               p.passenger_name,
+               p.dept_id,
+               d.dept_name,
+               p.enterprise_id,
+               e.enterprise_name,
+               passenger_phone,
+               passenger_photo1,
+               passenger_photo2,
+               passenger_photo3
+        from tqcgl_passenger p
+                 left join tqcgl_enterprise e on p.enterprise_id = d.enterprise_id
+                 left join sys_dept d on p.dept_id = d.dept_id
+        where user_id = #{userId}
+    </select>
+
+
+    <!--    索引处当前userid是否保存过内容-->
+    <select id="selectMessageByUserId" parameterType="WeChatMyMessage" resultMap="WeChatMyMessageResult">
+        select dept_id
+        from sys_dept
+        where user_id = #{userId}
+    </select>
+
+
+    <!--插入乘客信息-->
+    <insert id="insertPassengerMessage" parameterType="WeChatMyMessage" useGeneratedKeys="true" keyProperty="passengerId">
+        insert into tqcgl_vehicles
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">
+                passenger_name,
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id,
+            </if>
+            <if test="enterpriseId != null">enterprise_id,</if>
+            <if test="passengerPhone != null and passengerPhone != ''">passenger_phone,</if>
+            <if test="passengerPhoto1 != null and passengerPhoto1 != ''">passenger_photo1,</if>
+            <if test="passengerPhoto2 != null and passengerPhoto2 != ''">passenger_photo2,</if>
+            <if test="passengerPhoto3 != null and passengerPhoto3 != ''">passenger_photo3,</if>
+            <if test="userId != null and userId != ''">user_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">
+                #{passengerName},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                #{deptId},
+            </if>
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+            <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
+            <if test="passengerPhoto1 != null and passengerPhoto1 != ''">#{passengerPhoto1},</if>
+            <if test="passengerPhoto2 != null and passengerPhoto2 != ''">#{passengerPhoto2},</if>
+            <if test="passengerPhoto3 != null and passengerPhoto3 != ''">#{passengerPhoto3},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+<!--当表的数据本身就存在时执行更新-->
+    <update id="UpdatePassengerMessage" parameterType="WeChatMyMessage">
+        update tqcgl_passenger
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="passengerName != null and passengerName != ''">
+                #{passengerName},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                #{deptId},
+            </if>
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+            <if test="passengerPhone != null and passengerPhone != ''">#{passengerPhone},</if>
+            <if test="passengerPhoto1 != null and passengerPhoto1 != ''">#{passengerPhoto1},</if>
+            <if test="passengerPhoto2 != null and passengerPhoto2 != ''">#{passengerPhoto2},</if>
+            <if test="passengerPhoto3 != null and passengerPhoto3 != ''">#{passengerPhoto3},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+</mapper>

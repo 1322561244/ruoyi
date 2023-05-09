@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.WeChat.mapper.WeChatReservationMapper">
+
+    <resultMap type="WeChatReservation" id="WeChatReservationResult">
+        <result property="shiftsId" column="shifts_id"/>
+        <result property="shiftsName" column="shifts_name"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+
+        <result property="dateTime" column="date_time"/>
+        <result property="shiftsDepartureTime" column="shifts_departure_time"/>
+        <result property="shiftsStatus" column="shifts_status"/>
+        <result property="vehicleCapacity" column="vehicle_capacity"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+
+    </resultMap>
+
+    <!--    索引所有班次的信息-->
+    <select id="selectShiftsList" parameterType="WeChatReservation" resultMap="WeChatReservationResult">
+        select shifts_id, shifts_name
+        from tqcgl_shifts
+    </select>
+
+    <!--    通过开始和结束时间索引班次的预约信息-->
+    <select id="selectShiftsListByTime" parameterType="WeChatReservation" resultMap="WeChatReservationResult">
+        select d.date_format(d.date_time, '%y-%m-%d'), date_format(s.shifts_departure_time, '%h:%i:%s'), s.shifts_status
+        from tqcgl_shifts s
+                 left join tqcgl_shifts_date d on d.shifts_id = s.shifts_id
+        where date_time between #{startTime} and #{endTime}
+          and s.shifts_id = #{shiftsId}
+    </select>
+
+
+    <!--    通过班次id和搭乘日期索引该班次的已预约人数-->
+    <select id="selectShiftsCountById" parameterType="WeChatReservation" resultMap="int">
+        select count(*)
+        from tqcgl_reservation r
+        where r.reservation_time = #{dateTime}
+          and r.shifts_id = #{shiftsId}
+    </select>
+
+    <!--    通过班次id索引该班次的限载人数-->
+    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="int">
+        select v.vehicle_capacity
+        from tqcgl_shifts s
+                 left join tqcgl_vehicles v on v.vehicles_id = s.vehicles_id
+        where s.shifts_id = #{shiftsId}
+    </select>
+
+    <!--    当超出车辆限载人数时更新当前日期的班次的可预约状态-->
+    <update id="updateShiftsStatus" parameterType="WeChatReservation">
+        update tqcgl_shifts_date
+        set shifts_status=0
+        where shifts_id = #{shiftsId}
+          and date_time = #{dateTime}
+    </update>
+
+    <!--    索引该未过期的预约信息-->
+    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="WeChatReservation">
+        Select r.reservation_id,
+               s.shifts_name,
+               d.date_time,
+               s.shifts_departure_time
+        from tqcgl_reservation r
+                 Left join tqcgl_shifts s on r.shifts_id = s.shifts_id
+                 Left join tqcgl_shifts_date d on d.shifts_id = s.shifts_id
+                 Left join tqcgl_leader l on l.leader_id = s.leader_id
+                 Left join tqcgl_passenger p on p.passenger_id = r.passenger_id
+        Where p.user_id = #{userId}
+          And reservation = 1
+    </select>
+
+
+    <!--    取消预约更新预约表状态-->
+    <update id="cancelReservation" parameterType="WeChatReservation">
+        Update tqcgl_reservation
+        set reservation_status=2,
+            cancel_opterator=#{userName},
+            cancel_datetime=#{dateTime};
+        where reservation_id=
+        #{reservationId}
+    </update>
+
+    <!--    索引该已过期的预约信息-->
+    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="WeChatReservation">
+        Select r.reservation_id,
+               s.shifts_name,
+               d.date_time,
+               s.shifts_departure_time l.leader_name,l.leader_phone
+        from tqcgl_reservation r
+                 Left join tqcgl_shifts s on r.shifts_id = s.shifts_id
+                 Left join tqcgl_shifts_date d on d.shifts_id = s.shifts_id
+                 Left join tqcgl_leader l on l.leader_id = s.leader_id
+                 Left join tqcgl_passenger p on p.passenger_id = r.passenger_id
+        Where p.user_id = #{userId}
+          And reservation != 1
+    </select>
+
+    <!--新增预约信息-->
+    <insert id="insertReservation" parameterType="WeChatReservation" useGeneratedKeys="true" keyProperty="reservationId">insert
+        into tqcgl_drivers
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shiftsId != null">shifts_id,</if>
+            <if test="passengerId != null">passenger_id,</if>
+            <if test="reservationTime != null and  reservationTime!= ''">reservation_time,</if>
+            <if test="creationTime != null">create_time,</if>
+            <if test="reservationStatus != null">reservation_status,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shiftsId != null">#{shiftsId},</if>
+            <if test="passengerId != null">#{passengerId},</if>
+            <if test="reservationTime != null and  reservationTime!= ''">#{reservationTime},</if>
+            <if test="creationTime != null">#{creationTime},</if>
+            <if test="reservationStatus != null">#{reservationStatus},</if>
+            sysdate()
+        </trim>
+    </insert>
+</mapper>

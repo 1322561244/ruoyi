@@ -9,19 +9,19 @@ import com.ruoyi.biz.service.ITqcglShiftsDateService;
 
 /**
  * 班次日期管理Service业务层处理
- * 
+ *
  * @author zhu
- * @date 2023-05-07
+ * @date 2023-05-10
  */
 @Service
-public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService 
+public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 {
     @Autowired
     private TqcglShiftsDateMapper tqcglShiftsDateMapper;
 
     /**
      * 查询班次日期管理
-     * 
+     *
      * @param dateId 班次日期管理主键
      * @return 班次日期管理
      */
@@ -33,7 +33,7 @@ public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 
     /**
      * 查询班次日期管理列表
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 班次日期管理
      */
@@ -45,7 +45,7 @@ public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 
     /**
      * 新增班次日期管理
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 结果
      */
@@ -57,7 +57,7 @@ public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 
     /**
      * 修改班次日期管理
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 结果
      */
@@ -69,7 +69,7 @@ public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 
     /**
      * 批量删除班次日期管理
-     * 
+     *
      * @param dateIds 需要删除的班次日期管理主键
      * @return 结果
      */
@@ -81,7 +81,7 @@ public class TqcglShiftsDateServiceImpl implements ITqcglShiftsDateService
 
     /**
      * 删除班次日期管理信息
-     * 
+     *
      * @param dateId 班次日期管理主键
      * @return 结果
      */

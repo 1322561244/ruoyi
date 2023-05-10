@@ -51,3 +51,12 @@ export function getShifts2(shiftsId) {
     method: 'get'
   })
 }
+
+// 查询班次管理列表
+export function listShifts2(query) {
+  return request({
+    url: '/biz/shifts/list2',
+    method: 'get',
+    params: query
+  })
+}

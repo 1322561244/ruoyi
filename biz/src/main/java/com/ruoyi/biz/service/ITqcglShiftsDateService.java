@@ -5,15 +5,15 @@ import com.ruoyi.biz.domain.TqcglShiftsDate;
 
 /**
  * 班次日期管理Service接口
- * 
+ *
  * @author zhu
- * @date 2023-05-07
+ * @date 2023-05-10
  */
-public interface ITqcglShiftsDateService 
+public interface ITqcglShiftsDateService
 {
     /**
      * 查询班次日期管理
-     * 
+     *
      * @param dateId 班次日期管理主键
      * @return 班次日期管理
      */
@@ -21,7 +21,7 @@ public interface ITqcglShiftsDateService
 
     /**
      * 查询班次日期管理列表
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 班次日期管理集合
      */
@@ -29,7 +29,7 @@ public interface ITqcglShiftsDateService
 
     /**
      * 新增班次日期管理
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface ITqcglShiftsDateService
 
     /**
      * 修改班次日期管理
-     * 
+     *
      * @param tqcglShiftsDate 班次日期管理
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface ITqcglShiftsDateService
 
     /**
      * 批量删除班次日期管理
-     * 
+     *
      * @param dateIds 需要删除的班次日期管理主键集合
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface ITqcglShiftsDateService
 
     /**
      * 删除班次日期管理信息
-     * 
+     *
      * @param dateId 班次日期管理主键
      * @return 结果
      */

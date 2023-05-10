@@ -80,4 +80,12 @@ public interface TqcglShiftsMapper
      * @return 结果
      */
     public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts);
+
+    /**
+     * 查询班次管理列表
+     *
+     * @param tqcglShifts 班次管理
+     * @return 班次管理集合
+     */
+    public List<TqcglShifts> selectShiftsList(TqcglShifts tqcglShifts);
 }

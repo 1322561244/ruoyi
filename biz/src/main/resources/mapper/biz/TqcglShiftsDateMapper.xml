@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.biz.mapper.TqcglShiftsDateMapper">
-    
+
     <resultMap type="TqcglShiftsDate" id="TqcglShiftsDateResult">
         <result property="dateId"    column="date_id"    />
         <result property="dateTime"    column="date_time"    />
         <result property="shiftsId"    column="shifts_id"    />
         <result property="shiftsStatus"    column="shifts_status"    />
+        <result property="shiftsName" column="shifts_name"/>
     </resultMap>
 
     <sql id="selectTqcglShiftsDateVo">
         select date_id, date_time, shifts_id, shifts_status from tqcgl_shifts_date
     </sql>
 
+    <sql id="selectTqcglShiftsDateVo2">
+        select date_id, date_time, d.shifts_id, s.shifts_name,shifts_status from tqcgl_shifts_date d
+            left join tqcgl_shifts s on s.shifts_id=d.shifts_id
+    </sql>
+
     <select id="selectTqcglShiftsDateList" parameterType="TqcglShiftsDate" resultMap="TqcglShiftsDateResult">
-        <include refid="selectTqcglShiftsDateVo"/>
-        <where>  
+        <include refid="selectTqcglShiftsDateVo2"/>
+        <where>
             <if test="dateTime != null "> and date_time = #{dateTime}</if>
-            <if test="shiftsId != null "> and shifts_id = #{shiftsId}</if>
+            <if test="shiftsId != null">shifts_id = #{shiftsId},</if>
+            <if test="shiftsName != null "> and shifts_Name = #{shiftsName}</if>
             <if test="shiftsStatus != null "> and shifts_status = #{shiftsStatus}</if>
         </where>
     </select>
-    
+
     <select id="selectTqcglShiftsDateByDateId" parameterType="Long" resultMap="TqcglShiftsDateResult">
         <include refid="selectTqcglShiftsDateVo"/>
         where date_id = #{dateId}
     </select>
-        
+
     <insert id="insertTqcglShiftsDate" parameterType="TqcglShiftsDate" useGeneratedKeys="true" keyProperty="dateId">
         insert into tqcgl_shifts_date
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="dateTime != null">date_time,</if>
             <if test="shiftsId != null">shifts_id,</if>
             <if test="shiftsStatus != null">shifts_status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="dateTime != null">#{dateTime},</if>
             <if test="shiftsId != null">#{shiftsId},</if>
             <if test="shiftsStatus != null">#{shiftsStatus},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateTqcglShiftsDate" parameterType="TqcglShiftsDate">
@@ -58,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTqcglShiftsDateByDateIds" parameterType="String">
-        delete from tqcgl_shifts_date where date_id in 
+        delete from tqcgl_shifts_date where date_id in
         <foreach item="dateId" collection="array" open="(" separator="," close=")">
             #{dateId}
         </foreach>

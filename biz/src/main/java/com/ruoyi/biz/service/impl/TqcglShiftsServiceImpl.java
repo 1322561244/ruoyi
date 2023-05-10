@@ -118,4 +118,14 @@ public class TqcglShiftsServiceImpl implements ITqcglShiftsService
     public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts){
         return tqcglShiftsMapper.updateTqcglShiftsStatus(tqcglShifts);
     }
+
+    /**
+     * 查询班次管理列表
+     *
+     * @param tqcglShifts 班次管理
+     * @return 班次管理集合
+     */
+    public List<TqcglShifts> selectShiftsList(TqcglShifts tqcglShifts){
+        return tqcglShiftsMapper.selectShiftsList(tqcglShifts);
+    }
 }

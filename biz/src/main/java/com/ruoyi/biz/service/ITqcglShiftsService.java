@@ -59,6 +59,8 @@ public interface ITqcglShiftsService
      */
     public int deleteTqcglShiftsByShiftsIds(Long[] shiftsIds);
 
+
+
     /**
      * 删除班次管理信息
      * 
@@ -74,4 +76,13 @@ public interface ITqcglShiftsService
      * 当满人时更新b班次的可预约状态为不可预约
      * */
     public int updateTqcglShiftsStatus(TqcglShifts tqcglShifts);
+
+
+    /**
+     * 查询班次管理列表
+     *
+     * @param tqcglShifts 班次管理
+     * @return 班次管理集合
+     */
+    public List<TqcglShifts> selectShiftsList(TqcglShifts tqcglShifts);
 }

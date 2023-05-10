@@ -19,12 +19,13 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.biz.domain.TqcglShiftsDate;
 import com.ruoyi.biz.service.ITqcglShiftsDateService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 班次日期管理Controller
- * 
+ *
  * @author zhu
- * @date 2023-05-07
+ * @date 2023-05-10
  */
 @RestController
 @RequestMapping("/biz/date")
@@ -38,10 +39,11 @@ public class TqcglShiftsDateController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:date:list')")
     @GetMapping("/list")
-    public AjaxResult list(TqcglShiftsDate tqcglShiftsDate)
+    public TableDataInfo list(TqcglShiftsDate tqcglShiftsDate)
     {
+        startPage();
         List<TqcglShiftsDate> list = tqcglShiftsDateService.selectTqcglShiftsDateList(tqcglShiftsDate);
-        return success(list);
+        return getDataTable(list);
     }
 
     /**
@@ -94,7 +96,7 @@ public class TqcglShiftsDateController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('biz:date:remove')")
     @Log(title = "班次日期管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{dateIds}")
+    @DeleteMapping("/{dateIds}")
     public AjaxResult remove(@PathVariable Long[] dateIds)
     {
         return toAjax(tqcglShiftsDateService.deleteTqcglShiftsDateByDateIds(dateIds));

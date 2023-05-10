@@ -40,6 +40,11 @@
                                              LEFT JOIN tqcgl_drivers d ON s.drivers_id = d.drivers_id
                                              LEFT JOIN tqcgl_vehicles v ON s.vehicles_id = v.vehicles_id </sql>
 
+
+    <select id="selectShiftsList" parameterType="TqcglShifts" resultMap="TqcglShiftsResult">
+        select shifts_id,shifts_name from tqcgl_shifts
+    </select>
+
     <select id="selectTqcglShiftsList" parameterType="TqcglShifts" resultMap="TqcglShiftsResult">
         <include refid="selectTqcglShiftsVo2"/>
         <where>

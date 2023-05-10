@@ -112,4 +112,14 @@ public class TqcglShiftsController extends BaseController
         return success(tqcglShiftsService.selectTqcglShiftsByShiftsId2(shiftsId));
     }
 
+    /**
+     * 查询班次管理列表
+     */
+    @GetMapping("/list2")
+    public TableDataInfo list2(TqcglShifts tqcglShifts)
+    {
+        startPage();
+        List<TqcglShifts> list = tqcglShiftsService.selectShiftsList(tqcglShifts);
+        return getDataTable(list);
+    }
 }

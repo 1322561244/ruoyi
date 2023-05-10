@@ -12,13 +12,13 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
+@RestController
+@RequestMapping("/app/appLeader")
 public class AppLeaderController extends BaseController {
     @Autowired
     IAppLeaderService appLeaderService;
@@ -50,7 +50,7 @@ public class AppLeaderController extends BaseController {
      * 当前车次的乘客信息列表
      */
     @PreAuthorize("@ss.hasPermi('app:leader:shiftsList')")
-    @GetMapping("/passengerReservationList")
+    @GetMapping("/passengerMessageList")
     public TableDataInfo PassengerMessageList(AppLeader appLeader) {
         startPage();
         List<AppLeader> list=appLeaderService.findPassengerMessage(appLeader);

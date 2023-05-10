@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.biz.mapper.TqcglDriversMapper">
+<mapper namespace="com.ruoyi.Android.mapper.AppLeaderMapper">
 
     <resultMap type="AppLeader" id="AppLeaderResult">
         <result property="leaderId" column="leader_id"/>
@@ -20,7 +20,7 @@
         <result property="reservationStatus" column="reservation_status"/>
     </resultMap>
     <!--    通过车长账号对应的userid搜索到车长的id-->
-    <select id="findLeaderId" parameterType="Long" resultMap="Long">
+    <select id="findLeaderId" parameterType="Long" resultMap="AppLeaderResult">
         select leader_id
         FROM tqcgl_leader
         where user_id = #{userId}
@@ -43,7 +43,7 @@
 
     <select id="findPassengerReservaionMessage" parameterType="AppLeader" resultMap="AppLeaderResult">
         select reservation_id,
-                passenger_id,
+               passenger_id,
                passenger_name,
                reservation_status,
         from tqcgl_passenger p
@@ -70,25 +70,35 @@
           AND r.reservation_time = #{reservationTime}
     </select>
 
+<!--..........................-->
+    <!--    车长手动添加乘客上车时更新预约状态-->
     <update id="updateReservationStatus" parameterType="AppLeader">
-        <if test="reservationStatus != null">reservation_status =
-            #{driversSupplier},</if>
+        update tqcgl_reservation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reservationStatus != null">reservation_status =
+                #{reservationStatus},
+            </if>
+        </trim>
         where reservation_id = #{reservation_id}
     </update>
 
-    <update id="updateReservationStatus" parameterType="AppLeader">
-        <if test="reservationStatus != null">reservation_status =
-            #{driversSupplier},</if>
-        where reservation_id = #{reservation_id}
-    </update>
+
 
     <update id="updateCancelReservation" parameterType="AppLeader">
-        <if test="reservationStatus != null">reservation_status =
-            #{driversSupplier},</if>
-        <if test="cancelOperator != null">cancel_operator =
-            #{cancelOperator},</if>
-        <if test="cancelDatetime != null">cancel_datetime =
-            #{cancelDatetime},</if>
+        update tqcgl_reservation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reservationStatus != null">reservation_status =
+                #{reservationStatus},
+            </if>
+            <if test="cancelOperator != null">cancel_operator =
+                #{cancelOperator},
+            </if>
+            <if test="cancelDatetime != null">cancel_datetime =
+                #{cancelDatetime},
+            </if>
+        </trim>
         where reservation_id = #{reservation_id}
     </update>
+
+
 </mapper>

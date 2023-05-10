@@ -11,4 +11,8 @@ public class AppFaceServiceImpl implements IAppFaceService {
     public AppPassenger findByPassengerId(Long passengerId){
         return  appFaceMapper.findByPassengerId(passengerId);
     }
+
+    public void updateReservationStatus(Long reservationId){
+        appFaceMapper.updateReservationStatus(reservationId);
+    }
 }

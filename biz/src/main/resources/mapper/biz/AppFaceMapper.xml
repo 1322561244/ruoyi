@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.Android.mapper.AppFaceMapper">
+
+<!--    <resultMap type="AppPassenger" id="AppPassengerResult">-->
+<!--        <result property="passengerId" column="passenger_id"/>-->
+<!--        <result property="passengerName" column="passenger_name"/>-->
+<!--        <result property="passengerPhone" column="passenger_phone"/>-->
+<!--        <result property="passengerPhoto1" column="passenger_photo1"/>-->
+<!--        <result property="passengerPhoto2" column="passenger_photo2"/>-->
+<!--        <result property="passengerPhoto3" column="passenger_photo3"/>-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash;    根据乘客id返回三张照片信息&ndash;&gt;-->
+<!--    <select id="findByPassengerId" parameterType="Long" resultMap="AppPassengerResult">-->
+<!--        select passenger_id,-->
+<!--               passenger_name,-->
+<!--               dept_id,-->
+<!--               enterprise_id,-->
+<!--               passenger_phone,-->
+<!--               passenger_photo1,-->
+<!--               passenger_photo2,-->
+<!--               passenger_photo3,-->
+<!--        from tqcgl_passenger-->
+<!--        where passenger_id = #{passengerId}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;    识别成功后乘客状态改为已上车&ndash;&gt;-->
+<!--    <update id="updateReservationStatus" parameterType="AppPassenger">-->
+<!--        update tqcgl_reservation-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="reservationStatus != null">reservation_status = 3,</if>-->
+<!--        </trim>-->
+<!--        where reservation_id = #{reservation_id}-->
+<!--    </update>-->
+</mapper>

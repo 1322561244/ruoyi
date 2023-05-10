@@ -28,7 +28,7 @@
     </select>
 
     <!--    索引该账号以前的数据-->
-    <select id="selectMessage" parameterType="WeChatMyMessage" resultMap="WeChatMyMessageResult">
+    <select id="selectMessage" parameterType="Long" resultMap="WeChatMyMessageResult">
         select p.passenger_id,
                p.passenger_name,
                p.dept_id,
@@ -47,7 +47,7 @@
 
 
     <!--    索引处当前userid是否保存过内容-->
-    <select id="selectMessageByUserId" parameterType="WeChatMyMessage" resultMap="WeChatMyMessageResult">
+    <select id="selectMessageByUserId" parameterType="Long" resultMap="WeChatMyMessageResult">
         select dept_id
         from sys_dept
         where user_id = #{userId}

@@ -3,8 +3,7 @@ package com.ruoyi.Android.domain;
 import com.ruoyi.common.annotation.Excel;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
-import java.util.Arrays;
+
 
 public class AppPassenger {
 

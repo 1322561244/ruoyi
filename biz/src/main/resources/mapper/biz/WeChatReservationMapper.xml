@@ -13,7 +13,7 @@
         <result property="dateTime" column="date_time"/>
         <result property="shiftsDepartureTime" column="shifts_departure_time"/>
         <result property="shiftsStatus" column="shifts_status"/>
-        <result property="vehicleCapacity" column="vehicle_capacity"/>
+        <result property="vehiclesCapacity" column="vehicles_capacity"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
 
@@ -36,7 +36,7 @@
 
 
     <!--    通过班次id和搭乘日期索引该班次的已预约人数-->
-    <select id="selectShiftsCountById" parameterType="WeChatReservation" resultMap="int">
+    <select id="selectShiftsCountById" parameterType="WeChatReservation" resultType="int">
         select count(*)
         from tqcgl_reservation r
         where r.reservation_time = #{dateTime}
@@ -44,8 +44,8 @@
     </select>
 
     <!--    通过班次id索引该班次的限载人数-->
-    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="int">
-        select v.vehicle_capacity
+        <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultType="int">
+        select v.vehicles_capacity
         from tqcgl_shifts s
                  left join tqcgl_vehicles v on v.vehicles_id = s.vehicles_id
         where s.shifts_id = #{shiftsId}
@@ -60,7 +60,7 @@
     </update>
 
     <!--    索引该未过期的预约信息-->
-    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="WeChatReservation">
+    <select id="selectNoTimeoutList" parameterType="WeChatReservation" resultMap="WeChatReservationResult">
         Select r.reservation_id,
                s.shifts_name,
                d.date_time,
@@ -86,11 +86,13 @@
     </update>
 
     <!--    索引该已过期的预约信息-->
-    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="WeChatReservation">
+    <select id="selectTimeoutList" parameterType="Long" resultMap="WeChatReservationResult">
         Select r.reservation_id,
                s.shifts_name,
                d.date_time,
-               s.shifts_departure_time l.leader_name,l.leader_phone
+               s.shifts_departure_time,
+               l.leader_name,
+               l.leader_phone
         from tqcgl_reservation r
                  Left join tqcgl_shifts s on r.shifts_id = s.shifts_id
                  Left join tqcgl_shifts_date d on d.shifts_id = s.shifts_id
@@ -101,7 +103,8 @@
     </select>
 
     <!--新增预约信息-->
-    <insert id="insertReservation" parameterType="WeChatReservation" useGeneratedKeys="true" keyProperty="reservationId">insert
+    <insert id="insertReservation" parameterType="WeChatReservation" useGeneratedKeys="true" keyProperty="reservationId">
+        insert
         into tqcgl_drivers
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shiftsId != null">shifts_id,</if>

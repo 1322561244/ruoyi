@@ -8,7 +8,7 @@
       v-show="showSearch"
       label-width="80px"
     >
-      <el-form-item label="班次名" prop="shiftsName">
+      <el-form-item label="班次名" prop="shiftsName" labelWidth="110px">
         <el-input
           v-model="queryParams.shiftsName"
           placeholder="请输入班次名"
@@ -16,7 +16,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发车时间" prop="shiftsDepartureTime">
+      <el-form-item label="发车时间" prop="shiftsDepartureTime" labelWidth="80px">
         <el-date-picker
           clearable
           v-model="queryParams.shiftsDepartureTime"
@@ -26,7 +26,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="车长名" prop="leaderName">
+      <el-form-item label="车长名" prop="leaderName" labelWidth="80px">
         <el-input
           v-model="queryParams.leaderName"
           placeholder="请输入车长名"
@@ -34,7 +34,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车长电话" prop="leaderPhone">
+      <el-form-item label="车长电话" prop="leaderPhone" labelWidth="80px">
         <el-input
           v-model="queryParams.leaderPhone"
           placeholder="请输入车长电话"
@@ -42,7 +42,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="司机名" prop="driversName">
+      <el-form-item label="司机名" prop="driversName" labelWidth="80px">
         <el-input
           v-model="queryParams.driversName"
           placeholder="请输入司机名"
@@ -58,7 +58,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车牌号" prop="vehiclesLicensePlate">
+      <el-form-item label="车牌号" prop="vehiclesLicensePlate" labelWidth="80px">
         <el-input
           v-model="queryParams.vehiclesLicensePlate"
           placeholder="请输入车牌号"
@@ -66,7 +66,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item class="right">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
           >搜索</el-button
         >
@@ -437,3 +437,4 @@ export default {
   },
 };
 </script>
+

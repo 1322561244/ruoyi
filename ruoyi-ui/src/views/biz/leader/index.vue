@@ -6,7 +6,7 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="80px"
     >
       <el-form-item label="车长姓名" prop="leaderName">
         <el-input
@@ -24,7 +24,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业名称" prop="enterpriseName">
+      <el-form-item label="所属企业名称" prop="enterpriseName" labelWidth="115px">
         <el-input
           v-model="queryParams.enterpriseName"
           placeholder="请输入所属企业名称"
@@ -137,7 +137,7 @@
 
     <!-- 添加车长管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="车长姓名" prop="leaderName">
           <el-input v-model="form.leaderName" placeholder="请输入车长姓名" />
         </el-form-item>
@@ -190,11 +190,11 @@
 <script>
 import { listEnterprise } from "@/api/biz/enterprise";
 import {
-addLeader,
-delLeader,
-getLeader,
-listLeader,
-updateLeader,
+  addLeader,
+  delLeader,
+  getLeader,
+  listLeader,
+  updateLeader,
 } from "@/api/biz/leader";
 
 export default {

@@ -6,7 +6,7 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="80px"
     >
       <el-form-item label="司机姓名" prop="driversName">
         <el-input
@@ -16,7 +16,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="司机联系电话" prop="driversPhone">
+      <el-form-item label="司机联系电话" prop="driversPhone" labelWidth="130px">
         <el-input
           v-model="queryParams.driversPhone"
           placeholder="请输入司机联系电话"
@@ -24,10 +24,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="提供该司机的公司或供应商名称" prop="driversSupplier">
+      <el-form-item label="所属公司或供应商" prop="driversSupplier" labelWidth="170px">
         <el-input
           v-model="queryParams.driversSupplier"
-          placeholder="请输入提供该司机的公司或供应商名称"
+          placeholder="请输入公司或供应商名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -99,11 +99,7 @@
       <!-- <el-table-column label="每个司机记录的唯一标识符" align="center" prop="driversId" /> -->
       <el-table-column label="司机姓名" align="center" prop="driversName" />
       <el-table-column label="司机联系电话" align="center" prop="driversPhone" />
-      <el-table-column
-        label="提供该司机的公司或供应商名称"
-        align="center"
-        prop="driversSupplier"
-      />
+      <el-table-column label="所属公司或供应商" align="center" prop="driversSupplier" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
@@ -141,19 +137,16 @@
     />
 
     <!-- 添加或修改司机管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="550px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="司机姓名" prop="driversName">
           <el-input v-model="form.driversName" placeholder="请输入司机姓名" />
         </el-form-item>
         <el-form-item label="司机联系电话" prop="driversPhone">
           <el-input v-model="form.driversPhone" placeholder="请输入司机联系电话" />
         </el-form-item>
-        <el-form-item label="提供该司机的公司或供应商名称" prop="driversSupplier">
-          <el-input
-            v-model="form.driversSupplier"
-            placeholder="请输入提供该司机的公司或供应商名称"
-          />
+        <el-form-item label="所属公司或供应商" prop="driversSupplier">
+          <el-input v-model="form.driversSupplier" placeholder="请输入公司或供应商名称" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -166,11 +159,11 @@
 
 <script>
 import {
-addDrivers,
-delDrivers,
-getDrivers,
-listDrivers,
-updateDrivers,
+  addDrivers,
+  delDrivers,
+  getDrivers,
+  listDrivers,
+  updateDrivers,
 } from "@/api/biz/drivers";
 
 export default {

@@ -6,7 +6,7 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="80px"
     >
       <el-form-item label="班次名" prop="shiftsName">
         <el-input
@@ -50,7 +50,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="司机联系电话" prop="driversPhone">
+      <el-form-item label="司机联系电话" prop="driversPhone" labelWidth="110px">
         <el-input
           v-model="queryParams.driversPhone"
           placeholder="请输入司机联系电话"

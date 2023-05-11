@@ -6,7 +6,7 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="70px"
     >
       <el-form-item label="班次名" prop="shiftsName">
         <el-input
@@ -32,7 +32,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="司机联系电话" prop="driversPhone">
+      <el-form-item label="司机联系电话" prop="driversPhone" labelWidth="110px">
         <el-input
           v-model="queryParams.driversPhone"
           placeholder="请输入司机联系电话"
@@ -48,7 +48,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车长联系电话" prop="leaderPhone">
+      <el-form-item label="车长联系电话" prop="leaderPhone" labelWidth="110px">
         <el-input
           v-model="queryParams.leaderPhone"
           placeholder="请输入车长联系电话"
@@ -56,7 +56,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="预约的发车时间" prop="reservationTime">
+      <el-form-item label="预约的发车时间" prop="reservationTime" labelWidth="110px">
         <el-date-picker
           clearable
           v-model="queryParams.reservationTime"
@@ -74,7 +74,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="乘客所属部门" prop="deptName">
+      <el-form-item label="乘客所属部门" prop="deptName" labelWidth="110px">
         <el-input
           v-model="queryParams.deptName"
           placeholder="请输入乘客所属部门"
@@ -82,7 +82,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="乘客所属企业" prop="enterpriseName">
+      <el-form-item label="乘客所属企业" prop="enterpriseName" labelWidth="110px">
         <el-input
           v-model="queryParams.enterpriseName"
           placeholder="请输入乘客所属企业"
@@ -90,7 +90,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="乘客联系电话" prop="passengerPhone">
+      <el-form-item label="乘客联系电话" prop="passengerPhone" labelWidth="110px">
         <el-input
           v-model="queryParams.passengerPhone"
           placeholder="请输入乘客联系电话"
@@ -238,7 +238,7 @@
 
     <!-- 添加预约管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="班次名" prop="shiftsId">
           <el-select
             v-model="form.shiftsName"
@@ -267,7 +267,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="预约的发车时间" prop="reservationTime">
+        <el-form-item label="预约发车时间" prop="reservationTime">
           <el-date-picker
             clearable
             v-model="form.reservationTime"

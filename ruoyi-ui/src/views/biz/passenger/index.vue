@@ -6,7 +6,7 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="80px"
     >
       <el-form-item label="乘客姓名" prop="passengerName">
         <el-input
@@ -16,7 +16,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属企业名称" prop="enterpriseName">
+      <el-form-item label="所属企业名称" prop="enterpriseName" labelWidth="110px">
         <el-input
           v-model="queryParams.enterpriseName"
           placeholder="请输入所属企业名称"
@@ -24,7 +24,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属部门名称" prop="deptName">
+      <el-form-item label="所属部门名称" prop="deptName" labelWidth="110px">
         <el-input
           v-model="queryParams.deptName"
           placeholder="请输入所属部门名称"
@@ -176,8 +176,8 @@
     />
 
     <!-- 添加或修改乘客管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="550px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="乘客姓名" prop="passengerName">
           <el-input v-model="form.passengerName" placeholder="请输入乘客姓名" />
         </el-form-item>

@@ -6,36 +6,36 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="68px"
+      label-width="80px"
     >
-      <el-form-item label="车辆的车牌号码" prop="vehiclesLicensePlate">
+      <el-form-item label="车牌号码" prop="vehiclesLicensePlate">
         <el-input
           v-model="queryParams.vehiclesLicensePlate"
-          placeholder="请输入车辆的车牌号码"
+          placeholder="请输入车牌号码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车辆的型号" prop="vehiclesModel">
+      <el-form-item label="车辆型号" prop="vehiclesModel">
         <el-input
           v-model="queryParams.vehiclesModel"
-          placeholder="请输入车辆的型号"
+          placeholder="请输入车辆型号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车辆最多可搭载乘客数" prop="vehiclesCapacity">
+      <el-form-item label="限载人数" prop="vehiclesCapacity">
         <el-input
           v-model="queryParams.vehiclesCapacity"
-          placeholder="请输入车辆最多可搭载乘客数"
+          placeholder="请输入车辆限载人数"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="提供车辆的公司或供应商名称" prop="vehiclesSupplier">
+      <el-form-item label="所属公司或供应商" prop="vehiclesSupplier" labelWidth="130px">
         <el-input
           v-model="queryParams.vehiclesSupplier"
-          placeholder="请输入提供车辆的公司或供应商名称"
+          placeholder="请输入车辆所属公司或供应商"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -104,20 +104,11 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="每个车辆记录的唯一标识符" align="center" prop="vehiclesId" /> -->
+      <el-table-column label="车牌号码" align="center" prop="vehiclesLicensePlate" />
+      <el-table-column label="车辆型号" align="center" prop="vehiclesModel" />
+      <el-table-column label="车辆限载人数" align="center" prop="vehiclesCapacity" />
       <el-table-column
-        label="车辆的车牌号码"
-        align="center"
-        prop="vehiclesLicensePlate"
-      />
-      <el-table-column label="车辆的型号" align="center" prop="vehiclesModel" />
-      <el-table-column
-        label="车辆最多可搭载乘客数"
-        align="center"
-        prop="vehiclesCapacity"
-      />
-      <el-table-column
-        label="提供车辆的公司或供应商名称"
+        label="车辆所属公司或供应商"
         align="center"
         prop="vehiclesSupplier"
       />
@@ -157,27 +148,27 @@
     />
 
     <!-- 添加或修改车辆管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="车辆的车牌号码" prop="vehiclesLicensePlate">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+        <el-form-item label="车牌号码" prop="vehiclesLicensePlate">
           <el-input
             v-model="form.vehiclesLicensePlate"
             placeholder="请输入车辆的车牌号码"
           />
         </el-form-item>
-        <el-form-item label="车辆的型号" prop="vehiclesModel">
+        <el-form-item label="车辆型号" prop="vehiclesModel">
           <el-input v-model="form.vehiclesModel" placeholder="请输入车辆的型号" />
         </el-form-item>
-        <el-form-item label="车辆最多可搭载乘客数" prop="vehiclesCapacity">
+        <el-form-item label="车辆限载人数" prop="vehiclesCapacity">
           <el-input
             v-model="form.vehiclesCapacity"
             placeholder="请输入车辆最多可搭载乘客数"
           />
         </el-form-item>
-        <el-form-item label="提供车辆的公司或供应商名称" prop="vehiclesSupplier">
+        <el-form-item label="所属公司或供应商" prop="vehiclesSupplier">
           <el-input
             v-model="form.vehiclesSupplier"
-            placeholder="请输入提供车辆的公司或供应商名称"
+            placeholder="请输入车辆所属公司或供应商"
           />
         </el-form-item>
       </el-form>

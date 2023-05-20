@@ -75,4 +75,12 @@ public interface TqcglPassengerMapper {
      */
     public int checkExistUser(Long Id);
 
+    /**
+     * 根据用户名查用户
+     * 
+     * @param Id ID
+     * @return 结果
+     */
+    public TqcglPassenger select_Passenger_toName(String passengerName);
+
 }

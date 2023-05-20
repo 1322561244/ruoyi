@@ -1,6 +1,7 @@
 package com.ruoyi.biz.mapper;
 
 import java.util.List;
+
 import com.ruoyi.biz.domain.TqcglShifts;
 
 /**
@@ -9,8 +10,7 @@ import com.ruoyi.biz.domain.TqcglShifts;
  * @author ruoyi
  * @date 2023-04-28
  */
-public interface TqcglShiftsMapper 
-{
+public interface TqcglShiftsMapper {
     /**
      * 查询班次管理
      * 
@@ -19,7 +19,6 @@ public interface TqcglShiftsMapper
      */
     public TqcglShifts selectTqcglShiftsByShiftsId(Long shiftsId);
 
-
     /**
      * 查询班次管理
      *
@@ -27,7 +26,6 @@ public interface TqcglShiftsMapper
      * @return 班次管理
      */
     public TqcglShifts selectTqcglShiftsByShiftsId2(Long shiftsId);
-
 
     /**
      * 查询班次管理列表
@@ -69,9 +67,7 @@ public interface TqcglShiftsMapper
      */
     public int deleteTqcglShiftsByShiftsIds(Long[] shiftsIds);
 
-
     public int selectVehicleCapacityByShiftsId(Long shiftsId);
-
 
     /**
      * 修改班次管理
@@ -88,4 +84,12 @@ public interface TqcglShiftsMapper
      * @return 班次管理集合
      */
     public List<TqcglShifts> selectShiftsList(TqcglShifts tqcglShifts);
+
+    /**
+     * 校验用户名称是否唯一
+     * 
+     * @param shiftsName 名称
+     * @return 结果
+     */
+    public TqcglShifts checkNameUnique(String shiftsName);
 }

@@ -126,21 +126,7 @@
         </foreach>
     </delete>
 
-
-    <!--    &lt;!&ndash;    班次的限载人数索引&ndash;&gt;-->
-    <!--    <select id="selectVehicleCapacityByShiftsId" parameterType="Long" resultMap="TqcglShiftsResult">-->
-    <!--        SELECT vehicles_capacity-->
-    <!--        FROM tqcgl_vehicles v,-->
-    <!--             tqcgl_shifts s-->
-    <!--        where v.vehicles_id = s.vehicles_id-->
-    <!--          AND s.shifts_id = #{shiftsId}-->
-    <!--    </select>-->
-    <!--    &lt;!&ndash;    更新当前班次的状态：可预约状态→不可预约状态（满人）&ndash;&gt;-->
-    <!--    <update id="updateTqcglShiftsStatus" parameterType="TqcglShifts">-->
-    <!--        update tqcgl_shifts-->
-    <!--        <trim prefix="SET" suffixOverrides=",">-->
-    <!--            <if test="reservationStatus != null">reservation_status = #{reservationStatus},</if>-->
-    <!--        </trim>-->
-    <!--        where shifts_id = #{shiftsId}-->
-    <!--    </update>-->
+    <select id="checkNameUnique" parameterType="String" resultMap="TqcglShiftsResult"> select
+        shifts_id, shifts_name from tqcgl_shifts where shifts_name =
+        #{shiftsName} limit 1 </select>
 </mapper>

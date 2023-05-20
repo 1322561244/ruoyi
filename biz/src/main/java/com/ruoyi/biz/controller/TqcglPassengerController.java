@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.biz.domain.TqcglPassenger;
 import com.ruoyi.biz.service.ITqcglPassengerService;
@@ -111,4 +112,22 @@ public class TqcglPassengerController extends BaseController {
     public AjaxResult getInfo2(@PathVariable("passengerId") Long passengerId) {
         return success(tqcglPassengerService.selectTqcglPassengerByPassengerId2(passengerId));
     }
+
+    @Log(title = "乘客基本信息", businessType = BusinessType.IMPORT) // todo
+    @PreAuthorize("@ss.hasPermi('biz:passenger:import')") // todo
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<TqcglPassenger> util = new ExcelUtil<>(TqcglPassenger.class); // todo
+        List<TqcglPassenger> stuList = util.importExcel(file.getInputStream()); // todo
+        String operName = getUsername();
+        String message = tqcglPassengerService.importUser(stuList, updateSupport, operName); // todo
+        return AjaxResult.success(message);
+    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<TqcglPassenger> util = new ExcelUtil<>(TqcglPassenger.class); // todo
+        util.importTemplateExcel(response, "乘客基本信息");
+    }
+
 }

@@ -35,7 +35,7 @@
 		<if test="enterpriseId != null and enterpriseId != ''"> AND e.enterprise_id = #{enterpriseId} </if>
 		<if test="status != null and status != ''"> AND status = #{status} </if>
 		<if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
-		concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=d.enterprise_id 																				<!-- 数据范围过滤 -->
+		concat('%', #{enterpriseName}, '%')</if> and e.enterprise_id=d.enterprise_id 																						<!-- 数据范围过滤 -->
 		${params.dataScope} order by d.parent_id, d.order_num </select>
 
 	<select id="selectDeptListByRoleId" resultType="Long"> select d.dept_id from sys_dept d left
@@ -128,7 +128,9 @@
 		select d.dept_id,d.dept_name, e.enterprise_id,e.enterprise_name from sys_dept d
 		    left join tqclg_enterprise e ON d.enterprise_id=e.enterprise_id
 	<if test="enterpriseId != null">where enterprise_id = #{enterpriseId}</if>
-
 </select>
+
+<select id="select_DeptId_toName" parameterType="String" resultMap="SysDeptResult"> select *
+		from sys_dept where dept_name = #{deptName} </select>
 
 </mapper> 

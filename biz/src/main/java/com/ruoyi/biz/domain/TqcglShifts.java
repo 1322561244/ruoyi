@@ -1,12 +1,13 @@
 package com.ruoyi.biz.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 班次管理对象 tqcgl_shifts
@@ -32,25 +33,25 @@ public class TqcglShifts extends BaseEntity {
      * 发车时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "发车时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "发车时间(00:00:00)", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date shiftsDepartureTime;
 
     /**
      * 车长ID
      */
-    @Excel(name = "车长ID")
+
     private Long leaderId;
 
     /**
      * 司机ID
      */
-    @Excel(name = "司机ID")
+
     private Long driversId;
 
     /**
      * 车辆ID
      */
-    @Excel(name = "车辆ID")
+
     private Long vehiclesId;
 
     /**
@@ -77,13 +78,10 @@ public class TqcglShifts extends BaseEntity {
     @Excel(name = "司机联系电话")
     private String driversPhone;
 
-
     /**
      * 预约状态，可预约时为1，不可预约为0
      */
-    @Excel(name = "班次的状态")
     private int shiftsStatus;
-
 
     /**
      * 车牌号

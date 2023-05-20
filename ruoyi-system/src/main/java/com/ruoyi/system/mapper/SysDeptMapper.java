@@ -130,4 +130,13 @@ public interface SysDeptMapper {
      * 获取所有部门的名称及其对应的所属企业名
      */
     public List<SysDept> selectDeptList2();
+
+    /**
+     * 根据部门名找部门id
+     * 
+     * @param deptName 部门名称
+     * @param parentId 父部门ID
+     * @return 结果
+     */
+    public SysDept select_DeptId_toName(String deptName);
 }

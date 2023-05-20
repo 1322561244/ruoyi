@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.biz.domain.TqcglDrivers;
 import com.ruoyi.biz.service.ITqcglDriversService;
@@ -105,4 +106,22 @@ public class TqcglDriversController extends BaseController {
         }
         return toAjax(tqcglDriversService.deleteTqcglDriversByDriversIds(driversIds));
     }
+
+    @Log(title = "司机基本信息", businessType = BusinessType.IMPORT) // todo
+    @PreAuthorize("@ss.hasPermi('biz:drivers:import')") // todo
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<TqcglDrivers> util = new ExcelUtil<>(TqcglDrivers.class); // todo
+        List<TqcglDrivers> driverList = util.importExcel(file.getInputStream()); // todo
+        String operName = getUsername();
+        String message = tqcglDriversService.importUser(driverList, updateSupport, operName); // todo
+        return AjaxResult.success(message);
+    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<TqcglDrivers> util = new ExcelUtil<>(TqcglDrivers.class); // todo
+        util.importTemplateExcel(response, "司机基本信息");
+    }
+
 }

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
@@ -29,13 +30,11 @@ public class TqcglPassenger extends BaseEntity {
     /**
      * 所属企业ID
      */
-    @Excel(name = "所属企业ID")
     private Long enterpriseId;
 
     /**
      * 所属部门ID
      */
-    @Excel(name = "所属部门ID")
     private Long deptId;
 
     /**
@@ -59,25 +58,24 @@ public class TqcglPassenger extends BaseEntity {
     /**
      * 乘客照片1
      */
-    @Excel(name = "乘客照片1")
+    @Excel(name = "乘客照片1", cellType = ColumnType.IMAGE)
     private String passengerPhoto1;
 
     /**
      * 乘客照片2
      */
-    @Excel(name = "乘客照片2")
+    @Excel(name = "乘客照片2", cellType = ColumnType.IMAGE)
     private String passengerPhoto2;
 
     /**
      * 乘客照片3
      */
-    @Excel(name = "乘客照片3")
+    @Excel(name = "乘客照片3", cellType = ColumnType.IMAGE)
     private String passengerPhoto3;
 
     /**
      * 账号id
      */
-    @Excel(name = "账号id")
     private Long userId;
 
     /**

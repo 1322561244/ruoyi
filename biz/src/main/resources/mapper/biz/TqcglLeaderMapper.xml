@@ -10,15 +10,17 @@
         <result property="enterpriseId" column="enterprise_id" />
         <result property="userId" column="user_id" />
         <result property="createTime" column="create_time" />
+        <result property="userName" column="user_name" />
     </resultMap>
 
 
     <sql id="selectTqcglLeaderVo2"> select leader_id, leader_name, leader_phone, enterprise_id from
         tqcgl_leader </sql>
 
-    <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name, l.create_time
+    <sql id="selectTqcglLeaderVo"> select leader_id, leader_name, leader_phone, e.enterprise_name, l.create_time, u.user_name
         from tqcgl_leader l
-        LEFT JOIN tqcgl_enterprise e ON l.enterprise_id = e.enterprise_id</sql>
+        LEFT JOIN tqcgl_enterprise e ON l.enterprise_id = e.enterprise_id
+        LEFT JOIN sys_user u ON u.user_id = l.user_id</sql>
 
     <select id="selectTqcglLeaderList" parameterType="TqcglLeader" resultMap="TqcglLeaderResult">
         <include refid="selectTqcglLeaderVo" />
@@ -29,6 +31,7 @@
         leader_phone = #{leaderPhone}</if>
             <if test="enterpriseName != null  and enterpriseName != ''"> and e.enterprise_name like
         concat('%', #{enterpriseName}, '%')</if>
+            <if test="userName != null "> and user_name = #{userName}</if>
         </where>
     </select>
 

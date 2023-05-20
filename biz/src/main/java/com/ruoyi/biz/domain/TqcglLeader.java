@@ -19,8 +19,13 @@ public class TqcglLeader extends BaseEntity {
     private Long leaderId;
 
     /** 账号ID */
-    @Excel(name = "账号id")
     private Long userId;
+
+    /**
+     * 账号名
+     */
+    @Excel(name = "账号名")
+    private String userName;
 
     /** 车长姓名 */
     @Excel(name = "车长姓名")
@@ -31,7 +36,6 @@ public class TqcglLeader extends BaseEntity {
     private String leaderPhone;
 
     /** 所属企业ID */
-    @Excel(name = "所属企业ID")
     private Long enterpriseId;
 
     @Excel(name = "所属企业名称")
@@ -83,6 +87,14 @@ public class TqcglLeader extends BaseEntity {
 
     public String getEnterpriseName() {
         return enterpriseName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     @Override

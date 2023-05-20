@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.biz.domain.TqcglLeader;
 import com.ruoyi.biz.service.ITqcglLeaderService;
@@ -104,6 +105,23 @@ public class TqcglLeaderController extends BaseController {
             }
         }
         return toAjax(tqcglLeaderService.deleteTqcglLeaderByLeaderIds(leaderIds));
+    }
+
+    @Log(title = "车长基本信息", businessType = BusinessType.IMPORT) // todo
+    @PreAuthorize("@ss.hasPermi('biz:leader:import')") // todo
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<TqcglLeader> util = new ExcelUtil<>(TqcglLeader.class); // todo
+        List<TqcglLeader> stuList = util.importExcel(file.getInputStream()); // todo
+        String operName = getUsername();
+        String message = tqcglLeaderService.importUser(stuList, updateSupport, operName); // todo
+        return AjaxResult.success(message);
+    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<TqcglLeader> util = new ExcelUtil<>(TqcglLeader.class); // todo
+        util.importTemplateExcel(response, "车长基本信息");
     }
 
 }

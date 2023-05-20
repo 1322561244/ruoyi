@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.biz.domain.TqcglVehicles;
 import com.ruoyi.biz.service.ITqcglVehiclesService;
@@ -100,4 +101,22 @@ public class TqcglVehiclesController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] vehiclesIds) {
         return toAjax(tqcglVehiclesService.deleteTqcglVehiclesByVehiclesIds(vehiclesIds));
     }
+
+    @Log(title = "车辆基本信息", businessType = BusinessType.IMPORT) // todo
+    @PreAuthorize("@ss.hasPermi('biz:vehicles:import')") // todo
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<TqcglVehicles> util = new ExcelUtil<>(TqcglVehicles.class); // todo
+        List<TqcglVehicles> List = util.importExcel(file.getInputStream()); // todo
+        String operName = getUsername();
+        String message = tqcglVehiclesService.importUser(List, updateSupport, operName); // todo
+        return AjaxResult.success(message);
+    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<TqcglVehicles> util = new ExcelUtil<>(TqcglVehicles.class); // todo
+        util.importTemplateExcel(response, "学生基本信息");
+    }
+
 }

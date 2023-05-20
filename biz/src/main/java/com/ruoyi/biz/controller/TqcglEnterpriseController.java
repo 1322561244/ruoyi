@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.biz.domain.TqcglEnterprise;
 import com.ruoyi.biz.service.ITqcglEnterpriseService;
@@ -104,4 +105,22 @@ public class TqcglEnterpriseController extends BaseController {
         }
         return toAjax(tqcglEnterpriseService.deleteTqcglEnterpriseByEnterpriseId(enterpriseIds));
     }
+
+    @Log(title = "企业基本信息", businessType = BusinessType.IMPORT) // todo
+    @PreAuthorize("@ss.hasPermi('biz:enterprise:import')") // todo
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<TqcglEnterprise> util = new ExcelUtil<>(TqcglEnterprise.class); // todo
+        List<TqcglEnterprise> enterpriseList = util.importExcel(file.getInputStream()); // todo
+        String operName = getUsername();
+        String message = tqcglEnterpriseService.importUser(enterpriseList, updateSupport, operName); // todo
+        return AjaxResult.success(message);
+    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) {
+        ExcelUtil<TqcglEnterprise> util = new ExcelUtil<>(TqcglEnterprise.class); // todo
+        util.importTemplateExcel(response, "企业基本信息");
+    }
+
 }

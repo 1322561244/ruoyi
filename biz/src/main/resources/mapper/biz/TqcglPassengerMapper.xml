@@ -126,4 +126,8 @@ FROM
         total_count FROM ( SELECT COUNT(*) AS cnt FROM tqcgl_reservation WHERE tqcgl_reservation.passenger_id
         = #{Id})t</select>
 
+<select id="select_Passenger_toName" parameterType="String" resultMap="TqcglPassengerResult">
+<include refid="selectTqcglPassengerVo" />
+ where passenger_name = #{passengerName} </select>
+
 </mapper>

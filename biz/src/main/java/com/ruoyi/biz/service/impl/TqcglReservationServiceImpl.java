@@ -1,12 +1,13 @@
 package com.ruoyi.biz.service.impl;
 
-import com.ruoyi.biz.domain.TqcglReservation;
-import com.ruoyi.biz.mapper.TqcglReservationMapper;
-import com.ruoyi.biz.service.ITqcglReservationService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.ruoyi.biz.domain.TqcglReservation;
+import com.ruoyi.biz.mapper.TqcglReservationMapper;
+import com.ruoyi.biz.service.ITqcglReservationService;
 
 /**
  * 预约管理Service业务层处理
@@ -96,26 +97,4 @@ public class TqcglReservationServiceImpl implements ITqcglReservationService {
         return tqcglReservationMapper.deleteTqcglReservationByReservationId(reservationId);
     }
 
-
-    /**
-     * 新增预约管理
-     *
-     * @param tqcglReservation 预约管理
-     * @return 结果
-     */
-//    @Override
-//    public String insertTqcglReservation2(TqcglReservation tqcglReservation) {
-//        return tqcglReservationMapper.insertTqcglReservation2(tqcglReservation);
-//    }
-
-    /**
-     * 搜索当前班次已经预约了多少
-     *
-     * @param
-     * @return 结果count
-     */
-//    @Override
-//    public int selectShiftsCountById(Long shiftsId) {
-//        return tqcglReservationMapper.selectShiftsCountById(shiftsId);
-//    }
 }

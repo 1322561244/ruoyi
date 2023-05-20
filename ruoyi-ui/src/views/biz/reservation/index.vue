@@ -9,7 +9,6 @@
       label-width="70px"
       style="align-items: center"
     >
-
       <el-form-item label="班次名" prop="shiftsName" labelWidth="100px">
         <el-input
           v-model="queryParams.shiftsName"
@@ -28,7 +27,6 @@
         />
       </el-form-item>
 
-
       <el-form-item label="司机姓名" prop="driversName" labelWidth="100px">
         <el-input
           v-model="queryParams.driversName"
@@ -37,7 +35,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
 
       <el-form-item label="司机联系电话" prop="driversPhone" labelWidth="100px">
         <el-input
@@ -48,7 +45,6 @@
         />
       </el-form-item>
 
-
       <el-form-item label="车长姓名" prop="leaderName" labelWidth="100px">
         <el-input
           v-model="queryParams.leaderName"
@@ -58,7 +54,12 @@
         />
       </el-form-item>
 
-      <el-form-item label="车长联系电话" prop="leaderPhone" labelWidth="100px" class="form-label">
+      <el-form-item
+        label="车长联系电话"
+        prop="leaderPhone"
+        labelWidth="100px"
+        class="form-label"
+      >
         <el-input
           v-model="queryParams.leaderPhone"
           placeholder="请输入车长联系电话"
@@ -66,7 +67,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
 
       <el-form-item label="乘客名" prop="passengerName" labelWidth="100px">
         <el-input
@@ -124,15 +124,12 @@
         </el-date-picker>
       </el-form-item>
 
-
       <el-form-item class="right">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
-        >搜索
-        </el-button
-        >
+          >搜索
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
-
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -144,7 +141,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['biz:reservation:add']"
-        >新增
+          >新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -156,7 +153,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['biz:reservation:edit']"
-        >修改
+          >修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -168,7 +165,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['biz:reservation:remove']"
-        >删除
+          >删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -179,7 +176,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['biz:reservation:export']"
-        >导出
+          >导出
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -190,13 +187,13 @@
       :data="reservationList"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="班次名" align="center" prop="shiftsName"/>
-      <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate"/>
-      <el-table-column label="司机姓名" align="center" prop="driversName"/>
-      <el-table-column label="司机联系电话" align="center" prop="driversPhone"/>
-      <el-table-column label="车长姓名" align="center" prop="leaderName"/>
-      <el-table-column label="车长联系电话" align="center" prop="leaderPhone"/>
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="班次名" align="center" prop="shiftsName" />
+      <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate" />
+      <el-table-column label="司机姓名" align="center" prop="driversName" />
+      <el-table-column label="司机联系电话" align="center" prop="driversPhone" />
+      <el-table-column label="车长姓名" align="center" prop="leaderName" />
+      <el-table-column label="车长联系电话" align="center" prop="leaderPhone" />
       <el-table-column
         label="预约的发车时间"
         align="center"
@@ -207,10 +204,10 @@
           <span>{{ parseTime(scope.row.reservationTime, "{y}-{m}-{ds}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="乘客名" align="center" prop="passengerName"/>
-      <el-table-column label="乘客所属部门" align="center" prop="deptName"/>
-      <el-table-column label="乘客所属企业" align="center" prop="enterpriseName"/>
-      <el-table-column label="乘客联系电话" align="center" prop="passengerPhone"/>
+      <el-table-column label="乘客名" align="center" prop="passengerName" />
+      <el-table-column label="乘客所属部门" align="center" prop="deptName" />
+      <el-table-column label="乘客所属企业" align="center" prop="enterpriseName" />
+      <el-table-column label="乘客联系电话" align="center" prop="passengerPhone" />
       <el-table-column label="创建时间" align="center" prop="creationTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.creationTime, "{y}-{m}-{d}") }}</span>
@@ -232,7 +229,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['biz:reservation:edit']"
-          >修改
+            >修改
           </el-button>
           <el-button
             size="mini"
@@ -240,7 +237,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['biz:reservation:remove']"
-          >删除
+            >删除
           </el-button>
         </template>
       </el-table-column>
@@ -478,7 +475,7 @@
 </template>
 
 <script>
-import {getPassenger2, listPassenger} from "@/api/biz/passenger";
+import { getPassenger2, listPassenger } from "@/api/biz/passenger";
 import {
   addReservation,
   delReservation,
@@ -486,7 +483,7 @@ import {
   listReservation,
   updateReservation,
 } from "@/api/biz/reservation";
-import {getShifts2, listShifts} from "@/api/biz/shifts";
+import { getShifts2, listShifts } from "@/api/biz/shifts";
 import DictData from "@/components/DictData";
 
 DictData.install();
@@ -704,8 +701,7 @@ export default {
           this.getList();
           this.$modal.msgSuccess("删除成功");
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {

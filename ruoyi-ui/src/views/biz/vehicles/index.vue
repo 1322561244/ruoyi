@@ -397,7 +397,7 @@ export default {
     handleDelete(row) {
       const vehiclesIds = row.vehiclesId || this.ids;
       this.$modal
-        .confirm('是否确认删除车辆管理编号为"' + vehiclesIds + '"的数据项？')
+        .confirm('是否确认删除选中的数据项？')
         .then(function () {
           return delVehicles(vehiclesIds);
         })

@@ -3,74 +3,102 @@
 <mapper namespace="com.ruoyi.biz.mapper.TqcglVehiclesMapper">
 
     <resultMap type="TqcglVehicles" id="TqcglVehiclesResult">
-        <result property="vehiclesId" column="vehicles_id" />
-        <result property="vehiclesLicensePlate" column="vehicles_license_plate" />
-        <result property="vehiclesModel" column="vehicles_model" />
-        <result property="vehiclesCapacity" column="vehicles_capacity" />
-        <result property="vehiclesSupplier" column="vehicles_supplier" />
-        <result property="createTime" column="create_time" />
+        <result property="vehiclesId" column="vehicles_id"/>
+        <result property="vehiclesLicensePlate" column="vehicles_license_plate"/>
+        <result property="vehiclesModel" column="vehicles_model"/>
+        <result property="vehiclesCapacity" column="vehicles_capacity"/>
+        <result property="vehiclesSupplier" column="vehicles_supplier"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <sql id="selectTqcglVehiclesVo"> select vehicles_id, vehicles_license_plate, vehicles_model,
-        vehicles_capacity, vehicles_supplier, create_time from tqcgl_vehicles </sql>
+
+
+    <sql id="selectTqcglVehiclesVo"> select vehicles_id,
+                                            vehicles_license_plate,
+                                            vehicles_model,
+                                            vehicles_capacity,
+                                            vehicles_supplier,
+                                            create_time
+                                     from tqcgl_vehicles </sql>
 
     <select id="selectTqcglVehiclesList" parameterType="TqcglVehicles" resultMap="TqcglVehiclesResult">
-        <include refid="selectTqcglVehiclesVo" />
+        <include refid="selectTqcglVehiclesVo"/>
         <where>
-            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''"> and
-        vehicles_license_plate = #{vehiclesLicensePlate}</if>
-            <if test="vehiclesModel != null  and vehiclesModel != ''"> and vehicles_model =
-        #{vehiclesModel}</if>
-            <if test="vehiclesCapacity != null "> and vehicles_capacity =
-        #{vehiclesCapacity}</if>
-            <if test="vehiclesSupplier != null  and vehiclesSupplier != ''"> and
-        vehicles_supplier = #{vehiclesSupplier}</if>
+            <if test="vehiclesLicensePlate != null  and vehiclesLicensePlate != ''">and
+                vehicles_license_plate like concat('%', #{vehiclesLicensePlate} ,'%')
+            </if>
+            <if test="vehiclesModel != null  and vehiclesModel != ''">and vehicles_model like concat('%',
+                #{vehiclesModel} ,'%')
+            </if>
+            <if test="vehiclesCapacity != null ">and vehicles_capacity like concat('%', #{vehiclesCapacity} ,'%')
+            </if>
+            <if test="vehiclesSupplier != null  and vehiclesSupplier != ''">and
+                vehicles_supplier like concat('%', #{vehiclesSupplier} ,'%')
+            </if>
         </where>
     </select>
 
     <select id="selectTqcglVehiclesByVehiclesId" parameterType="Long" resultMap="TqcglVehiclesResult">
-        <include refid="selectTqcglVehiclesVo" />
- where vehicles_id = #{vehiclesId} </select>
+        <include refid="selectTqcglVehiclesVo"/>
+        where vehicles_id = #{vehiclesId}
+    </select>
 
-    <insert id="insertTqcglVehicles" parameterType="TqcglVehicles" useGeneratedKeys="true" keyProperty="vehiclesId"> insert into tqcgl_vehicles <trim prefix="(" suffix=")" suffixOverrides=",">
-        <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">
-        vehicles_license_plate,</if>
-        <if test="vehiclesModel != null and vehiclesModel != ''">
-        vehicles_model,</if>
-        <if test="vehiclesCapacity != null">vehicles_capacity,</if>
-        <if test="vehiclesSupplier != null and vehiclesSupplier != ''">vehicles_supplier,</if>
-        create_time
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-        <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">
-        #{vehiclesLicensePlate},</if>
-        <if test="vehiclesModel != null and vehiclesModel != ''">
-        #{vehiclesModel},</if>
-        <if test="vehiclesCapacity != null">#{vehiclesCapacity},</if>
-        <if test="vehiclesSupplier != null and vehiclesSupplier != ''">#{vehiclesSupplier},</if>
-        sysdate()
-    </trim>
-</insert>
+    <insert id="insertTqcglVehicles" parameterType="TqcglVehicles" useGeneratedKeys="true" keyProperty="vehiclesId">
+        insert into tqcgl_vehicles
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">
+                vehicles_license_plate,
+            </if>
+            <if test="vehiclesModel != null and vehiclesModel != ''">
+                vehicles_model,
+            </if>
+            <if test="vehiclesCapacity != null">vehicles_capacity,</if>
+            <if test="vehiclesSupplier != null and vehiclesSupplier != ''">vehicles_supplier,</if>
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">
+                #{vehiclesLicensePlate},
+            </if>
+            <if test="vehiclesModel != null and vehiclesModel != ''">
+                #{vehiclesModel},
+            </if>
+            <if test="vehiclesCapacity != null">#{vehiclesCapacity},</if>
+            <if test="vehiclesSupplier != null and vehiclesSupplier != ''">#{vehiclesSupplier},</if>
+            sysdate()
+        </trim>
+    </insert>
 
-<update id="updateTqcglVehicles" parameterType="TqcglVehicles"> update tqcgl_vehicles <trim prefix="SET" suffixOverrides=",">
-    <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">vehicles_license_plate
-        = #{vehiclesLicensePlate},</if>
-    <if test="vehiclesModel != null and vehiclesModel != ''">vehicles_model
-        = #{vehiclesModel},</if>
-    <if test="vehiclesCapacity != null">vehicles_capacity =
-        #{vehiclesCapacity},</if>
-    <if test="vehiclesSupplier != null and vehiclesSupplier != ''">vehicles_supplier
-        = #{vehiclesSupplier},</if>
-</trim> where vehicles_id = #{vehiclesId} </update>
+    <update id="updateTqcglVehicles" parameterType="TqcglVehicles">update tqcgl_vehicles
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vehiclesLicensePlate != null and vehiclesLicensePlate != ''">vehicles_license_plate
+                = #{vehiclesLicensePlate},
+            </if>
+            <if test="vehiclesModel != null and vehiclesModel != ''">vehicles_model
+                = #{vehiclesModel},
+            </if>
+            <if test="vehiclesCapacity != null">vehicles_capacity =
+                #{vehiclesCapacity},
+            </if>
+            <if test="vehiclesSupplier != null and vehiclesSupplier != ''">vehicles_supplier
+                = #{vehiclesSupplier},
+            </if>
+        </trim>
+        where vehicles_id = #{vehiclesId}
+    </update>
 
-<delete id="deleteTqcglVehiclesByVehiclesId" parameterType="Long"> delete from tqcgl_vehicles
-        where vehicles_id = #{vehiclesId} </delete>
+    <delete id="deleteTqcglVehiclesByVehiclesId" parameterType="Long"> delete
+                                                                       from tqcgl_vehicles
+                                                                       where vehicles_id = #{vehiclesId} </delete>
 
-<delete id="deleteTqcglVehiclesByVehiclesIds" parameterType="String"> delete from tqcgl_vehicles
-        where vehicles_id in <foreach item="vehiclesId" collection="array" open="(" separator="," close=")"> #{vehiclesId} </foreach>
-</delete>
+    <delete id="deleteTqcglVehiclesByVehiclesIds" parameterType="String">delete from tqcgl_vehicles
+        where vehicles_id in
+        <foreach item="vehiclesId" collection="array" open="(" separator="," close=")">#{vehiclesId}</foreach>
+    </delete>
 
-<select id="checkNameUnique" parameterType="String" resultMap="TqcglVehiclesResult"> select
-        vehicles_id, vehicles_license_plate from tqcgl_vehicles where vehicles_license_plate =
-        #{vehiclesLicensePlate} limit 1 </select>
+    <select id="checkNameUnique" parameterType="String" resultMap="TqcglVehiclesResult"> select vehicles_id,
+                                                                                                vehicles_license_plate
+                                                                                         from tqcgl_vehicles
+                                                                                         where vehicles_license_plate =
+                                                                                               #{vehiclesLicensePlate} limit 1 </select>
 </mapper>

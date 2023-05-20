@@ -18,10 +18,10 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="班次名" prop="shiftsName">
+      <el-form-item label="班次名称" prop="shiftsName">
         <el-input
           v-model="queryParams.shiftsName"
-          placeholder="请输入班次名"
+          placeholder="请输入班次名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -96,7 +96,7 @@
           <span>{{ parseTime(scope.row.dateTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="班次名" align="center" prop="shiftsName" />
+      <el-table-column label="班次名称" align="center" prop="shiftsName" />
       <el-table-column label="班次状态" align="center" prop="shiftsStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.shift_status" :value="scope.row.shiftsStatus" />
@@ -145,7 +145,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="班次名" prop="shiftsId">
+        <el-form-item label="班次名称" prop="shiftsId">
           <el-select v-model="form.shiftsId" placeholder="请选择班次">
             <el-option
               v-for="iteam in shiftsList"

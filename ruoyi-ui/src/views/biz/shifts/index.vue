@@ -8,15 +8,56 @@
       v-show="showSearch"
       label-width="80px"
     >
-      <el-form-item label="班次名" prop="shiftsName" labelWidth="110px">
+      <el-form-item label="班次名称" prop="shiftsName">
         <el-input
           v-model="queryParams.shiftsName"
-          placeholder="请输入班次名"
+          placeholder="请输入班次名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发车时间" prop="shiftsDepartureTime" labelWidth="80px">
+
+      <el-form-item label="车长姓名" prop="leaderName">
+        <el-input
+          v-model="queryParams.leaderName"
+          placeholder="请输入车长姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="车长电话" prop="leaderPhone">
+        <el-input
+          v-model="queryParams.leaderPhone"
+          placeholder="请输入车长联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="司机姓名" prop="driversName">
+        <el-input
+          v-model="queryParams.driversName"
+          placeholder="请输入司机姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="司机电话" prop="driversPhone">
+        <el-input
+          v-model="queryParams.driversPhone"
+          placeholder="请输入司机联系电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="车牌号码" prop="vehiclesLicensePlate">
+        <el-input
+          v-model="queryParams.vehiclesLicensePlate"
+          placeholder="请输入车牌号码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="发车时间" prop="shiftsDepartureTime">
         <el-date-picker
           clearable
           v-model="queryParams.shiftsDepartureTime"
@@ -26,52 +67,13 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="车长名" prop="leaderName" labelWidth="80px">
-        <el-input
-          v-model="queryParams.leaderName"
-          placeholder="请输入车长名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="车长电话" prop="leaderPhone" labelWidth="80px">
-        <el-input
-          v-model="queryParams.leaderPhone"
-          placeholder="请输入车长电话"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="司机名" prop="driversName" labelWidth="80px">
-        <el-input
-          v-model="queryParams.driversName"
-          placeholder="请输入司机名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="司机联系电话" prop="driversPhone" labelWidth="110px">
-        <el-input
-          v-model="queryParams.driversPhone"
-          placeholder="请输入司机联系电话"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="车牌号" prop="vehiclesLicensePlate" labelWidth="80px">
-        <el-input
-          v-model="queryParams.vehiclesLicensePlate"
-          placeholder="请输入车牌号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item class="right">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"
           >搜索</el-button
         >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
+
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -143,7 +145,7 @@
     >
       <el-table-column type="selection" width="55" align="center" />
       <!-- <el-table-column label="班次id" align="center" prop="shiftsId" /> -->
-      <el-table-column label="班次名" align="center" prop="shiftsName" />
+      <el-table-column label="班次名称" align="center" prop="shiftsName" />
       <el-table-column
         label="发车时间"
         align="center"
@@ -154,11 +156,11 @@
           <span>{{ parseTime(scope.row.shiftsDepartureTime, "{h}:{i}:{s}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="车长名" align="center" prop="leaderName" />
+      <el-table-column label="车长姓名" align="center" prop="leaderName" />
       <el-table-column label="车长电话" align="center" prop="leaderPhone" />
-      <el-table-column label="司机名" align="center" prop="driversName" />
-      <el-table-column label="司机联系电话" align="center" prop="driversPhone" />
-      <el-table-column label="车牌号" align="center" prop="vehiclesLicensePlate" />
+      <el-table-column label="司机姓名" align="center" prop="driversName" />
+      <el-table-column label="司机电话" align="center" prop="driversPhone" />
+      <el-table-column label="车牌号码" align="center" prop="vehiclesLicensePlate" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d} {h}:{i}:{s}") }}</span>
@@ -197,8 +199,8 @@
     <!-- 添加或修改班次管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="班次名" prop="shiftsName">
-          <el-input v-model="form.shiftsName" placeholder="请输入班次名" />
+        <el-form-item label="班次名称" prop="shiftsName">
+          <el-input v-model="form.shiftsName" placeholder="请输入班次名称" />
         </el-form-item>
         <el-form-item label="发车时间" prop="shiftsDepartureTime">
           <el-date-picker
@@ -210,7 +212,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="车长名" prop="leaderId">
+        <el-form-item label="车长姓名" prop="leaderId">
           <el-select v-model="form.leaderId" placeholder="请选择车长">
             <el-option
               v-for="iteam in leaderList"
@@ -221,7 +223,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="司机名" prop="driversId">
+        <el-form-item label="司机姓名" prop="driversId">
           <el-select v-model="form.driversId" placeholder="请选择车长">
             <el-option
               v-for="iteam in driversList"
@@ -232,7 +234,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="车牌号" prop="vehiclesId">
+        <el-form-item label="车牌号码" prop="vehiclesId">
           <el-select v-model="form.vehiclesId" placeholder="请选择车长">
             <el-option
               v-for="iteam in vehiclesList"
@@ -375,7 +377,7 @@ export default {
     this.getList();
   },
   methods: {
-    /**查询车长名列表*/
+    /**查询车长姓名列表*/
     getLeaderList() {
       this.loading = true;
       listLeader(this.queryParams).then((response) => {
@@ -383,7 +385,7 @@ export default {
         this.loading = false;
       });
     },
-    /**查询司机名列表*/
+    /**查询司机姓名列表*/
     getDriversList() {
       this.loading = true;
       listDrivers(this.queryParams).then((response) => {
@@ -483,7 +485,7 @@ export default {
     handleDelete(row) {
       const shiftsIds = row.shiftsId || this.ids;
       this.$modal
-        .confirm('是否确认删除班次管理编号为"' + shiftsIds + '"的数据项？')
+        .confirm('是否确认删除选中的数据项？')
         .then(function () {
           return delShifts(shiftsIds);
         })

@@ -330,7 +330,7 @@ export default {
     handleDelete(row) {
       const enterpriseIds = row.enterpriseId || this.ids;
       this.$modal
-        .confirm('是否确认删除企业管理编号为"' + enterpriseIds + '"的数据项？')
+        .confirm('是否确认删除选中的数据项？')
         .then(function () {
           return delEnterprise(enterpriseIds);
         })

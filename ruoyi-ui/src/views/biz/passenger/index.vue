@@ -461,7 +461,7 @@ export default {
     handleDelete(row) {
       const passengerIds = row.passengerId || this.ids;
       this.$modal
-        .confirm('是否确认删除乘客管理编号为"' + passengerIds + '"的数据项？')
+        .confirm('是否确认删除选中的数据项？')
         .then(function () {
           return delPassenger(passengerIds);
         })

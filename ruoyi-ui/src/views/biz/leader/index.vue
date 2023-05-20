@@ -401,7 +401,7 @@ export default {
     handleDelete(row) {
       const leaderIds = row.leaderId || this.ids;
       this.$modal
-        .confirm('是否确认删除车长管理编号为"' + leaderIds + '"的数据项？')
+        .confirm('是否确认删除选中的数据项？')
         .then(function () {
           return delLeader(leaderIds);
         })

@@ -18,9 +18,9 @@
         <where>
             <if test="driversName != null  and driversName != ''"> and drivers_name like concat('%',  #{driversName}, '%')</if>
             <if test="driversPhone != null  and driversPhone != ''"> and
-        drivers_phone = #{driversPhone}</if>
-            <if test="driversSupplier != null  and driversSupplier != ''"> and drivers_supplier =
-        #{driversSupplier}</if>
+        drivers_phone like concat('%',  #{driversPhone}, '%') </if>
+            <if test="driversSupplier != null  and driversSupplier != ''"> and drivers_supplier like concat('%',  #{driversSupplier}, '%')
+        </if>
         </where>
     </select>
 

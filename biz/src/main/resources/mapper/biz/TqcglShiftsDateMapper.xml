@@ -26,7 +26,8 @@
         <where>
             <if test="dateTime != null "> and date_time = #{dateTime}</if>
             <if test="shiftsId != null">shifts_id = #{shiftsId},</if>
-            <if test="shiftsName != null "> and shifts_Name = #{shiftsName}</if>
+            <if test="shiftsName != null "> and shifts_Name like concat('%',
+                #{shiftsName}, '%') </if>
             <if test="shiftsStatus != null "> and shifts_status = #{shiftsStatus}</if>
         </where>
     </select>

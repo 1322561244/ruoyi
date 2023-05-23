@@ -143,12 +143,14 @@ public class TqcglDriversServiceImpl implements ITqcglDriversService {
                     user.setCreateBy(operName);
                     this.insertTqcglDrivers(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、司机 " + user.getDriversName() + " 导入成功");
+                    // successMsg.append("<br/>" + successNum + "、司机 " + user.getDriversName() + "
+                    // 导入成功");
                 } else if (isUpdateSupport) {
                     user.setUpdateBy(operName);
                     this.updateTqcglDrivers(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、司机 " + user.getDriversName() + " 更新成功");
+                    // successMsg.append("<br/>" + successNum + "、司机 " + user.getDriversName() + "
+                    // 更新成功");
                 } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、司机 " + user.getDriversName() + " 已存在");
@@ -161,10 +163,10 @@ public class TqcglDriversServiceImpl implements ITqcglDriversService {
             }
         }
         if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            failureMsg.insert(0, "共 " + successNum + " 条数据导入成功，共 " + failureNum + " 条数据导入失败，错误如下：");
             throw new ServiceException(failureMsg.toString());
         } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条。");
         }
         return successMsg.toString();
     }

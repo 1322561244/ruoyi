@@ -160,7 +160,8 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService {
                                 stu.setCreateBy(operName);
                                 this.insertTqcglPassenger(stu);
                                 successNum++;
-                                successMsg.append("<br/>" + successNum + "、乘客 " + stu.getPassengerName() + " 导入成功");
+                                // successMsg.append("<br/>" + successNum + "、乘客 " + stu.getPassengerName() + "
+                                // 导入成功");
                             }
                         }
                     }
@@ -168,7 +169,8 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService {
                     stu.setUpdateBy(operName);
                     this.updateTqcglPassenger(stu);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、乘客 " + stu.getPassengerName() + " 更新成功");
+                    // successMsg.append("<br/>" + successNum + "、乘客 " + stu.getPassengerName() + "
+                    // 更新成功");
                 } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、乘客 " + stu.getPassengerName() + " 已存在");
@@ -181,10 +183,10 @@ public class TqcglPassengerServiceImpl implements ITqcglPassengerService {
             }
         }
         if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            failureMsg.insert(0, "共 " + successNum + " 条数据导入成功，共 " + failureNum + " 条数据导入失败，错误如下：");
             throw new ServiceException(failureMsg.toString());
         } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条。");
         }
         return successMsg.toString();
     }

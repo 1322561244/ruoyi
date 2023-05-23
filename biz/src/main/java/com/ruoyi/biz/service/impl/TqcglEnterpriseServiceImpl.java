@@ -152,12 +152,14 @@ public class TqcglEnterpriseServiceImpl implements ITqcglEnterpriseService {
                     user.setCreateBy(operName);
                     this.insertTqcglEnterprise(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、企业 " + user.getEnterpriseName() + " 导入成功");
+                    // successMsg.append("<br/>" + successNum + "、企业 " + user.getEnterpriseName() +
+                    // " 导入成功");
                 } else if (isUpdateSupport) {
                     user.setUpdateBy(operName);
                     this.updateTqcglEnterprise(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、企业 " + user.getEnterpriseName() + " 更新成功");
+                    // successMsg.append("<br/>" + successNum + "、企业 " + user.getEnterpriseName() +
+                    // " 更新成功");
                 } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、企业 " + user.getEnterpriseName() + " 已存在");
@@ -170,10 +172,10 @@ public class TqcglEnterpriseServiceImpl implements ITqcglEnterpriseService {
             }
         }
         if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            failureMsg.insert(0, "共 " + successNum + " 条数据导入成功，共 " + failureNum + " 条数据导入失败，错误如下：");
             throw new ServiceException(failureMsg.toString());
         } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条。");
         }
         return successMsg.toString();
     }
